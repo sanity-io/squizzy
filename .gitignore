@@ -1,0 +1,5 @@
+.DS_Store
+
+web/node_modules
+studio/node_modules
+serverless/node_modules
