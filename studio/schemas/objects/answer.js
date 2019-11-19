@@ -8,13 +8,13 @@ export default {
       name: 'question',
       title: 'Question',
       type: 'number',
-      description: 'Index number referring to question in the quiz'
+      description: 'Number referring to a Question by _key (in quiz.questions[])'
     },
     {
       name: 'selectedChoice',
       title: 'Selected Choice',
       type: 'number',
-      description: 'Index number referring to a particular choice on the question'
+      description: 'Number referring to a Choice by _key (in question.choices[])'
     },
     {
       name: 'player',

@@ -34,8 +34,7 @@ export default {
       name: 'currentQuestion',
       title: 'Current question',
       type: 'number',
-      description:
-        'Index number referring to a question in the quiz which should currently be answered'
+      description: 'Number referring to a question by _key (in quiz.questions[])'
     },
     {
       name: 'players',
@@ -54,11 +53,23 @@ export default {
   preview: {
     select: {
       title: 'quiz.title',
-      media: 'quiz.image'
+      media: 'quiz.image',
+      startedAt: 'startedAt',
+      finishedAt: 'finishedAt'
     },
-    prepare({title, media}) {
+    prepare({title, media, startedAt, finishedAt}) {
+      const isOngoing = startedAt && !finishedAt
+      const isNotYetStarted = !startedAt && !finishedAt
+
+      let subtitle
+      if (isNotYetStarted) {
+        subtitle = 'Not yet started'
+      } else {
+        subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
+      }
       return {
         title,
+        subtitle,
         media
       }
     }
