@@ -5,40 +5,34 @@ import Preview from 'part:@sanity/base/preview'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
 
-// Sanity uses CSS modules for styling. We import a stylesheet and get an
-// object where the keys matches the class names defined in the CSS file and
-// the values are a unique, generated class name. This allows you to write CSS
-// with only your components in mind without any conflicting class names.
-// See https://github.com/css-modules/css-modules for more info.
 import styles from './QuizMatchTool.css'
 
-function getDocumentTypeNames() {
-  return schema
-    .getTypeNames()
-    .map(typeName => schema.get(typeName))
-    .filter(type => type.type && type.type.name === 'document')
-    .map(type => type.name)
-}
+const playableGamesQuery = `*[
+  !(_id in path("drafts.**"))
+  && _type == "match"
+  && !defined(startedAt)
+][0...50] | order (_updatedAt desc)`
 
-class MyTool extends React.Component {
-  state = {}
-  observables = {}
-
-  handleReceiveList = documents => {
-    this.setState({documents})
+class QuizMatchTool extends React.Component {
+  state = {
+    match: null,
+    matches: null
   }
 
-  handleReceiveDocument = document => {
-    this.setState({document})
+  observables = {}
+
+  handleReceiveList = matches => {
+    this.setState({matches: matches})
+  }
+
+  handleReceiveDocument = match => {
+    this.setState({match})
   }
 
   componentWillMount() {
-    // Fetch 50 last updated, published documents
+    // Fetch published, unplayed Match documents
     this.observables.list = client.observable
-      .fetch(
-        '*[!(_id in path("drafts.**")) && _type in $types][0...50] | order (_updatedAt desc)',
-        {types: getDocumentTypeNames()}
-      )
+      .fetch(playableGamesQuery)
       .subscribe(this.handleReceiveList)
 
     // If we have a document ID as part of our route, load that document as well
@@ -59,7 +53,7 @@ class MyTool extends React.Component {
       .subscribe(this.handleReceiveDocument)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const current = this.props.router.state.selectedDocumentId
     const next = nextProps.router.state.selectedDocumentId
 
@@ -75,9 +69,9 @@ class MyTool extends React.Component {
     })
   }
 
-  renderDocumentsList() {
-    const {documents} = this.state
-    if (!documents) {
+  renderMatches() {
+    const {matches} = this.state
+    if (!matches) {
       return (
         <div className={styles.list}>
           <Spinner message="Loading..." center />}
@@ -87,10 +81,10 @@ class MyTool extends React.Component {
 
     return (
       <ul className={styles.list}>
-        {documents.map(doc => (
-          <li key={doc._id} className={styles.listItem}>
-            <StateLink state={{selectedDocumentId: doc._id}}>
-              <Preview value={doc} type={schema.get(doc._type)} />
+        {matches.map(match => (
+          <li key={match._id} className={styles.listItem}>
+            <StateLink state={{selectedDocumentId: match._id}}>
+              <Preview value={match} type={schema.get(match._type)} />
             </StateLink>
           </li>
         ))}
@@ -99,8 +93,8 @@ class MyTool extends React.Component {
   }
 
   renderDocumentView() {
-    const {document} = this.state
-    if (!document) {
+    const {match} = this.state
+    if (!match) {
       return (
         <div className={styles.document}>
           <Spinner message="Loading document..." center />}
@@ -108,7 +102,7 @@ class MyTool extends React.Component {
       )
     }
 
-    const {_id, _type} = document
+    const {_id, _type} = match
     return (
       <div className={styles.document}>
         <h2>
@@ -119,23 +113,23 @@ class MyTool extends React.Component {
         </h2>
 
         <pre>
-          <code>{JSON.stringify(document, null, 2)}</code>
+          <code>{JSON.stringify(match, null, 2)}</code>
         </pre>
       </div>
     )
   }
 
   render() {
-    const {documents, document} = this.state
+    const {matches, match} = this.state
     const {selectedDocumentId} = this.props.router.state
 
     return (
       <div className={styles.container}>
-        {this.renderDocumentsList()}
+        {this.renderMatches()}
         {selectedDocumentId && this.renderDocumentView()}
       </div>
     )
   }
 }
 
-export default withRouterHOC(MyTool)
+export default withRouterHOC(QuizMatchTool)
