@@ -5,6 +5,8 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$appName = 'Squizzy'
+
 new Vue({
   router,
   store,

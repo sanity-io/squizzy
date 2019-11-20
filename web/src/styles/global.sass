@@ -1,0 +1,48 @@
+*
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+body
+  font-family: $font-family
+  min-height: 100vh
+  height: 100%;
+  font-size: $font-size-base
+  color: $color-black
+  display: flex
+  @media screen and (max-width: 320px)
+    font-size: $font-size-small
+
+
+#app
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  background: $color-white
+  max-height: 812px
+  max-width: 375px
+  margin: 0 auto
+  box-shadow: 0 0 10px rgba(0,0,0,0.1)
+  border-radius: $border-radius
+  @media screen and (min-width: 400px)
+    margin-top: 2rem
+
+a
+  font: inherit
+  color: inherit
+  text-decoration: inherit
+
+h1, h2, h3, h4
+  font-weight: 600
+
+h1
+  font-size: 2rem
+  text-align: center
+  margin: 0.5rem 0
+
+p
+  text-align: center
+
+img
+  width: 100%
+  height: 100%
