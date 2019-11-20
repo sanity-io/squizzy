@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Asap&display=swap');
+:root {
+	/* Brand colors */
+	--brand-primary: #FF4C54;
+  --brand-primary--inverted: #F9FAFF;
+	/* Typography */
+	--font-family-sans-serif: 'Asap';
+	--font-size-base: 17px;
+	--text-color: #002152;
+	/* Main Navigation */
+	--main-navigation-color: var(--brand-primary);
+	--main-navigation-color--inverted: var(--brand-primary--inverted);
+	/* General */
+	--body-bg: #F9FAFF;
+	--component-bg: #F9FAFF;
+}
