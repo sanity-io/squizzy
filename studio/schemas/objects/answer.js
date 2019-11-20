@@ -7,13 +7,13 @@ export default {
     {
       name: 'question',
       title: 'Question',
-      type: 'number',
+      type: 'string',
       description: 'Number referring to a Question by _key (in quiz.questions[])'
     },
     {
       name: 'selectedChoice',
       title: 'Selected Choice',
-      type: 'number',
+      type: 'string',
       description: 'Number referring to a Choice by _key (in question.choices[])'
     },
     {

@@ -4,6 +4,7 @@ import Spinner from 'part:@sanity/components/loading/spinner'
 import Preview from 'part:@sanity/base/preview'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
+import Match from './components/Match'
 
 import styles from './QuizMatchTool.css'
 
@@ -16,17 +17,18 @@ const playableGamesQuery = `*[
 class QuizMatchTool extends React.Component {
   state = {
     match: null,
-    matches: null
+    matches: null,
+    isLoading: true
   }
 
   observables = {}
 
   handleReceiveList = matches => {
-    this.setState({matches: matches})
+    this.setState({matches: matches, isLoading: false})
   }
 
   handleReceiveDocument = match => {
-    this.setState({match})
+    this.setState({match, isLoading: false})
   }
 
   componentWillMount() {
@@ -49,7 +51,7 @@ class QuizMatchTool extends React.Component {
     }
 
     this.observables.document = client.observable
-      .getDocument(documentId)
+      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->}`, {documentId})
       .subscribe(this.handleReceiveDocument)
   }
 
@@ -69,12 +71,23 @@ class QuizMatchTool extends React.Component {
     })
   }
 
-  renderMatches() {
-    const {matches} = this.state
-    if (!matches) {
+  renderMatchList() {
+    const {matches, isLoading} = this.state
+    if (isLoading) {
       return (
         <div className={styles.list}>
-          <Spinner message="Loading..." center />}
+          <Spinner message="Loading documents..." center />}
+        </div>
+      )
+    }
+
+    if (!matches) {
+      return (
+        <div className={styles.document}>
+          <h2>No matches found 😞, but that's no problem you can just creat one 😍</h2>
+          <IntentLink intent="create" params={{type: 'match'}}>
+            Create
+          </IntentLink>
         </div>
       )
     }
@@ -92,41 +105,14 @@ class QuizMatchTool extends React.Component {
     )
   }
 
-  renderDocumentView() {
-    const {match} = this.state
-    if (!match) {
-      return (
-        <div className={styles.document}>
-          <Spinner message="Loading document..." center />}
-        </div>
-      )
-    }
-
-    const {_id, _type} = match
-    return (
-      <div className={styles.document}>
-        <h2>
-          {_id} -{' '}
-          <IntentLink intent="edit" params={{id: _id, type: _type}}>
-            Edit
-          </IntentLink>
-        </h2>
-
-        <pre>
-          <code>{JSON.stringify(match, null, 2)}</code>
-        </pre>
-      </div>
-    )
-  }
-
   render() {
-    const {matches, match} = this.state
+    const {matches, match, isLoading} = this.state
     const {selectedDocumentId} = this.props.router.state
 
     return (
       <div className={styles.container}>
-        {this.renderMatches()}
-        {selectedDocumentId && this.renderDocumentView()}
+        {selectedDocumentId && <Match match={match} />}
+        {!selectedDocumentId && this.renderMatchList()}
       </div>
     )
   }

@@ -33,8 +33,8 @@ export default {
     {
       name: 'currentQuestion',
       title: 'Current question',
-      type: 'number',
-      description: 'Number referring to a question by _key (in quiz.questions[])'
+      type: 'string',
+      description: 'String referring to a question by _key (in quiz.questions[])'
     },
     {
       name: 'players',
