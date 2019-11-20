@@ -1,1 +1,9 @@
-module.exports = {}
+module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "@/styles/_variables.sass";`
+      }
+    }
+  }
+}
