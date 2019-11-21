@@ -33,13 +33,14 @@ export default {
 
   preview: {
     select: {
-      title: 'title',
-      media: 'image'
+      questionKey: 'questionKey',
+      selectedChoiceKey: 'selectedChoiceKey',
+      playerName: 'player.name'
     },
-    prepare({title, media}) {
+    prepare({questionKey, selectedChoiceKey, playerName}) {
       return {
-        title,
-        media
+        title: playerName,
+        subtitle: `${questionKey} / ${selectedChoiceKey}`
       }
     }
   }
