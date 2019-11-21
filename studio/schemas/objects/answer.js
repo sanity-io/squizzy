@@ -5,14 +5,14 @@ export default {
   description: 'An answer submitted to a question. Refers to a Player, Question and Choice',
   fields: [
     {
-      name: 'question',
-      title: 'Question',
+      name: 'questionKey',
+      title: 'Question Key',
       type: 'string',
       description: 'Number referring to a Question by _key (in quiz.questions[])'
     },
     {
-      name: 'selectedChoice',
-      title: 'Selected Choice',
+      name: 'selectedChoiceKey',
+      title: 'Selected Choice Key',
       type: 'string',
       description: 'Number referring to a Choice by _key (in question.choices[])'
     },

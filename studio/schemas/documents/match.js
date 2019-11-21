@@ -31,8 +31,8 @@ export default {
       type: 'datetime'
     },
     {
-      name: 'currentQuestion',
-      title: 'Current question',
+      name: 'currentQuestionKey',
+      title: 'Current Question Key',
       type: 'string',
       description: 'String referring to a question by _key (in quiz.questions[])'
     },
