@@ -3,6 +3,7 @@ import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import Spinner from 'part:@sanity/components/loading/spinner'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
+import MatchQrCode from './MatchQrCode'
 
 import styles from './Match.css'
 
@@ -49,6 +50,9 @@ class Match extends React.Component {
           <button disabled={!isOngoing}>Cancel Game</button>
           <button disabled={!isOngoing}>Next question</button>
         </div>
+
+        {isNotYetStarted && <MatchQrCode match={match} />}
+
         <pre>
           <code>{JSON.stringify(match, null, 2)}</code>
         </pre>

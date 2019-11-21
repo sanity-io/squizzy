@@ -23,6 +23,7 @@
     "@sanity/uuid": "^0.144.0",
     "@sanity/vision": "^0.144.2",
     "prop-types": "^15.6",
+    "qrcode.react": "^1.0.0",
     "react": "^16.2",
     "react-dom": "^16.2"
   },
