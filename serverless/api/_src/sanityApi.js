@@ -33,13 +33,7 @@ export const ensurePlayerParticipation = async (player, match) => {
     .commit()
 }
 
-// export const submitAnswer = async () => {
-//   return true
-// }
-
 export const submitAnswer = async (match, playerId, questionKey, selectedChoiceKey) => {
-  // todo: there there exists an answer, remove it first
-
   let indexOfExistingAnswer = -1
   match.answers.forEach((answer, index) => {
     if (answer.questionKey === questionKey && answer.player._ref == playerId) {
