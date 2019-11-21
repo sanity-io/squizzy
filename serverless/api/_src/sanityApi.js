@@ -1,5 +1,5 @@
-const nanoid = require('nanoid')
 const client = require('./client')
+const nanoid = require('nanoid')
 
 export const ensurePlayerExists = async (playerId, playerName) => {
   const player = {
@@ -30,5 +30,30 @@ export const ensurePlayerParticipation = async (player, match) => {
     .patch(match._id)
     .setIfMissing({players: []})
     .append('players', [playerRef])
+    .commit()
+}
+
+// export const submitAnswer = async () => {
+//   return true
+// }
+
+export const submitAnswer = async (match, playerId, questionKey, selectedChoiceKey) => {
+  // todo: there there exists an answer, remove it first
+  const answer = {
+    _key: nanoid(),
+    _type: 'answer',
+    player: {
+      _type: 'reference',
+      _ref: playerId
+    },
+    questionKey,
+    selectedChoiceKey,
+    submittedAt: new Date().toISOString()
+  }
+
+  return client
+    .patch(match._id)
+    .setIfMissing({answers: []})
+    .append('answers', [answer])
     .commit()
 }
