@@ -39,6 +39,24 @@ export const ensurePlayerParticipation = async (player, match) => {
 
 export const submitAnswer = async (match, playerId, questionKey, selectedChoiceKey) => {
   // todo: there there exists an answer, remove it first
+
+  let indexOfExistingAnswer = -1
+  match.answers.forEach((answer, index) => {
+    if (answer.questionKey === questionKey && answer.player._ref == playerId) {
+      indexOfExistingAnswer = index
+    }
+  })
+
+  let position
+  let operation
+  if (indexOfExistingAnswer > -1) {
+    operation = 'replace'
+    position = `answers[${indexOfExistingAnswer}]`
+  } else {
+    operation = 'after'
+    position = `answers[-1]`
+  }
+
   const answer = {
     _key: nanoid(),
     _type: 'answer',
@@ -54,6 +72,6 @@ export const submitAnswer = async (match, playerId, questionKey, selectedChoiceK
   return client
     .patch(match._id)
     .setIfMissing({answers: []})
-    .append('answers', [answer])
+    .insert(operation, position, [answer])
     .commit()
 }
