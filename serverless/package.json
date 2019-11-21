@@ -12,6 +12,7 @@
   "dependencies": {
     "@sanity/client": "^0.142.6",
     "micro": "^9.3.4",
-    "micro-query": "^0.3.0"
+    "micro-query": "^0.3.0",
+    "nanoid": "^2.1.7"
   }
 }
