@@ -22,6 +22,12 @@ export default {
       type: 'reference',
       to: [{type: 'player'}],
       description: 'The player who submitted the answer'
+    },
+    {
+      name: 'submittedAt',
+      title: 'Submitted At',
+      type: 'datetime',
+      description: 'Point in time when the answer was submitted'
     }
   ],
 
