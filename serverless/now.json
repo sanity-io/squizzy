@@ -1,0 +1,5 @@
+{
+  "env": {
+    "SANITY_IO_WRITE_TOKEN": "@sanity_io_write_token"
+  }
+}

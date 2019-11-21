@@ -1,0 +1,17 @@
+{
+  "name": "squizzy-serverless-functions",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sanity/client": "^0.142.6",
+    "micro": "^9.3.4",
+    "micro-query": "^0.3.0"
+  }
+}
