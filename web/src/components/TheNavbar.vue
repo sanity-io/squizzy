@@ -11,7 +11,7 @@
   display: flex
   justify-content: space-between
   align-items: center
-  min-height: 3rem
+  min-height: $navbar-height
   font-size: 1.5rem
   font-weight: 700
   text-transform: uppercase

@@ -13,44 +13,30 @@
 
 <script>
 import OptionCard from '@/components/OptionCard'
+import {mapState} from 'vuex'
 export default {
   components: {
     OptionCard
   },
+  props: {
+    options: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      hasAnswered: false,
       selectedAnswer: null
     }
   },
   computed: {
-    options() {
-      return [
-        {
-          title: '8 hours',
-          _id: 1
-        },
-        {
-          title: '8 minutes',
-          _id: 12
-        },
-        {
-          title: '8 seconds',
-          _id: 123
-        },
-        {
-          title: '8 milliseconds',
-          _id: 1234
-        }
-      ]
-    }
+    ...mapState(['hasAnswered'])
   },
   methods: {
     selectAnswer(id) {
-      this.hasAnswered = true
       this.selectedAnswer = id
-      // eslint-disable-next-line no-console
-      console.log(id)
+      this.$store.dispatch('getAnswer', id)
+      this.$store.dispatch('stopCountdown')
     }
   }
 }

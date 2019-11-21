@@ -67,9 +67,11 @@ export default {
 
 .option-title
   flex-grow: 1
-  font-size: 1.2rem
+  font-size: 1.5rem
   font-weight: normal
   text-align: center
+  @media screen and (max-width: 320px)
+    font-size: 1.2rem
 
 // Symbol representing option
 .symbol
