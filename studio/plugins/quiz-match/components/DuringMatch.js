@@ -7,13 +7,21 @@ import schema from 'part:@sanity/base/schema'
 import styles from './styles/DuringMatch.css'
 
 class DuringMatch extends React.Component {
+  handleNextQuestion = () => {
+    this.props.onNextQuestion()
+  }
+
+  handleCancel = () => {
+    this.props.onCancelMatch()
+  }
+
   render() {
     const {match} = this.props
 
     return (
       <div className={styles.container}>
-        <button>Stop Game</button>
-        <button>Next question</button>
+        <button onClick={this.handleCancel}>Stop Game</button>
+        <button onClick={this.handleNextQuestion}>Next question</button>
         during match
       </div>
     )

@@ -9,7 +9,47 @@ import DuringMatch from './DuringMatch'
 import AfterMatch from './AfterMatch'
 import styles from './styles/Match.css'
 
+function nextQuestion(match) {
+  const {questions} = match.quiz
+  const currentQuestionIndex = questions.find(
+    question => question._key === match.currentQuestionKey
+  )
+  return questions[currentQuestionIndex + 1]
+}
+
 class Match extends React.Component {
+  handleStart = () => {
+    const {match} = this.props
+    console.log('start button clicked')
+    const firstQuestionKey = match.quiz.questions[0]._key
+    client
+      .patch(match._id)
+      .set({startedAt: new Date().toISOString(), currentQuestionKey: firstQuestionKey})
+      .commit()
+  }
+
+  handleNextQuestion = () => {
+    const {match} = this.props
+    console.log('next question button clicked')
+
+    const next = nextQuestion(match)
+    if (next) {
+      client
+        .patch(match._id)
+        .set({currentQuestionKey: next._key})
+        .commit()
+    }
+  }
+
+  handleCancelMatch = () => {
+    console.log('cancel button clicked')
+    const {match} = this.props
+    client
+      .patch(match._id)
+      .set({startedAt: null, currentQuestionKey: null})
+      .commit()
+  }
+
   render() {
     const {match} = this.props
     const {selectedDocumentId} = this.props.router.state
@@ -34,8 +74,14 @@ class Match extends React.Component {
 
     return (
       <div className={styles.container}>
-        {isNotYetStarted && <BeforeMatch match={match} />}
-        {isOngoing && <DuringMatch match={match} />}
+        {isNotYetStarted && <BeforeMatch match={match} onStart={this.handleStart} />}
+        {isOngoing && (
+          <DuringMatch
+            match={match}
+            onNextQuestion={this.handleNextQuestion}
+            onCancelMatch={this.handleCancelMatch}
+          />
+        )}
         {isFinished && <AfterMatch match={match} />}
       </div>
     )

@@ -16,14 +16,6 @@ export default {
       type: 'text'
     },
     {
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    },
-    {
       name: 'questions',
       title: 'Questions',
       type: 'array',
