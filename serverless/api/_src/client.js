@@ -5,7 +5,7 @@ const client = sanityClient({
   dataset: 'production',
   useCdn: false,
   // eslint-disable-next-line no-process-env
-  token: process.env.SANITY_IO_WRITE_TOKEN
+  token: process.env.SQUIZZY_WRITE_TOKEN
 })
 
 module.exports = client

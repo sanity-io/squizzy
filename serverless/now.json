@@ -1,5 +1,6 @@
 {
+  "name": "squizzy-server",
   "env": {
-    "SANITY_IO_WRITE_TOKEN": "@sanity_io_write_token"
+    "SQUIZZY_WRITE_TOKEN": "@squizzy_write_token"
   }
 }
