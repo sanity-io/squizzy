@@ -11,28 +11,31 @@ import styles from './QuizMatchTool.css'
 const playableGamesQuery = `*[
   !(_id in path("drafts.**"))
   && _type == "match"
-  && !defined(startedAt)
 ][0...50] | order (_updatedAt desc)`
 
 class QuizMatchTool extends React.Component {
   state = {
     match: null,
-    matches: null,
-    isLoading: true
+    matches: null
   }
 
   observables = {}
 
+  subscription = null
+
   handleReceiveList = matches => {
-    this.setState({matches: matches, isLoading: false})
+    this.setState({matches})
   }
 
-  handleReceiveDocument = match => {
-    this.setState({match, isLoading: false})
+  handleReceiveDocument = incoming => {
+    const documentId = this.props.router.state.selectedDocumentId
+    client
+      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->}`, {documentId})
+      .then(match => this.setState({match: match}))
   }
 
-  componentWillMount() {
-    // Fetch published, unplayed Match documents
+  componentDidMount() {
+    // Fetch published Match documents
     this.observables.list = client.observable
       .fetch(playableGamesQuery)
       .subscribe(this.handleReceiveList)
@@ -46,12 +49,20 @@ class QuizMatchTool extends React.Component {
 
   fetchDocument(documentId) {
     // If we're already fetching a document, make sure to cancel that request
-    if (this.observables.document) {
-      this.observables.document.unsubscribe()
+    if (this.subscription) {
+      this.subscription.unsubscribe()
     }
 
-    this.observables.document = client.observable
-      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->}`, {documentId})
+    this.subscription = client
+      .listen(
+        `*[_id==$documentId]`,
+        {documentId},
+        {
+          includeResult: true,
+          visibility: 'query',
+          events: ['welcome', 'mutation', 'reconnect']
+        }
+      )
       .subscribe(this.handleReceiveDocument)
   }
 
@@ -73,13 +84,6 @@ class QuizMatchTool extends React.Component {
 
   renderMatchList() {
     const {matches, isLoading} = this.state
-    if (isLoading) {
-      return (
-        <div className={styles.list}>
-          <Spinner message="Loading documents..." center />}
-        </div>
-      )
-    }
 
     if (!matches) {
       return (
@@ -106,8 +110,12 @@ class QuizMatchTool extends React.Component {
   }
 
   render() {
-    const {matches, match, isLoading} = this.state
+    const {matches, match} = this.state
     const {selectedDocumentId} = this.props.router.state
+
+    if (selectedDocumentId && match && match._type !== 'match') {
+      return <div>that's not a match, my friend</div>
+    }
 
     return (
       <div className={styles.container}>
