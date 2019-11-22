@@ -1,6 +1,6 @@
 const client = require('./client')
 const nanoid = require('nanoid')
-console.error('USING CLIENT', client)
+
 export const ensurePlayerExists = async (playerId, playerName) => {
   const player = {
     _type: 'player',
