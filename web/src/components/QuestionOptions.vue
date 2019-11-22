@@ -36,7 +36,6 @@ export default {
     selectAnswer(id) {
       this.selectedAnswer = id
       this.$store.dispatch('getAnswer', id)
-      this.$store.dispatch('stopCountdown')
     }
   }
 }

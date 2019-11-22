@@ -6,31 +6,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     hasAnswered: false,
-    countdown: null,
-    activeCountdown: 10,
-    secondsLeft: 10,
-    activeAnswer: null
+    activeAnswer: null,
+    gameIdExists: null
   },
   mutations: {
-    START_COUNTDOWN(state) {
-      state.countdown = setInterval(() => {
-        state.secondsLeft = state.secondsLeft - 1
-      }, 1000)
-    },
-    STOP_COUNTDOWN(state) {
-      clearInterval(state.countdown)
-    },
     SET_ANSWER(state, id) {
       state.activeAnswer = id
       state.hasAnswered = true
+    },
+    GAME_ID_FOUND(state, status) {
+      state.gameIdExists = status
     }
   },
   actions: {
-    startCountdown({commit}) {
-      commit('START_COUNTDOWN')
-    },
-    stopCountdown({commit}) {
-      commit('STOP_COUNTDOWN')
+    checkGameId({commit}) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          commit('GAME_ID_FOUND', true)
+          resolve(true)
+        }, 500)
+      })
     },
     getAnswer({commit}, id) {
       commit('SET_ANSWER', id)
