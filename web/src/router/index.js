@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,23 @@ const routes = [
   {
     path: '/:id',
     name: 'Game',
-    component: () => import(/* webpackChunkName: "game" */ '../views/Game.vue')
+    component: () => import(/* webpackChunkName: "game" */ '../views/Game.vue'),
+    async beforeEnter(to, from, next) {
+      try {
+        const gameExists = await store.dispatch('checkGameId')
+        if (gameExists) {
+          next()
+        } else {
+          next({
+            name: 'home' // back home
+          })
+        }
+      } catch (e) {
+        next({
+          name: 'home' // back home
+        })
+      }
+    }
   },
   {
     path: '/about',
