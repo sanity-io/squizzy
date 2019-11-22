@@ -9,7 +9,7 @@
   display: flex
   justify-content: center
   text-align: center
-  margin: 1rem auto
+  margin: 0 auto
   max-width: 220px
   & img
     width: 100%
