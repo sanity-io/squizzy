@@ -1,12 +1,12 @@
 import React from 'react'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
-import Spinner from 'part:@sanity/components/loading/spinner'
 import client from 'part:@sanity/base/client'
-import schema from 'part:@sanity/base/schema'
 
 import BeforeMatch from './BeforeMatch'
-import DuringMatch from './DuringMatch'
 import AfterMatch from './AfterMatch'
+import MatchQuestion from './MatchQuestion'
+import MatchScoreboard from './MatchScoreboard'
+
 import styles from './styles/Match.css'
 
 function nextQuestion(match) {
@@ -46,7 +46,7 @@ class Match extends React.Component {
     const {match} = this.props
     client
       .patch(match._id)
-      .set({startedAt: null, currentQuestionKey: null})
+      .unset(['startedAt', 'currentQuestionKey'])
       .commit()
   }
 
@@ -76,11 +76,11 @@ class Match extends React.Component {
       <div className={styles.container}>
         {isNotYetStarted && <BeforeMatch match={match} onStart={this.handleStart} />}
         {isOngoing && (
-          <DuringMatch
-            match={match}
-            onNextQuestion={this.handleNextQuestion}
-            onCancelMatch={this.handleCancelMatch}
-          />
+          <div>
+            <button onClick={this.handleCancelMatch}>Stop Game</button>
+            <MatchQuestion match={match} />
+            <MatchScoreboard match={match} onNextQuestion={this.handleNextQuestion} />
+          </div>
         )}
         {isFinished && <AfterMatch match={match} />}
       </div>

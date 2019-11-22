@@ -3,12 +3,15 @@
 }
 
 .container {
-  display: flex;
-  height: 100%;
   width: 100%;
-  position: absolute;
 }
 
-.matchControls {
-  border: 10px solid gold;
+.leftBox {
+  float: left;
+  border: 1px solid green;
+}
+
+.rightBox {
+  float: left;
+  border: 1px solid gold;
 }
