@@ -1,17 +1,17 @@
 <template>
-  <div class="option-card" :data-option="index" :class="{disabled: disabled}">
+  <div class="choice-card" :data-choice="index" :class="{disabled: disabled}">
     <input
-      class="option-radio"
+      class="choice-radio"
       type="radio"
-      name="options"
-      :aria-labelledby="`option-label-${title}`"
+      name="choices"
+      :aria-labelledby="`choice-label-${title}`"
       @change="$emit('change', $event)"
       :disabled="disabled"
     />
     <div class="symbol">
       <component :is="icon" />
     </div>
-    <h2 class="option-title" :id="`option-label-${title}`">{{ title }}</h2>
+    <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
   </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.option-card
+.choice-card
   position: relative
   border-radius: $border-radius
   color: $color-white
@@ -52,7 +52,7 @@ export default {
 .disabled
   opacity: 0.3
 
-.option-radio
+.choice-radio
   position: absolute
   top: 0
   bottom: 0
@@ -62,10 +62,10 @@ export default {
   width: 100%
   opacity: 0
 
-.option-radio:disabled
+.choice-radio:disabled
   pointer-events: none
 
-.option-title
+.choice-title
   flex-grow: 1
   font-size: 1.5rem
   font-weight: normal
@@ -73,7 +73,7 @@ export default {
   @media screen and (max-width: 320px)
     font-size: 1.2rem
 
-// Symbol representing option
+// Symbol representing choice
 .symbol
   position: absolute
   top: 0
@@ -84,19 +84,19 @@ export default {
   height: 1.5rem
   fill: $color-white
 
-// Option 1 - Circle
-.option-card[data-option="0"]
+// choice 1 - Circle
+.choice-card[data-choice="0"]
   background: $color-red
 
-// Option 2 - Star
-.option-card[data-option="1"]
+// choice 2 - Star
+.choice-card[data-choice="1"]
   background: $color-blue
 
-// Option 3 - Triangle
-.option-card[data-option="2"]
+// choice 3 - Triangle
+.choice-card[data-choice="2"]
   background: $color-green
 
-// Option 4 - Square
-.option-card[data-option="3"]
+// choice 4 - Square
+.choice-card[data-choice="3"]
   background: $color-purple
 </style>

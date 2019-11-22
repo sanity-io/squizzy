@@ -1,12 +1,12 @@
 <template>
-  <div class="question-options" :data-grid="options.length">
+  <div class="question-choices" :data-grid="choices.length">
     <choice-card
-      v-for="(option, index) in options"
-      :key="option.title"
-      :title="option.title"
+      v-for="(choice, index) in choices"
+      :key="choice.title"
+      :title="choice.title"
       :index="index"
-      @change="selectAnswer(option._id)"
-      :disabled="hasAnswered && selectedAnswer !== option._id"
+      @change="selectAnswer(choice._id)"
+      :disabled="hasAnswered && selectedAnswer !== choice._id"
     />
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     ChoiceCard
   },
   props: {
-    options: {
+    choices: {
       type: Array,
       required: true
     }
@@ -42,12 +42,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.question-options
+.question-choices
   display: grid
   grid-template-columns: 1fr 1fr
   gap: 0.5rem
   padding: 0.5rem
 
-.question-options[data-grid="3"] .option-card:last-child
+.question-choices[data-grid="3"] .choice-card:last-child
   grid-column: 1 / -1
 </style>

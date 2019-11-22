@@ -2,34 +2,32 @@
   <div class="question-card">
     <div class="quiz-status">Question 1 of 6</div>
     <div class="question-header">
-      <question-image v-if="question.image" />
+      <question-image v-if="question.image" :asset="question.image.asset" />
       <h1
         class="heading"
         :class="{
-          'heading-large': !question.image,
           'heading-long': question.title.split('').length > 80
         }"
       >
         {{ question.title }}
       </h1>
     </div>
-    <question-choices :options="question.options" />
+    <question-choices :choices="question.choices" />
   </div>
 </template>
 
 <script>
 import QuestionImage from '@/components/question/QuestionImage'
 import QuestionChoices from '@/components/question/QuestionChoices'
+import {mapState} from 'vuex'
+
 export default {
   components: {
     QuestionImage,
     QuestionChoices
   },
-  props: {
-    question: {
-      type: Object,
-      default: () => {}
-    }
+  computed: {
+    ...mapState(['question'])
   }
 }
 </script>
@@ -40,7 +38,7 @@ export default {
   height: 100%
   display: grid
   grid-template-areas: status       question  options
-  grid-template-rows:  min-content  1fr      1fr
+  grid-template-rows:  min-content  1fr      1.2fr
   height: 100%
   max-height: calc(100vh - 2.5rem) // height of navbar. Sass variables doesnt work
   overflow: hidden
@@ -56,6 +54,7 @@ export default {
   display: flex
   flex-direction: column
   flex-grow: 0
+  min-width: 0
 
 .heading
   font-size: 2rem

@@ -1,10 +1,15 @@
 <template>
   <div class="question-image">
-    <img :src="urlFor(asset.source)" alt="" />
+    <img :src="urlFor(asset)" alt="" />
   </div>
 </template>
 
 <script>
+import client from '../../sanityClient'
+import imageUrlBuilder from '@sanity/image-url'
+
+const builder = imageUrlBuilder(client)
+
 export default {
   props: {
     asset: {
@@ -15,7 +20,10 @@ export default {
   methods: {
     // eslint-disable-next-line no-unused-vars
     urlFor(asset) {
-      // build url
+      return builder
+        .image(asset)
+        .width(500)
+        .url()
     }
   }
 }
@@ -25,7 +33,7 @@ export default {
 .question-image
   display: flex
   justify-content: center
-  max-height: 20vh
+  max-height: 25vh
 
   & img
     height: 100%
