@@ -1,32 +1,30 @@
 <template>
-  <div class="page game">
-    <page-header :match="match.title" title="Let’s get Squizzy with it!">
-      <input-field
-        :label="inputLabel"
-        :button-title="buttonTitle"
-        :placeholder="inputPlaceholder"
-        :is-loading="isLoading"
-        @click="enterGame($event)"
-      />
-    </page-header>
+  <div class="register">
+    <h1 class="page-heading">{{ title }}</h1>
+    <input-field
+      :label="inputLabel"
+      :button-title="buttonTitle"
+      :placeholder="inputPlaceholder"
+      :is-loading="isLoading"
+      @click="registerPlayer($event)"
+    />
     <match-status :players="match.players.length" :message="statusMessage" />
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/PageHeader'
 import InputField from '@/components/InputField'
 import MatchStatus from '@/components/MatchStatus'
 import {mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
-    PageHeader,
     InputField,
     MatchStatus
   },
   data() {
     return {
+      title: `Let's get squizzy with it!`,
       isLoading: false,
       inputLabel: 'What do we call you?',
       buttonTitle: 'Join game',
@@ -35,11 +33,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['match'])
+    ...mapState(['match', 'player'])
   },
   methods: {
-    enterGame(playerName) {
-      console.log(playerName)
+    registerPlayer(playerName) {
+      // TODO:
+      // - Register player
+      // - push route to PreMatch if successfull?
+      this.$store.dispatch('registerPlayer', playerName)
+      this.$router.push({name: 'gameroom'})
     }
   }
 }

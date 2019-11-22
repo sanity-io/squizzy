@@ -12,10 +12,7 @@ export default new Vuex.Store({
       questions: [],
       players: []
     },
-    player: {
-      name: null,
-      _id: null
-    },
+    player: null,
     currentQuestionKey: null
   },
   mutations: {
