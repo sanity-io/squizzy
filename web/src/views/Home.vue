@@ -1,15 +1,15 @@
 <template>
   <div class="page home">
-    <squizzy-page :title="title" :message="message" />
+    <page-header :title="title" :message="message" />
   </div>
 </template>
 
 <script>
-import SquizzyPage from '@/components/SquizzyPage'
+import PageHeader from '@/components/PageHeader'
 export default {
   name: 'Home',
   components: {
-    SquizzyPage
+    PageHeader
   },
   data() {
     return {

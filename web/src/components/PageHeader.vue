@@ -2,8 +2,8 @@
   <div class="squizzy-page">
     <div class="header">
       <squizzy-squid />
-      <h1 class="heading-1">{{ title }}</h1>
-      <p v-if="message" class="par">{{ message }}</p>
+      <h1 class="heading">{{ title }}</h1>
+      <p v-if="message" class="message">{{ message }}</p>
     </div>
     <slot />
   </div>
@@ -31,4 +31,12 @@ export default {
 <style lang="sass" scoped>
 .squizzy-page
   text-align: center
+
+.heading
+  font-size: 2rem
+  margin-bottom: 0.5rem
+
+.message
+  max-width: 20ch
+  margin: 0 auto
 </style>

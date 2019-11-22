@@ -1,21 +1,22 @@
 <template>
-  <div class="page">
-    <squizzy-page v-if="!hasStarted" title="Let’s get Squizzy with it!">
-      <label>Nickname</label>
-      <input type="text" />
-      <button @click="startGame">Play</button>
-    </squizzy-page>
-    <question-card v-if="hasStarted" :question="question" />
+  <div class="page game">
+    <page-header v-if="!hasStarted" title="Let’s get Squizzy with it!">
+    </page-header>
+    <question-choices v-if="hasStarted" :question="question" />
   </div>
 </template>
 
 <script>
+import PageHeader from '@/components/PageHeader'
+import QuestionChoices from '@/components/question/QuestionChoices'
 import SquizzyPage from '@/components/SquizzyPage'
 import QuestionCard from '@/components/QuestionCard'
 
 export default {
   name: 'Home',
   components: {
+    PageHeader,
+    QuestionChoices,
     SquizzyPage,
     QuestionCard
   },

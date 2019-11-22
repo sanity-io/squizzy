@@ -13,17 +13,17 @@
         {{ question.title }}
       </h1>
     </div>
-    <question-options :options="question.options" />
+    <question-choices :options="question.options" />
   </div>
 </template>
 
 <script>
-import QuestionImage from '@/components/QuestionImage'
-import QuestionOptions from '@/components/QuestionOptions'
+import QuestionImage from '@/components/question/QuestionImage'
+import QuestionChoices from '@/components/question/QuestionChoices'
 export default {
   components: {
     QuestionImage,
-    QuestionOptions
+    QuestionChoices
   },
   props: {
     question: {

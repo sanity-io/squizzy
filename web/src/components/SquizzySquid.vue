@@ -7,6 +7,10 @@
 <style lang="sass" scoped>
 .squizzy-squid
   display: flex
-  margin: 0 auto
-  max-width: 250px
+  justify-content: center
+  text-align: center
+  margin: 1rem auto
+  max-width: 220px
+  & img
+    width: 100%
 </style>

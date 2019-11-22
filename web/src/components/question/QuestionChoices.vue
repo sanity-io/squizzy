@@ -1,6 +1,6 @@
 <template>
   <div class="question-options" :data-grid="options.length">
-    <option-card
+    <choice-card
       v-for="(option, index) in options"
       :key="option.title"
       :title="option.title"
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import OptionCard from '@/components/OptionCard'
+import ChoiceCard from '@/components/question/ChoiceCard'
 import {mapState} from 'vuex'
 export default {
   components: {
-    OptionCard
+    ChoiceCard
   },
   props: {
     options: {
