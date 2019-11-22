@@ -14,6 +14,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@sanity/client": "^0.145.0",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-plugin-router": "^4.0.0",
@@ -45,7 +46,8 @@
     "rules": {
       "vue/require-prop-types": "warning",
       "vue/attributes-order": "warning",
-      "vue/object-curly-spacing": "warning"
+      "vue/object-curly-spacing": "warning",
+      "no-console": 1
     }
   },
   "postcss": {
