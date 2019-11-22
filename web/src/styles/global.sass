@@ -3,28 +3,28 @@
   margin: 0
   padding: 0
 
+body, html
+  height: 100%
+  width: 100%
+
 body
   font-family: $font-family
-  min-height: 100vh
-  height: 100%;
   font-size: $font-size-base
   color: $color-black
-  display: flex
   @media screen and (max-width: 320px)
     font-size: $font-size-small
 
 #app
-  flex-grow: 1
-  display: flex
-  flex-direction: column
+  height: 100vh
+  width: 100vw
   background: $color-white
-  max-height: 812px
-  max-width: 414px
-  margin: 0 auto
   box-shadow: 0 0 10px rgba(0,0,0,0.1)
   border-radius: $border-radius
-  @media screen and (min-width: 415px)
-    margin-top: 2rem
+  overflow: hidden
+  @media screen and (min-width: 768px)
+    max-height: 812px
+    max-width: 414px
+    margin: auto
 
 a
   font: inherit
@@ -43,3 +43,4 @@ p
 .page
   height: 100%
   width: 100%
+  padding: 0 0.5rem
