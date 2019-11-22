@@ -1,3 +1,7 @@
+const maxNumberOfChoices = 4
+const minNumberOfChoices = 2
+const maxQuestionLength = 100
+
 export default {
   name: 'question',
   title: 'Question',
@@ -7,7 +11,17 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      validation: Rule =>
+        Rule.custom(title => {
+          if (!title) {
+            return 'What was the question, again?'
+          }
+          if (title.length > maxQuestionLength) {
+            return `A question can't be longer that ${maxQuestionLength} characters. This one has ${title.length}`
+          }
+          return true
+        })
     },
     {
       name: 'image',
@@ -21,7 +35,20 @@ export default {
       name: 'choices',
       title: 'Choices',
       type: 'array',
-      of: [{type: 'choice'}]
+      of: [{type: 'choice'}],
+      validation: Rule =>
+        Rule.custom(choices => {
+          if (!choices) {
+            return true
+          }
+          if (choices.length < minNumberOfChoices) {
+            return 'A question must have at leat 2 choices'
+          }
+          if (choices.length > maxNumberOfChoices) {
+            return 'A question can have a maximum of 4 choices'
+          }
+          return true
+        })
     },
     {
       name: 'timeLimit',

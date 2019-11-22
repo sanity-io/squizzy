@@ -1,3 +1,5 @@
+const maxAnswerLength = 100
+
 export default {
   name: 'choice',
   title: 'Choice',
@@ -7,7 +9,17 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      validation: Rule =>
+        Rule.custom(title => {
+          if (!title) {
+            return 'An answer needs a title'
+          }
+          if (title.length > maxAnswerLength) {
+            return `An answer can't be longer that ${maxAnswerLength} characters. This one has ${title.length}`
+          }
+          return true
+        })
     },
     {
       name: 'isCorrect',
