@@ -5,5 +5,16 @@
 .container {
   height: 100%;
   width: 100%;
+  padding: 20px;
 }
 
+.choice {
+  float: left;
+  background-color: green;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  height: 100px;
+  color: white;
+  border-radius: 5px;
+}

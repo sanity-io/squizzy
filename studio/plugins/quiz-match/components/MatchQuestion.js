@@ -9,16 +9,29 @@ function urlFor(source) {
   return builder.image(source)
 }
 
+function findCurrenQuestion(match) {
+  return match.quiz.questions.find(question => question._key === match.currentQuestionKey)
+}
+
+const colors = ['green', 'red', 'blue', 'pink']
+const symbols = ['⭐', '⚪', '🐹', '🟦']
+
 class MatchQuestion extends React.Component {
   renderChoices = () => {
-    return <span>CHOICES</span>
+    const {match} = this.props
+    const currentQuestion = findCurrenQuestion(match)
+    return currentQuestion.choices.map((choice, index) => {
+      return (
+        <div key={choice._key} className={styles.choice} style={{backgroundColor: colors[index]}}>
+          {symbols[index]} {choice.title}
+        </div>
+      )
+    })
   }
 
   render() {
     const {match} = this.props
-    const currentQuestion = match.quiz.questions.find(
-      question => question._key === match.currentQuestionKey
-    )
+    const currentQuestion = findCurrenQuestion(match)
     return (
       <div className={styles.container}>
         <div>
