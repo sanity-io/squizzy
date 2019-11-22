@@ -1,5 +1,5 @@
 const sanityClient = require('@sanity/client')
-console.log('-------', process.env.SQUIZZY_WRITE_TOKEN)
+
 const client = sanityClient({
   projectId: 'puj7p168',
   dataset: 'production',
