@@ -12,25 +12,35 @@ const routes = [
     component: Home
   },
   {
-    path: '/:id',
-    name: 'game',
-    component: () => import(/* webpackChunkName: "game" */ '../views/Game.vue'),
+    path: '/match/:id',
+    name: 'match',
+    component: () => import(/* webpackChunkName: "game" */ '../views/Match.vue'),
     async beforeEnter(to, from, next) {
       try {
-        const gameExists = await store.dispatch('checkGameId')
-        if (gameExists) {
+        const isMatch = await store.dispatch('findMatch', to.params.id)
+        if (isMatch) {
           next()
         } else {
           next({
-            name: 'home' // back home
+            name: 'home',
+            query: {matchFound: false}
           })
         }
       } catch (e) {
         next({
-          name: 'home' // back home
+          name: 'home', // back home
+          query: {matchFound: false}
         })
       }
     }
+  },
+  {
+    path: '/matches',
+    name: 'matches',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Matches.vue')
   },
   {
     path: '/q',

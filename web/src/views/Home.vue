@@ -14,7 +14,17 @@ export default {
   data() {
     return {
       title: 'Welcome to Squizzy!',
-      message: 'Please scan a QR code to get started.'
+      message: 'Please scan the QR code to get started.'
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (!to.query.matchFound) {
+      next(vm => {
+        vm.title = `Oh no! I couldn't find that match...`
+        vm.message = `Please scan the QR code to try again.`
+      })
+    } else {
+      next()
     }
   }
 }
