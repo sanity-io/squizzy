@@ -18,3 +18,15 @@
   color: white;
   border-radius: 5px;
 }
+
+.countdown {
+  font-size: 6em;
+  position: absolute;
+  right: 50px;
+  top: 0px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  vertical-align: bottom;
+  display: inline;
+}

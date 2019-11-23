@@ -6,12 +6,9 @@
   width: 100%;
 }
 
-.leftBox {
+.infoBox {
   float: left;
-  border: 1px solid green;
-}
-
-.rightBox {
-  float: left;
-  border: 1px solid gold;
+  margin: 10px;
+  border: 6px solid gold;
+  height: 80vh;
 }

@@ -37,6 +37,12 @@ export default {
       description: 'String referring to a question by _key (in quiz.questions[])'
     },
     {
+      name: 'isCurrentQuestionOpen',
+      title: 'Current Question Open',
+      type: 'boolean',
+      description: 'Is the current question open to receive answers?'
+    },
+    {
       name: 'players',
       title: 'Players',
       type: 'array',

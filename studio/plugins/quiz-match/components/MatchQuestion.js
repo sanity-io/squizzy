@@ -2,6 +2,9 @@ import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 
+import {findCurrenQuestion} from './utils'
+
+import QuestionCountdown from './QuestionCountdown'
 import styles from './styles/Match.css'
 
 const builder = imageUrlBuilder(client)
@@ -9,14 +12,14 @@ function urlFor(source) {
   return builder.image(source)
 }
 
-function findCurrenQuestion(match) {
-  return match.quiz.questions.find(question => question._key === match.currentQuestionKey)
-}
-
 const colors = ['green', 'red', 'blue', 'pink']
 const symbols = ['⭐', '⚪', '🐹', '🟦']
 
 class MatchQuestion extends React.Component {
+  handleCloseQuestion = () => {
+    this.props.onCloseQuestion()
+  }
+
   renderChoices = () => {
     const {match} = this.props
     const currentQuestion = findCurrenQuestion(match)
@@ -42,6 +45,7 @@ class MatchQuestion extends React.Component {
           />
         </div>
 
+        <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
         <div>
           <h2>{currentQuestion.title}</h2>
         </div>

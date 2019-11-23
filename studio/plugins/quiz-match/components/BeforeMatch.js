@@ -16,7 +16,7 @@ class BeforeStart extends React.Component {
     const hasQuestions = get(quiz, 'questions', []).length > 0
     return (
       <div className={styles.container}>
-        <div className={styles.leftBox}>
+        <div className={styles.infoBox}>
           <div>
             <img src="/static/squizzy-mock.png" />
           </div>
@@ -29,7 +29,7 @@ class BeforeStart extends React.Component {
           </button>
         </div>
 
-        <div className={styles.rightBox}>
+        <div className={styles.infoBox}>
           <MatchQrCode match={match} />
           <div>Scan QR code to get started!</div>
           <PlayerList match={match} />
