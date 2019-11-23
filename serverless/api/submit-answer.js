@@ -14,6 +14,10 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return send(res, 404, {error: 'please use post method'})
   }
+
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST')
+
   const postBody = await parse(req)
   const {playerId, matchSlug, questionKey, selectedChoiceKey} = postBody
 
