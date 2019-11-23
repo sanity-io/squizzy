@@ -35,19 +35,19 @@ class MatchQuestion extends React.Component {
   render() {
     const {match} = this.props
     const currentQuestion = findCurrenQuestion(match)
+    const questionImageUrl = urlFor(currentQuestion.image)
+      .width(300)
+      .url()
+    console.log('lll', questionImageUrl)
     return (
       <div className={styles.container}>
         <div>
-          <img
-            src={urlFor(currentQuestion.image)
-              .width(300)
-              .url()}
-          />
+          <img src={questionImageUrl} />
         </div>
 
         <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
         <div>
-          <h2>{currentQuestion.title}</h2>
+          <h1>{currentQuestion.title}</h1>
         </div>
 
         <div>{this.renderChoices()}</div>

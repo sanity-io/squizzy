@@ -25,7 +25,13 @@ export default {
   preview: {
     select: {
       title: 'title',
-      media: 'image'
+      questions: 'questions'
+    },
+    prepare({title, questions}) {
+      return {
+        title,
+        subtitle: `${questions.length} questions`
+      }
     }
   }
 }

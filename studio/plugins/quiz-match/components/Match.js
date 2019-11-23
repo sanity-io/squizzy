@@ -70,11 +70,11 @@ class Match extends React.Component {
       return <div>No match for {selectedDocumentId}</div>
     }
 
-    const {startedAt, finishedAt, quiz, isCurrentQuestionOpen, selectedQuestionKey} = match
+    const {startedAt, finishedAt, quiz, isCurrentQuestionOpen, currentQuestionKey} = match
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
-
+    console.log('-->', currentQuestionKey, isCurrentQuestionOpen)
     if (!quiz) {
       return (
         <div>

@@ -59,7 +59,6 @@ export default {
   preview: {
     select: {
       title: 'quiz.title',
-      media: 'quiz.image',
       startedAt: 'startedAt',
       finishedAt: 'finishedAt'
     },
@@ -75,8 +74,7 @@ export default {
       }
       return {
         title,
-        subtitle,
-        media
+        subtitle
       }
     }
   }
