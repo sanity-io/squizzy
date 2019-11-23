@@ -1,7 +1,7 @@
 import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
-import {findCurrenQuestion} from './utils'
+import {findCurrenQuestion} from '../utils'
 import styles from './styles/Match.css'
 
 const defaultTimeLimit = 20

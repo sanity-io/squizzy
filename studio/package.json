@@ -27,7 +27,9 @@
     "react": "^16.2",
     "react-dom": "^16.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:sanity-io/quiz-fabrikk.git"

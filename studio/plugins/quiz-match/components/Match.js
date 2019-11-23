@@ -10,8 +10,9 @@ import MatchScoreboard from './MatchScoreboard'
 import styles from './styles/Match.css'
 
 function nextQuestion(match) {
-  const {questions} = match.quiz
-  const index = questions.map(question => question._key).indexOf(match.currentQuestionKey)
+  const {currentQuestionKey, quiz} = match
+  const {questions} = quiz
+  const index = questions.map(question => question._key).indexOf(currentQuestionKey)
   return questions[index + 1]
 }
 
@@ -74,7 +75,7 @@ class Match extends React.Component {
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
-    console.log('-->', currentQuestionKey, isCurrentQuestionOpen)
+
     if (!quiz) {
       return (
         <div>
