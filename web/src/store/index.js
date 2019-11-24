@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import VuexPersist from 'vuex-persist'
+import VuexPersist from 'vuex-persist'
 import client from '../sanityClient'
 import axios from 'axios'
 import nanoid from 'nanoid'
