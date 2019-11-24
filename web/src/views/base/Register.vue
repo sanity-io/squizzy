@@ -37,11 +37,7 @@ export default {
   },
   methods: {
     registerPlayer(playerName) {
-      // TODO:
-      // - Register player
-      // - push route to PreMatch if successfull?
       this.$store.dispatch('registerPlayer', playerName)
-      this.$router.push({name: 'gameroom'})
     }
   }
 }

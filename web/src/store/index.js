@@ -1,22 +1,32 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import VuexPersist from 'vuex-persist'
 import client from '../sanityClient'
+import axios from 'axios'
+import nanoid from 'nanoid'
+import router from '../router'
 
 Vue.use(Vuex)
 
+const vuexLocalStorage = new VuexPersist({
+  key: 'vuex', // The key to store the state on in the storage provider.
+  storage: window.localStorage // or window.sessionStorage or localForage
+  // Function that passes the state and returns the state with only the objects you want to store.
+  // reducer: state => state,
+  // Function that passes a mutation and lets you decide if it should update the state in localStorage.
+  // filter: mutation => (true)
+})
+
 export default new Vuex.Store({
   state: {
-    match: {
-      title: null,
-      slug: null,
-      questions: [],
-      players: []
-    },
+    match: null,
+    question: {},
     player: null,
     currentQuestionKey: null
   },
   mutations: {
     REGISTER_PLAYER(state, player) {
+      console.log('Player mutation', player)
       state.player = player
     },
     SET_CURRENT_QUESTION(state, question) {
@@ -54,9 +64,21 @@ export default new Vuex.Store({
     getAnswer({commit}, id) {
       commit('SET_ANSWER', id)
     },
-    registerPlayer(/* {commit}, player */) {
-      // generate ID for player
-      // talk to endpoint
+    async registerPlayer({commit, state}, playerName) {
+      try {
+        const url = `https://squizzy-server.sanity-io.now.sh/api/sign-up-player`
+        const player = {
+          playerId: nanoid(),
+          playerName,
+          matchSlug: state.match.slug
+        }
+        const response = await axios.post(url, player)
+        console.log(response)
+        commit('REGISTER_PLAYER', player)
+        router.push({name: 'gameroom'})
+      } catch (error) {
+        console.error(error)
+      }
     },
     getCurrentQuestion(/* {commit}, question */) {
       // get currentQuestion from sanity client
@@ -68,5 +90,6 @@ export default new Vuex.Store({
       // client.unsubscribe()
     }
   },
-  modules: {}
+  modules: {},
+  plugins: [vuexLocalStorage.plugin]
 })
