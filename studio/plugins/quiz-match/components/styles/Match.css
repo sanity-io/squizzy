@@ -38,3 +38,7 @@
   text-align: center;
   vertical-align: bottom;
 }
+
+.scoreboard {
+  border: 1px solid gold;
+}

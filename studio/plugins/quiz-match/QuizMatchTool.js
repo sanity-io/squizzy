@@ -30,7 +30,9 @@ class QuizMatchTool extends React.Component {
   handleReceiveDocument = incoming => {
     const documentId = this.props.router.state.selectedDocumentId
     client
-      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->}`, {documentId})
+      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->, answers[]{...,player->}}`, {
+        documentId
+      })
       .then(match => this.setState({match: match}))
   }
 
