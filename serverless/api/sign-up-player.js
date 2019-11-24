@@ -1,5 +1,7 @@
 const micro = require('micro')
 const query = require('micro-query')
+const cors = require('micro-cors')()
+
 const {ensurePlayerExists, ensurePlayerParticipation, fetchMatch} = require('./_src/sanityApi')
 const {buffer, text, json, send} = micro
 
@@ -8,15 +10,16 @@ const parse = async req => {
   return postBody
 }
 
-module.exports = async (req, res) => {
+const handler = async (req, res) => {
   const {method} = req
+
+  if (req.method === 'OPTIONS') {
+    return send(res, 200, {status: 'ok'})
+  }
 
   if (req.method !== 'POST') {
     return send(res, 404, {error: 'please use post method'})
   }
-
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'POST')
 
   const postBody = await parse(req)
   const {playerId, playerName, matchSlug} = postBody
@@ -40,3 +43,5 @@ module.exports = async (req, res) => {
   const result = await ensurePlayerParticipation(player, match)
   return send(res, 200, {status: 'ok'})
 }
+
+module.exports = cors(handler)
