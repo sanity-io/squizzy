@@ -63,6 +63,17 @@ class Match extends React.Component {
       .commit()
   }
 
+  handleKickPlayer = playerId => {
+    console.log('kick player button clicked')
+    const {match} = this.props
+    const indexOfPlayer = match.players.map(player => player._id).indexOf(playerId)
+
+    client
+      .patch(match._id)
+      .unset([`players[${indexOfPlayer}]`])
+      .commit()
+  }
+
   render() {
     const {match} = this.props
     const {selectedDocumentId} = this.props.router.state
@@ -89,7 +100,13 @@ class Match extends React.Component {
 
     return (
       <div className={styles.container}>
-        {isNotYetStarted && <BeforeMatch match={match} onStart={this.handleStart} />}
+        {isNotYetStarted && (
+          <BeforeMatch
+            match={match}
+            onStart={this.handleStart}
+            onKickPlayer={this.handleKickPlayer}
+          />
+        )}
 
         {isOngoing && (
           <div>

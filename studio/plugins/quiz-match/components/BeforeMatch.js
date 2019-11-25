@@ -10,6 +10,10 @@ class BeforeStart extends React.Component {
     this.props.onStart()
   }
 
+  handleKickPlayer = playerId => {
+    this.props.onKickPlayer(playerId)
+  }
+
   render() {
     const {match} = this.props
     const {players, quiz} = match
@@ -32,7 +36,7 @@ class BeforeStart extends React.Component {
         <div className={styles.infoBox}>
           <MatchQrCode match={match} />
           <div>Scan QR code to get started!</div>
-          <PlayerList match={match} />
+          <PlayerList match={match} onKickPlayer={this.handleKickPlayer} />
         </div>
       </div>
     )
