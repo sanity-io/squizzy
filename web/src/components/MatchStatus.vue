@@ -27,8 +27,8 @@ export default {
 <style lang="sass" scoped>
 .match-status
   text-align: center
-  margin: 2rem 0
+  align-self: center
 
 .player-number
-  font-size: 5rem
+  font-size: 3rem
 </style>

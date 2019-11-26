@@ -30,8 +30,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+.page
+  display: flex
+  flex-direction: column
+
 section
-  min-height: 100%
   display: grid
   grid-template: 'main'
   flex: 1
@@ -43,9 +47,7 @@ section > *
   grid-area: main // Transition: make sections overlap on same cell
   flex: 1 1 auto
   position: relative
-  // height: 100vh // To be fixed
   background: $color-white
-
 
 section > :first-child
   z-index: 10 // Prevent flickering on first frame when transition classes not added yet

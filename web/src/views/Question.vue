@@ -38,9 +38,9 @@ export default {
   height: 100%
   display: grid
   grid-template-areas: status       question  options
-  grid-template-rows:  min-content  1fr      1.2fr
+  grid-template-rows:  min-content  1fr       1.2fr
   height: 100%
-  max-height: calc(100vh - 2.5rem) // height of navbar. Sass variables doesnt work
+  width: 100%
   overflow: hidden
 
 .quiz-status
@@ -63,6 +63,9 @@ export default {
   padding: 0 0.5rem
   @media screen and (max-width: 320px)
     font-size: 1.5rem
+
+.heading-img
+  margin: auto 0
 
 .heading-long
   font-size: 1.8rem

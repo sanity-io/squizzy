@@ -48,6 +48,7 @@ export default {
   display: flex
   align-items: center
   min-height: 120px
+  padding: 0.5rem
 
 .disabled
   opacity: 0.3

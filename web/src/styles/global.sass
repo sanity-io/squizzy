@@ -21,10 +21,15 @@ body
   box-shadow: 0 0 10px rgba(0,0,0,0.1)
   border-radius: $border-radius
   overflow: hidden
+  display: flex;
+  flex-direction: column;
   @media screen and (min-width: 768px)
     max-height: 812px
     max-width: 414px
     margin: auto
+
+[v-cloak] *
+  display: none
 
 a
   font: inherit
@@ -45,9 +50,14 @@ p
   width: 100%
   padding: 0 0.5rem
 
+.sub-page
+  display: grid
+  grid-template-rows: min-content min-content auto
+
 .page-heading
-  font-size: 2rem
+  font-size: 1.9rem
   margin-bottom: 0.5rem
+  padding: 0 0.5rem
 
 .page-message
   max-width: 20ch

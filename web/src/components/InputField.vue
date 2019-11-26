@@ -77,7 +77,7 @@ $max-width: 25ch
   border-radius: $border-radius
   padding: 0.5rem 1rem
   text-align: center
-  font-size: 1.8rem
+  font-size: 1.5rem
   font-weight: 600
   max-width: $max-width
   width: 100%

@@ -9,8 +9,11 @@
   display: flex
   justify-content: center
   text-align: center
-  margin: 0 auto
-  max-width: 220px
+  margin: 1rem auto
+  max-height: 25vh
   & img
+    object-fit: contain
     width: 100%
+  @media screen and (min-width: 321px)
+    max-height: 35vh
 </style>

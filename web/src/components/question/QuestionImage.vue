@@ -1,6 +1,6 @@
 <template>
   <div class="question-image">
-    <img :src="urlFor(asset)" alt="" />
+    <img class="image-src" :src="urlFor(asset)" alt="" />
   </div>
 </template>
 
@@ -34,7 +34,10 @@ export default {
   display: flex
   justify-content: center
   max-height: 25vh
+  overflow: hidden
 
-  & img
-    height: 100%
+.image-src
+  object-fit: contain
+  padding: 0 1rem
+  width: 100%
 </style>
