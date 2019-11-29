@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <the-navbar />
     <main class="main">
       <transition :name="transitionName" :key="$route.name">
@@ -24,6 +24,12 @@ export default {
     $route(to, from) {
       this.transitionName = to.meta.page > from.meta.page ? 'next' : 'prev'
     }
+  },
+  mounted() {
+    // this.$store.commit('RESET_ALL')
+  },
+  destroyed() {
+    this.$store.dispatch('stopListener')
   }
 }
 </script>
@@ -34,7 +40,6 @@ export default {
 
 <style lang="sass" scoped>
 main
-  min-height: 100%
   display: grid
   grid-template: 'main'
   flex: 1
@@ -46,7 +51,7 @@ main > *
   grid-area: main // Transition: make sections overlap on same cell
   flex: 1 1 auto
   position: relative
-  height: 100vh // To be fixed
+  height: 100% // To be fixed
   background: $color-white
 
 

@@ -1,8 +1,23 @@
 <template>
   <div class="navbar">
     <router-link to="/">{{ $appName }}</router-link>
+    <button v-if="player || match" class="btn" @click="leaveGame">Leave game</button>
   </div>
 </template>
+
+<script>
+import {mapState} from 'vuex'
+export default {
+  computed: {
+    ...mapState(['match', 'player'])
+  },
+  methods: {
+    leaveGame() {
+      this.$store.dispatch('leaveGame')
+    }
+  }
+}
+</script>
 
 <style lang="sass" scoped>
 .navbar

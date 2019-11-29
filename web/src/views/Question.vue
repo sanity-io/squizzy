@@ -2,17 +2,18 @@
   <div class="question-card">
     <div class="quiz-status">Question 1 of 6</div>
     <div class="question-header">
-      <question-image v-if="question.image" :asset="question.image.asset" />
+      <question-image v-if="currentQuestion.image" :asset="currentQuestion.image.asset" />
       <h1
         class="heading"
         :class="{
-          'heading-long': question.title.split('').length > 80
+          'heading-long': currentQuestion.title.split('').length > 80,
+          'heading-img': currentQuestion.image
         }"
       >
-        {{ question.title }}
+        {{ currentQuestion.title }}
       </h1>
     </div>
-    <question-choices :choices="question.choices" />
+    <question-choices :choices="currentQuestion.choices" />
   </div>
 </template>
 
@@ -27,7 +28,7 @@ export default {
     QuestionChoices
   },
   computed: {
-    ...mapState(['question'])
+    ...mapState(['currentQuestion'])
   }
 }
 </script>

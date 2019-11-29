@@ -1,8 +1,11 @@
 <template>
-  <div class="register">
+  <div class="sub-page gameroom">
     <h1 class="page-heading">{{ title }}</h1>
-    <p class="page-message">{{ message }}</p>
-    <match-status :players="match.players.length" :message="statusMessage" />
+    <p class="page-message">
+      <span v-if="!isLoading"> {{ message }}</span>
+      <spinner v-if="isLoading" />
+    </p>
+    <match-status :players="playerCount" :message="statusMessage" />
   </div>
 </template>
 
@@ -16,13 +19,26 @@ export default {
   },
   data() {
     return {
-      title: `Welcome to Squizzy, ${this.player.name}!`,
       message: 'Waiting for host...',
-      statusMessage: `player${this.match.players.length > 1 ? 's have' : ' has'} joined.`
+      statusMessage: `players joined`
     }
   },
   computed: {
-    ...mapState(['match', 'player'])
+    ...mapState(['match', 'playerCount', 'player', 'isLoading', 'isQuestionOpen']),
+    title() {
+      const name = this.player && this.player.playerName
+      return `Welcome to Squizzy${name ? `, ${name}` : ''}!`
+    }
+  },
+  mounted() {
+    this.$store.dispatch('startListener')
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.isQuestionOpen) {
+      next()
+    } else {
+      console.log('nope')
+    }
   }
 }
 </script>

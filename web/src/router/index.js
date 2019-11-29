@@ -3,14 +3,20 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store'
 
+// const matchFound = store.state.match && store.state.match.slug
+// const matchHasStarted = matchFound && store.state.match.startedAt
+// const showQuestion = store.state.isQuestionOpen
+// const hasPlayer = store.state.player
+
 Vue.use(VueRouter)
 
 const routes = [
+  {path: '*', redirect: '/welcome'},
   {
     path: '/',
     name: 'home',
+    redirect: {name: 'welcome'},
     component: Home,
-    redirect: '/welcome',
     meta: {
       page: 1
     },
@@ -21,6 +27,15 @@ const routes = [
         component: () => import(/* webpackChunkName: "matches" */ '../views/base/Welcome.vue'),
         meta: {
           page: 1.1
+        },
+        beforeEnter(to, from, next) {
+          if (store.state.match) {
+            next({
+              name: 'register'
+            })
+          } else {
+            next()
+          }
         }
       },
       {
@@ -28,19 +43,8 @@ const routes = [
         name: 'register',
         component: () => import(/* webpackChunkName: "matches" */ '../views/base/Register.vue'),
         meta: {
-          page: 1.2
-        },
-        beforeEnter(to, from, next) {
-          next()
-          const match = store.state.match
-          if (match) {
-            next()
-          } else {
-            next({
-              name: 'welcome',
-              params: {}
-            })
-          }
+          page: 1.2,
+          requiresMatch: true
         }
       },
       {
@@ -48,17 +52,9 @@ const routes = [
         name: 'gameroom',
         component: () => import(/* webpackChunkName: "gameroom" */ '../views/base/Gameroom.vue'),
         meta: {
-          page: 1.3
-        },
-        beforeEnter(to, from, next) {
-          const player = store.state.player
-          if (player) {
-            next()
-          } else {
-            next({
-              name: 'register'
-            })
-          }
+          page: 1.3,
+          requiresMatch: true,
+          requiresPlayer: true
         }
       }
     ]
@@ -88,15 +84,7 @@ const routes = [
           })
         }
       } catch (e) {
-        next({
-          name: 'welcome',
-          params: {
-            error: {
-              title: `Something went wrong...`,
-              message: 'Please scan the QR code to try again.'
-            }
-          }
-        })
+        console.error(e)
       }
     }
   },
@@ -104,45 +92,24 @@ const routes = [
     path: '/question',
     name: 'question',
     meta: {
-      page: 4
+      page: 4,
+      requiresMatch: true,
+      requiresPlayer: true
     },
     component: () => import(/* webpackChunkName: "question" */ '../views/Question.vue'),
     beforeEnter(to, from, next) {
-      if (!store.state.match) {
-        next({
-          name: 'welcome',
-          params: {
-            error: {
-              title: `Match not found...`,
-              message: 'Please scan a QR code to try again.'
-            }
-          }
-        })
-      } else {
+      if (store.state.isQuestionOpen) {
         next()
-      }
-    }
-  },
-  {
-    path: '/scores',
-    name: 'scores',
-    meta: {
-      page: 5
-    },
-    component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue'),
-    beforeEnter(to, from, next) {
-      if (!store.state.match || !store.state.player) {
-        next({
-          name: 'welcome',
-          params: {
-            error: {
-              title: `Match or player not found...`,
-              message: 'Please scan a QR code to try again.'
-            }
-          }
-        })
       } else {
-        next()
+        if (store.state.isOnGoing) {
+          next({
+            name: 'leaderboard'
+          })
+        } else {
+          next({
+            name: 'gameroom'
+          })
+        }
       }
     }
   },
@@ -153,6 +120,21 @@ const routes = [
     meta: {
       page: 6
     }
+  },
+  {
+    path: '/leaderboard',
+    name: 'leaderboard',
+    component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue'),
+    meta: {
+      page: 7,
+      requiresMatch: true,
+      requiresPlayer: true
+    },
+    beforeEnter(to, from, next) {
+      if (!store.state.isQuestionOpen) {
+        next()
+      }
+    }
   }
 ]
 
@@ -160,6 +142,33 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const state = store.state
+  const requiresMatch = to.matched.some(route => route.meta.requiresMatch)
+  const requiresPlayer = to.matched.some(route => route.meta.requiresPlayer)
+
+  const hasMatch = state.match
+  const hasPlayer = state.player
+
+  if (to.name === 'match') {
+    return next()
+  }
+
+  // If route requires a match
+  if (requiresMatch) {
+    // Check if it also requires a player
+    if (requiresPlayer) {
+      // If it requires a player, and player exists, go to next. If not, go to register
+      return hasPlayer ? next() : next({name: 'register'})
+    } else {
+      // If it doesn't require a player, but has match, go to next, if not, go to welcome screen
+      return hasMatch ? next() : next({name: 'welcome'})
+    }
+  } else {
+    return next()
+  }
 })
 
 export default router

@@ -1,9 +1,9 @@
 <template>
   <div class="match-status">
-    <h3 v-if="players" class="player-number">
-      {{ players }}
+    <h3 class="player-number">
+      {{ players ? players : '0' }}
     </h3>
-    <p class="status-message">
+    <p class="status-message" v-if="players !== 0">
       {{ message }}
     </p>
   </div>
