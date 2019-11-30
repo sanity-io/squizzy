@@ -34,10 +34,10 @@ export const answerDistribution = match => {
   const currentQuestion = questions.find(question => question._key === currentQuestionKey)
 
   const choicesWithAnswerCount = currentQuestion.choices.map(choice => {
-    const answersToThisChoice = answers.filter(
+    const answersToThisChoice = answers ? answers.filter(
       answer =>
         answer.questionKey === currentQuestionKey && answer.selectedChoiceKey === choice._key
-    )
+    ) : []
 
     return Object.assign({}, choice, {answerCount: answersToThisChoice.length})
   })
@@ -61,7 +61,7 @@ export const currentScoreboard = match => {
 
   answeredQuestions.forEach(question => {
     // begin with all answers to this questions
-    answers
+    answers && answers
       .filter(
         answer =>
           answer.questionKey === question._key &&

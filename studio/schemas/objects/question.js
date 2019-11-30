@@ -6,7 +6,7 @@ export default {
   name: 'question',
   title: 'Question',
   type: 'object',
-  description: 'A question has mulitple choices and a time limit',
+  description: 'A question has multiple choices and a time limit',
   fields: [
     {
       name: 'title',
@@ -18,7 +18,7 @@ export default {
             return 'What was the question, again?'
           }
           if (title.length > maxQuestionLength) {
-            return `A question can't be longer that ${maxQuestionLength} characters. This one has ${title.length}`
+            return `A question can't be longer than ${maxQuestionLength} characters. This one has ${title.length}`
           }
           return true
         })
@@ -42,7 +42,7 @@ export default {
             return true
           }
           if (choices.length < minNumberOfChoices) {
-            return 'A question must have at leat 2 choices'
+            return 'A question must have at least 2 choices'
           }
           if (choices.length > maxNumberOfChoices) {
             return 'A question can have a maximum of 4 choices'

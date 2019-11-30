@@ -17,7 +17,7 @@ class BeforeStart extends React.Component {
   render() {
     const {match} = this.props
     const {players, quiz} = match
-    const hasQuestions = get(quiz, 'questions', []).length > 0
+    const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
     return (
       <div className={styles.container}>
         <div className={styles.infoBox}>
@@ -25,9 +25,10 @@ class BeforeStart extends React.Component {
             <img src="/static/squizzy-mock.png" />
           </div>
           <h3>{quiz.title}</h3>
-          <h4>This quiz has {quiz.questions.length} questions! Get your Squizzies on!</h4>
+          <h4>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions! Get your Squizzies on!</h4>
           <div>Waiting for players...</div>
-          <h3>{players.length} have joined</h3>
+          {players && players.length && <h3>{players.lentgh} have joined</h3>}
+          
           <button onClick={this.handleStart} disabled={!hasQuestions}>
             Start Game
           </button>

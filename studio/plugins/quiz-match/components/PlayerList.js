@@ -18,6 +18,9 @@ function PlayerList(props) {
       </ol>
     )
   }
+  return (<p>
+  No players yet
+</p>)
 }
 
 export default PlayerList
