@@ -8,6 +8,7 @@
       v-model.trim="playerName"
       :placeholder="placeholder"
       @keydown.enter="validateName"
+      autocomplete="off"
     />
     <p v-if="error">{{ errorMessage }}</p>
     <v-button @click.native="validateName" :title="buttonTitle" :is-loading="isLoading" />
