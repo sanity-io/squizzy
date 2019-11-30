@@ -8,10 +8,14 @@ const state = {
 
 const mutations = {
   REGISTER_PLAYER(state, player) {
-    state.player = {
-      name: player.playerName,
-      id: player.playerId,
-      match: player.matchSlug
+    if (player) {
+      state.player = {
+        name: player.playerName,
+        id: player.playerId,
+        match: player.matchSlug
+      }
+    } else {
+      state.player = player
     }
   },
   SET_IS_LOADING(state, status) {

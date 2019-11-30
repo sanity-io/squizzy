@@ -6,10 +6,13 @@
 </template>
 
 <script>
+// TODO: prettify leave button
 export default {
   computed: {
     showLeaveButton() {
-      return this.$store.state.quiz.match || this.$store.state.player.player
+      const hasMatch = this.$store.state.quiz.match
+      const hasPlayer = this.$store.state.player.player
+      return hasMatch || hasPlayer
     }
   },
   methods: {
