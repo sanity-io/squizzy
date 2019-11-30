@@ -8,44 +8,33 @@
       :is-loading="isLoading"
       @click="registerPlayer($event)"
     />
-    <!-- <match-status :players="playerCount" :message="statusMessage" /> -->
-    <div class="match-info">
-      <p>Quiz</p>
-      <p>
-        {{ match.title }}
-      </p>
-      <p v-if="$route.params.message">
-        {{ $route.params.message }}
-      </p>
-    </div>
+    <!-- TODO: Add title of the quiz you're about to join -->
   </div>
 </template>
 
 <script>
 import InputField from '@/components/InputField'
-// import MatchStatus from '@/components/MatchStatus'
 import {mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
     InputField
-    // MatchStatus
   },
   data() {
     return {
       title: `Let's get squizzy with it!`,
       inputLabel: 'What do we call you?',
       buttonTitle: 'Join game',
-      inputPlaceholder: 'Nickname',
-      statusMessage: 'players have joined'
+      inputPlaceholder: 'Nickname'
     }
   },
   computed: {
-    ...mapState(['match', 'playerCount', 'isLoading'])
+    ...mapState('quiz', ['match']),
+    ...mapState('player', ['isLoading'])
   },
   methods: {
     registerPlayer(playerName) {
-      this.$store.dispatch('registerPlayer', playerName)
+      this.$store.dispatch('player/registerPlayer', playerName)
     }
   }
 }

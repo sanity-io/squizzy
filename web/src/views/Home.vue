@@ -1,16 +1,15 @@
 <template>
   <div class="page home">
     <squizzy-squid />
-    <section class="section">
-      <transition :name="transitionName">
-        <router-view />
-      </transition>
-    </section>
+    <transition :name="transitionName" mode="out-in">
+      <component :is="stage.component" :key="stage.name" />
+    </transition>
   </div>
 </template>
 
 <script>
 import SquizzySquid from '@/components/SquizzySquid'
+import {mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
@@ -21,9 +20,44 @@ export default {
       transitionName: ''
     }
   },
+  computed: {
+    ...mapState('quiz', ['match']),
+    ...mapState('player', ['player']),
+
+    stage() {
+      // If no match is found
+      if (!this.match) {
+        // show welcome screen
+        return {
+          name: 'welcome',
+          order: 1,
+          component: () => import(`../components/home/Welcome.vue`)
+        }
+      } else if (this.match && !this.player) {
+        // register player if no player is registered already
+        return {
+          name: 'register',
+          order: 2,
+          component: () => import(`../components/home/Register.vue`)
+        }
+      } else {
+        // Put player in pregame if there's a match
+        return {
+          name: 'pregame',
+          order: 3,
+          component: () => import(`../components/home/Pregame.vue`)
+        }
+      }
+    }
+  },
   watch: {
-    $route(to, from) {
-      this.transitionName = to.meta.page > from.meta.page ? 'next' : 'prev'
+    stage() {
+      this.transitionName = this.stage.order > this.stage.order ? 'next' : 'prev'
+    }
+  },
+  mounted() {
+    if (this.stage.order === 3) {
+      this.$store.dispatch('startListener')
     }
   }
 }

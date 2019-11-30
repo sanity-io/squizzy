@@ -25,9 +25,6 @@ export default {
       this.transitionName = to.meta.page > from.meta.page ? 'next' : 'prev'
     }
   },
-  mounted() {
-    // this.$store.commit('RESET_ALL')
-  },
   destroyed() {
     this.$store.dispatch('stopListener')
   }

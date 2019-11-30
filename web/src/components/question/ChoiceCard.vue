@@ -1,17 +1,19 @@
 <template>
-  <div class="choice-card" :data-choice="index" :class="{disabled: disabled}">
-    <input
-      class="choice-radio"
-      type="radio"
-      name="choices"
-      :aria-labelledby="`choice-label-${title}`"
-      @change="$emit('change', $event)"
-      :disabled="disabled"
-    />
-    <div class="symbol">
-      <component :is="icon" />
+  <div class="choice-card" :data-choice="index">
+    <div class="inner">
+      <input
+        class="choice-radio"
+        type="radio"
+        name="choices"
+        :aria-labelledby="`choice-label-${title}`"
+        @change="$emit('change', $event)"
+        :disabled="disabled"
+      />
+      <div class="symbol">
+        <component :is="icon" />
+      </div>
+      <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
     </div>
-    <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
   </div>
 </template>
 
@@ -45,10 +47,18 @@ export default {
   position: relative
   border-radius: $border-radius
   color: $color-white
-  display: flex
-  align-items: center
   min-height: 120px
   padding: 0.5rem
+  opacity: 1
+  transition: all 0.4s ease-in-out
+
+.inner
+  display: flex
+  align-items: center
+  height: 100%
+
+// .selected-answer .inner
+//   border: 1px dashed $color-white
 
 .disabled
   opacity: 0.3
@@ -74,12 +84,26 @@ export default {
   @media screen and (max-width: 320px)
     font-size: 1.2rem
 
+.selected-answer
+  animation-name: selected
+  animation-duration: 2s
+  animation-iteration-count: infinite
+  animation-timing-function: ease-in-out
+
+@keyframes selected
+  from
+    transform: scale(1)
+  50%
+    transform: scale(0.95)
+  to
+    transform: scale(1)
+
 // Symbol representing choice
 .symbol
   position: absolute
   top: 0
   left: 0
-  padding: 0.25rem
+  padding: 0.75rem
 
 .symbol svg
   height: 1.5rem

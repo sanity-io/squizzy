@@ -2,18 +2,21 @@
   <div class="question-choices" :data-grid="choices.length">
     <choice-card
       v-for="(choice, index) in choices"
-      :key="choice.title"
+      :key="choice._key"
       :title="choice.title"
       :index="index"
-      @change="selectAnswer(choice._id)"
-      :disabled="hasAnswered && selectedAnswer !== choice._id"
+      @change="selectAnswer(choice._key)"
+      :class="{
+        disabled: selectedAnswer && selectedAnswer !== choice._key,
+        'selected-answer': selectedAnswer === choice._key
+      }"
+      :disabled="selectedAnswer && selectedAnswer !== choice._key"
     />
   </div>
 </template>
 
 <script>
 import ChoiceCard from '@/components/question/ChoiceCard'
-import {mapState} from 'vuex'
 export default {
   components: {
     ChoiceCard
@@ -29,13 +32,10 @@ export default {
       selectedAnswer: null
     }
   },
-  computed: {
-    ...mapState(['hasAnswered'])
-  },
   methods: {
-    selectAnswer(id) {
-      this.selectedAnswer = id
-      this.$store.dispatch('getAnswer', id)
+    selectAnswer(key) {
+      this.selectedAnswer = key
+      this.$store.dispatch('client/submitAnswer', key)
     }
   }
 }

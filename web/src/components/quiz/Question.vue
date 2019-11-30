@@ -20,15 +20,14 @@
 <script>
 import QuestionImage from '@/components/question/QuestionImage'
 import QuestionChoices from '@/components/question/QuestionChoices'
-import {mapState} from 'vuex'
-
+import {mapGetters} from 'vuex'
 export default {
   components: {
     QuestionImage,
     QuestionChoices
   },
   computed: {
-    ...mapState(['currentQuestion'])
+    ...mapGetters('quiz', ['currentQuestion'])
   }
 }
 </script>
