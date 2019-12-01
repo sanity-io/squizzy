@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import QuestionImage from '@/components/question/QuestionImage'
-import QuestionChoices from '@/components/question/QuestionChoices'
+import QuestionImage from './question/QuestionImage'
+import QuestionChoices from './question/QuestionChoices'
 import {mapGetters} from 'vuex'
 export default {
   components: {

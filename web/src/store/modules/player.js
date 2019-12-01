@@ -37,21 +37,19 @@ const actions = {
       axios
         // Create the player with a POST
         .post(url, player)
-        .then(response => {
-          if (response.status === 200) {
-            // Commit the player mutation
-            commit('REGISTER_PLAYER', player)
-            // Start the listener to get game updates
-            dispatch('startListener', {root: true})
-            // Set the loading state to false
-            commit('SET_IS_LOADING', false)
-          } else {
-            commit('SET_IS_LOADING', false)
-          }
+        .then(() => {
+          // Commit the player mutation
+          commit('REGISTER_PLAYER', player)
+          // Start the listener to get game updates
+          dispatch('client/startListener', {root: true})
+          // Set the loading state to false
+          commit('SET_IS_LOADING', false)
+          return Promise.resolve(true)
         })
         .catch(error => {
           commit('SET_IS_LOADING', false)
           console.error(error)
+          return Promise.resolve(false)
         })
     )
   }

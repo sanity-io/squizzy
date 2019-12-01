@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ChoiceCard from '@/components/question/ChoiceCard'
+import ChoiceCard from './ChoiceCard'
 export default {
   components: {
     ChoiceCard

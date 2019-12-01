@@ -27,8 +27,10 @@ export default new Vuex.Store({
     leaveGame({commit, state}) {
       if (router.currentRoute.name === 'quiz') {
         commit('player/REGISTER_PLAYER', false, {root: true})
+      } else if (router.currentRoute.name === 'home' && player.state.player) {
+        commit('player/REGISTER_PLAYER', false, {root: true})
       } else {
-        commit('player/REGISTER_PLAYER', null, {root: true})
+        commit('player/REGISTER_PLAYER', false, {root: true})
         commit('quiz/RESET_ALL', null, {root: true})
       }
       if (router.currentRoute.name !== 'home') {

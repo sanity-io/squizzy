@@ -9,11 +9,13 @@
       @click="registerPlayer($event)"
     />
     <!-- TODO: Add title of the quiz you're about to join -->
+    <!-- TODO: Add error message if something goes wrong -->
+    <p v-if="errorMessage">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script>
-import InputField from '@/components/InputField'
+import InputField from './register/InputField'
 import {mapState} from 'vuex'
 export default {
   name: 'Home',
@@ -25,7 +27,8 @@ export default {
       title: `Let's get squizzy with it!`,
       inputLabel: 'What do we call you?',
       buttonTitle: 'Join game',
-      inputPlaceholder: 'Nickname'
+      inputPlaceholder: 'Nickname',
+      errorMessage: false
     }
   },
   computed: {
@@ -34,7 +37,14 @@ export default {
   },
   methods: {
     registerPlayer(playerName) {
-      this.$store.dispatch('player/registerPlayer', playerName)
+      this.$store
+        .dispatch('player/registerPlayer', playerName)
+        .then(() => {
+          console.log(this.player.name, 'has been registered!')
+        })
+        .catch(() => {
+          this.errorMessage = 'Something went wrong :( Please try again!'
+        })
     }
   }
 }

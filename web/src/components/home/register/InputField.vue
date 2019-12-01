@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Button from '@/components/Button'
+import Button from '@/components/general/Button'
 export default {
   components: {
     'v-button': Button
@@ -49,7 +49,7 @@ export default {
   methods: {
     validateName() {
       const name = this.playerName
-      if (name || name !== '') {
+      if (name) {
         this.$emit('click', this.playerName)
       }
     }

@@ -60,15 +60,19 @@ const actions = {
         return Promise.resolve(false)
       })
   },
-  startListener({commit, dispatch}, slug) {
-    commit('SET_IS_LISTENING', true)
-    const params = {slug}
-    subscription = client.listen(listenerQuery, params).subscribe(update => {
-      dispatch('updateQuiz', update.result)
-    })
+  startListener({dispatch, rootState}, slug) {
+    if (slug || rootState.quiz.match) {
+      console.log('Match found. Listener started.')
+      const params = {slug: slug || rootState.quiz.match.slug}
+      subscription = client.listen(listenerQuery, params).subscribe(update => {
+        dispatch('updateQuiz', update.result)
+      })
+    } else {
+      console.log('No match found. Listener not started.')
+    }
   },
-  stopListener({commit}) {
-    commit('SET_IS_LISTENING', false)
+  stopListener() {
+    console.log('Listener started stopped.')
     subscription.unsubscribe()
   },
   updateQuiz({dispatch}, match) {

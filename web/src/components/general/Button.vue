@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Spinner from '@/components/Spinner'
+import Spinner from './Spinner'
 export default {
   components: {
     Spinner

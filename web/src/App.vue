@@ -25,8 +25,11 @@ export default {
       this.transitionName = to.meta.page > from.meta.page ? 'next' : 'prev'
     }
   },
+  mounted() {
+    this.$store.dispatch('client/startListener')
+  },
   destroyed() {
-    this.$store.dispatch('stopListener')
+    this.$store.dispatch('client/stopListener')
   }
 }
 </script>
