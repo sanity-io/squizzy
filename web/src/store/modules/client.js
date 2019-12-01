@@ -8,7 +8,7 @@ const query = `
     "title": quiz->title,
     "slug": slug.current,
     "questions": quiz->questions,
-    "players": players[]->{name, _id},
+    "players": players[]->,
     startedAt,
     finishedAt,
     answers
@@ -75,7 +75,7 @@ const actions = {
     console.log('Listener started stopped.')
     subscription.unsubscribe()
   },
-  updateQuiz({dispatch}, match) {
+  updateQuiz({dispatch, rootState}, match) {
     // Update quiz/isOngoing
     const isOngoing = match.startedAt && !match.finishedAt
     dispatch('quiz/getIsOngoing', isOngoing, {root: true})
@@ -91,6 +91,13 @@ const actions = {
       dispatch('quiz/getCurrentQuestionKey', match.currentQuestionKey, {root: true})
     } else {
       dispatch('quiz/getCurrentQuestionKey', null, {root: true})
+    }
+
+    // Kick active player if active player is no longer in array
+    const activePlayerId = rootState.player.player.id
+    const playerExists = match.players.find(player => player._ref === activePlayerId)
+    if (!playerExists) {
+      dispatch('player/kickPlayer', true, {root: true})
     }
 
     if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {

@@ -52,6 +52,9 @@ const actions = {
           return Promise.resolve(false)
         })
     )
+  },
+  kickPlayer({commit}) {
+    commit('REGISTER_PLAYER', false)
   }
 }
 
