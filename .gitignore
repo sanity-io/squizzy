@@ -1,6 +1,7 @@
 .DS_Store
 
 web/node_modules
+studio/dist
 studio/node_modules
 serverless/node_modules
 serverless/.env
