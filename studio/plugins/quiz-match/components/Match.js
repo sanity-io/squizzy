@@ -66,11 +66,10 @@ class Match extends React.Component {
   handleKickPlayer = playerId => {
     console.log('kick player button clicked')
     const {match} = this.props
-    const indexOfPlayer = match.players.map(player => player._id).indexOf(playerId)
 
     client
       .patch(match._id)
-      .unset([`players[${indexOfPlayer}]`])
+      .unset([`players[_ref=="${playerId}"]`])
       .commit()
   }
 
