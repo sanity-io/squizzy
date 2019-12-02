@@ -4,8 +4,8 @@ import client from 'part:@sanity/base/client'
 
 import BeforeMatch from './BeforeMatch'
 import AfterMatch from './AfterMatch'
-import MatchQuestion from './MatchQuestion'
-import MatchScoreboard from './MatchScoreboard'
+import Question from './Question'
+import QuestionScores from './QuestionScores'
 
 import styles from './styles/Match.css'
 
@@ -112,11 +112,11 @@ class Match extends React.Component {
             <button onClick={this.handleCancelMatch}>Stop Game</button>
 
             {isCurrentQuestionOpen && (
-              <MatchQuestion match={match} onCloseQuestion={this.handleCloseQuestion} />
+              <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
             {!isCurrentQuestionOpen && (
-              <MatchScoreboard match={match} onNextQuestion={this.handleNextQuestion} />
+              <QuestionScores match={match} onNextQuestion={this.handleNextQuestion} />
             )}
           </div>
         )}

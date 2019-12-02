@@ -12,7 +12,7 @@ function urlFor(source) {
   return builder.image(source)
 }
 
-class MatchQuestion extends React.Component {
+class Question extends React.Component {
   handleCloseQuestion = () => {
     this.props.onCloseQuestion()
   }
@@ -57,4 +57,4 @@ class MatchQuestion extends React.Component {
   }
 }
 
-export default MatchQuestion
+export default Question

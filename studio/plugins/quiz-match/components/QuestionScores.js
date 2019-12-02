@@ -3,7 +3,7 @@ import React from 'react'
 import {answerDistribution, choiceColors, choiceSymbols, currentScoreboard} from '../utils'
 import styles from './styles/Match.css'
 
-class MatchScoreboard extends React.Component {
+class QuestionScores extends React.Component {
   handleNextQuestion = () => {
     this.props.onNextQuestion()
   }
@@ -58,4 +58,4 @@ class MatchScoreboard extends React.Component {
   }
 }
 
-export default MatchScoreboard
+export default QuestionScores
