@@ -24,7 +24,7 @@ export const assembleMatchUrl = match => {
 export const choiceColors = ['green', 'red', 'blue', 'pink']
 export const choiceSymbols = ['⭐', '⚪', '🐹', '🟦']
 
-export function findCurrenQuestion(match) {
+export function findCurrentQuestion(match) {
   return match.quiz.questions.find(question => question._key === match.currentQuestionKey)
 }
 

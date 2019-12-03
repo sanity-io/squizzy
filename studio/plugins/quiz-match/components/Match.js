@@ -126,13 +126,8 @@ class Match extends React.Component {
         )}
 
         {isOngoing && (
-          <div>
-            {isFinalQuestionCompleted && (
-              <button onClick={this.handleFinishMatch}>Finish match</button>
-            )}
-            {!isFinalQuestionCompleted && (
-              <button onClick={this.handleCancelMatch}>Cancel match</button>
-            )}
+          <>
+            {/* <button onClick={this.handleCancelMatch}>Stop Game</button> */}
 
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
@@ -146,7 +141,7 @@ class Match extends React.Component {
                 )}
               </>
             )}
-          </div>
+          </>
         )}
 
         {isFinished && <AfterMatch match={match} />}

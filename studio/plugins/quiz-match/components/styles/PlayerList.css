@@ -1,0 +1,30 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  @nest & button {
+    opacity: 0;
+    transition: all 0.2s linear;
+  }
+}
+
+.player:hover {
+  font-weight: bold;
+  @nest & button {
+    opacity: 1;
+  }
+}
+
+.noPlayers {
+  text-align: center;
+  grid-column: 1 / -1;
+}

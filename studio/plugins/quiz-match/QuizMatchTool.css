@@ -1,3 +1,5 @@
+@import 'part:@sanity/base/theme/variables-style';
+
 :root {
   --border-style: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -6,22 +8,26 @@
   display: flex;
   height: 100%;
   width: 100%;
-  position: absolute;
+  color: var(--text-color);
 }
 
 .list {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  min-width: 220px;
-  max-width: 33%;
+  max-width: 300px;
+  width: 100%;
   border-right: var(--border-style);
   overflow-y: auto;
 }
 
 .listItem {
-  padding: 5px;
-  border-bottom: var(--border-style);
+  padding: var(--small-padding);
+  @nest & a {
+    color: inherit;
+    text-decoration: inherit;
+    border-bottom: var(--border-style);
+  }
 }
 
 .listItem:last-child {
@@ -32,4 +38,13 @@
   margin: 0;
   padding: 0 10px;
   max-width: 66%;
+}
+
+
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

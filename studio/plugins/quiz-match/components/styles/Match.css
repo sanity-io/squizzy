@@ -1,44 +1,9 @@
-:root {
-  --border-style: 1px solid rgba(0, 0, 0, 0.1);
-}
+@import 'part:@sanity/base/theme/variables-style';
 
 .container {
   height: 100%;
   width: 100%;
-  padding: 20px;
+  font-size: 19px;
+  box-sizing: border-box;
 }
 
-.choice {
-  float: left;
-  background-color: green;
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
-  height: 100px;
-  color: white;
-  border-radius: 5px;
-}
-
-.choiceBar {
-  float: left;
-  width: 15%;
-  padding: 5px;
-  margin-left: 20px;
-  font-size: 1.2em;
-  color: white;
-}
-
-.countdown {
-  font-size: 6em;
-  position: absolute;
-  right: 50px;
-  top: 0px;
-  width: 200px;
-  height: 200px;
-  text-align: center;
-  vertical-align: bottom;
-}
-
-.scoreboard {
-  border: 1px solid gold;
-}

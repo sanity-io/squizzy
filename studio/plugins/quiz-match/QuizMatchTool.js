@@ -122,7 +122,18 @@ class QuizMatchTool extends React.Component {
     return (
       <div className={styles.container}>
         {selectedDocumentId && <Match match={match} />}
-        {!selectedDocumentId && this.renderMatchList()}
+        {!selectedDocumentId && <>
+          {this.renderMatchList()}
+          <div className={styles.welcome}>
+          <div className={styles.squizzy}>
+            <img src="/static/squizzy-mock.png"/>
+          </div>
+          <h1>Welcome to Squizzy!</h1>
+          <p>Please select a match to get started.</p>
+        </div>
+        </>
+        }
+        
       </div>
     )
   }

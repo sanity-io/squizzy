@@ -1,11 +1,12 @@
 import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
+import styles from './styles/MatchQuestion.css'
+import Icons from './Icons'
 
-import {findCurrenQuestion, choiceColors, choiceSymbols} from '../utils'
+import {findCurrentQuestion, choiceColors, choiceSymbols} from '../utils'
 
 import QuestionCountdown from './QuestionCountdown'
-import styles from './styles/Match.css'
 
 const builder = imageUrlBuilder(client)
 function urlFor(source) {
@@ -19,15 +20,23 @@ class Question extends React.Component {
 
   renderChoices = () => {
     const {match} = this.props
-    const currentQuestion = findCurrenQuestion(match)
+    const currentQuestion = findCurrentQuestion(match)
+
     return currentQuestion.choices.map((choice, index) => {
+      const Symbol = Icons[index]
       return (
         <div
           key={choice._key}
-          className={styles.choice}
-          style={{backgroundColor: choiceColors[index]}}
+          className={styles.choiceCard}
+          data-choice={index}
         >
-          {choiceSymbols[index]} {choice.title}
+          <div className={styles.inner}>
+          <div className={styles.symbol}>
+            <Symbol />
+          </div>
+         
+            <div className={styles.choiceTitle}>{choice.title}</div>
+          </div>
         </div>
       )
     })
@@ -35,23 +44,27 @@ class Question extends React.Component {
 
   render() {
     const {match} = this.props
-    const currentQuestion = findCurrenQuestion(match)
+    const currentQuestion = findCurrentQuestion(match)
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
 
     return (
-      <div className={styles.container}>
+      <div className={styles.root}>
+        <div className={styles.countdown}>
         <div>
-          <img src={questionImageUrl} />
+            <img src="/static/squizzy-mock.png" />
+          </div>
+          <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
         </div>
-
-        <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
-        <div>
+       <div className={styles.question}>
+         <h2 className={styles.matchProgress}>Question X of TOTAL Q</h2>
+        <div className={styles.questionImage}>
+            <img className={styles.imageSrc} src={questionImageUrl} />
+          </div>
           <h1>{currentQuestion.title}</h1>
-        </div>
-
-        <div>{this.renderChoices()}</div>
+          <div className={styles.questionChoices}>{this.renderChoices()}</div>
+       </div>
       </div>
     )
   }

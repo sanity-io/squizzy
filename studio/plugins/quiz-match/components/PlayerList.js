@@ -1,26 +1,26 @@
 import React from 'react'
+import styles from './styles/PlayerList.css'
+import KickButton from './KickButton'
 
 function PlayerList(props) {
   const {players} = props.match
   const {onKickPlayer} = props
-
-  if (players && players.length > 0) {
+  
     return (
-      <ol>
-        {players.map(player => {
+      <ul className={styles.root}>
+        {players.length !== 0 && players.map(player => {
           const handleKickPlayer = () => onKickPlayer(player._id)
           return (
-            <li key={player._id}>
-              {player.name} <button onClick={handleKickPlayer}>Kick</button>
+            <li className={styles.player} key={player._id}>
+              - {player.name} <KickButton onKickPlayer={handleKickPlayer}/>
             </li>
           )
         })}
-      </ol>
+        {players.length === 0 && (
+          <li className={styles.noPlayers}>No players</li>
+        )}
+      </ul>
     )
-  }
-  return (<p>
-  No players yet
-</p>)
 }
 
 export default PlayerList

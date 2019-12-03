@@ -1,14 +1,15 @@
-:root {
-  --border-style: 1px solid rgba(0, 0, 0, 0.1);
-}
+@import 'part:@sanity/base/theme/variables-style';
 
 .container {
-  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--medium-padding);
 }
 
-.infoBox {
-  float: left;
-  margin: 10px;
-  border: 6px solid gold;
-  height: 80vh;
+.gridItem {
+  text-align: center;
+  margin-top: var(--large-padding);
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
-import {findCurrenQuestion} from '../utils'
+import {findCurrentQuestion} from '../utils'
 import styles from './styles/Match.css'
 
 const defaultTimeLimit = 20
@@ -17,7 +17,7 @@ class QuestionCountdown extends React.Component {
 
   componentDidMount() {
     const {match} = this.props
-    const currentQuestion = findCurrenQuestion(match)
+    const currentQuestion = findCurrentQuestion(match)
     this.setState({seconds: currentQuestion.timeLimit || defaultTimeLimit})
     this.myInterval = setInterval(() => {
       const {seconds} = this.state

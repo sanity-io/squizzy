@@ -1,0 +1,11 @@
+@import 'part:@sanity/base/theme/variables-style';
+
+.root {
+  display: flex;
+  background: 0;
+  border: 0;
+  outline: 0;
+  font-size: 0.9rem;
+  color: var(--brand-primary);
+  cursor: pointer;
+}
