@@ -82,6 +82,9 @@ class QuizMatchTool extends React.Component {
     Object.keys(this.observables).forEach(obs => {
       this.observables[obs].unsubscribe()
     })
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
   renderMatchList() {
@@ -122,18 +125,18 @@ class QuizMatchTool extends React.Component {
     return (
       <div className={styles.container}>
         {selectedDocumentId && <Match match={match} />}
-        {!selectedDocumentId && <>
-          {this.renderMatchList()}
-          <div className={styles.welcome}>
-          <div className={styles.squizzy}>
-            <img src="/static/squizzy-mock.png"/>
-          </div>
-          <h1>Welcome to Squizzy!</h1>
-          <p>Please select a match to get started.</p>
-        </div>
-        </>
-        }
-        
+        {!selectedDocumentId && (
+          <>
+            {this.renderMatchList()}
+            <div className={styles.welcome}>
+              <div className={styles.squizzy}>
+                <img src="/static/squizzy-mock.png" />
+              </div>
+              <h1>Welcome to Squizzy!</h1>
+              <p>Please select a match to get started.</p>
+            </div>
+          </>
+        )}
       </div>
     )
   }
