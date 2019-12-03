@@ -20,6 +20,16 @@ export const fetchMatch = async matchSlug => {
   return match
 }
 
+export const withdrawPlayerFromMatch = async (playerId, match) => {
+  if (!match.players || !match.players.find(pRef => pRef._ref === playerId)) {
+    return Promise.resolve(true)
+  }
+  return client
+    .patch(match._id)
+    .unset([`players[_ref=="${playerId}"]`])
+    .commit()
+}
+
 export const ensurePlayerParticipation = async (player, match) => {
   if (match.players && match.players.some(pRef => pRef._ref === player._id)) {
     return Promise.resolve(true)
