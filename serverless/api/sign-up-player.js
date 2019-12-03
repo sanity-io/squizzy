@@ -1,9 +1,8 @@
 const micro = require('micro')
-const query = require('micro-query')
 const cors = require('micro-cors')()
-
 const {ensurePlayerExists, ensurePlayerParticipation, fetchMatch} = require('./_src/sanityApi')
-const {buffer, text, json, send} = micro
+
+const {json, send} = micro
 
 const parse = async req => {
   const postBody = await json(req)
@@ -11,8 +10,6 @@ const parse = async req => {
 }
 
 const handler = async (req, res) => {
-  const {method} = req
-
   if (req.method === 'OPTIONS') {
     return send(res, 200, {status: 'ok'})
   }
