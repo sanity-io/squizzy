@@ -59,10 +59,11 @@ export default {
   preview: {
     select: {
       title: 'quiz.title',
+      slug: 'slug.current',
       startedAt: 'startedAt',
       finishedAt: 'finishedAt'
     },
-    prepare({title, media, startedAt, finishedAt}) {
+    prepare({title, slug, startedAt, finishedAt}) {
       const isOngoing = startedAt && !finishedAt
       const isNotYetStarted = !startedAt && !finishedAt
 
@@ -73,7 +74,7 @@ export default {
         subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
       }
       return {
-        title,
+        title: `[${slug}] ${title}`,
         subtitle
       }
     }
