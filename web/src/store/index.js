@@ -24,34 +24,29 @@ const vuexLocalStorage = new VuexPersist({
 export default new Vuex.Store({
   // strict: true,
   actions: {
-    leaveGame({commit, state, rootState}) {
-      if (router.currentRoute.name === 'quiz') {
-        commit('player/REGISTER_PLAYER', false, {root: true})
-      } else if (router.currentRoute.name === 'home' && player.state.player) {
-        commit('player/REGISTER_PLAYER', false, {root: true})
-      } else {
-        commit('player/REGISTER_PLAYER', false, {root: true})
-        commit('quiz/RESET_ALL', null, {root: true})
-      }
-      if (router.currentRoute.name !== 'home') {
-        return router.push({name: 'home'})
-      }
-      if (state.player) {
-        // TODO this isn't finished
+    leaveGame({commit, rootState}) {
+      if (rootState.player.player && rootState.quiz.match.slug) {
         const url = 'https://squizzy-server.sanity-io.now.sh/api/withdraw-player'
-        const postBody = {playerId: state.player.playerId, matchSlug: rootState.quiz.match.slug}
-        console.log('LEAVING', url, postBody)
+        const postBody = {
+          playerId: rootState.player.player.id,
+          matchSlug: rootState.quiz.match.slug
+        }
         return axios
           .post(url, postBody)
           .then(response => {
             if (response.status === 200) {
-              commit('REGISTER_PLAYER', null)
-              router.push({name: 'register'})
+              commit('player/REGISTER_PLAYER', false, {root: true})
             }
           })
           .catch(error => {
             console.log(error)
           })
+      } else {
+        commit('player/REGISTER_PLAYER', false, {root: true})
+        commit('quiz/RESET_ALL', null, {root: true})
+        if (router.currentRoute.name !== 'home') {
+          return router.push({name: 'home'})
+        }
       }
     }
   },
