@@ -39,6 +39,7 @@ section
   position: relative
   overflow: hidden
   background: $color-white
+  height: 100%
 
 section > *
   grid-area: main // Transition: make sections overlap on same cell

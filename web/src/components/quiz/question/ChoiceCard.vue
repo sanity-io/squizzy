@@ -47,8 +47,7 @@ export default {
   position: relative
   border-radius: $border-radius
   color: $color-white
-  min-height: 120px
-  padding: 0.5rem
+  padding: 1rem
   opacity: 1
   transition: all 0.4s ease-in-out
 
@@ -103,7 +102,7 @@ export default {
   position: absolute
   top: 0
   left: 0
-  padding: 0.75rem
+  padding: 0.5rem
 
 .symbol svg
   height: 1.5rem
