@@ -1,9 +1,49 @@
 @import 'part:@sanity/base/theme/variables-style';
 
-.container {
+.root {
   height: 100%;
   width: 100%;
   font-size: 19px;
   box-sizing: border-box;
+}
+
+.resultView {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr min-content;
+  height: 100%;
+}
+
+.graphColumn {
+  display: grid;
+  grid-template-rows: min-content auto;
+
+  @nest & .squiddy {
+    padding: var(--medium-padding);
+  }
+}
+
+.stopButton {
+  position: absolute;
+  top: var(--small-padding);
+  left: var(--small-padding);
+  text-transform: uppercase;
+  background: color(#647897 l(+20%));
+  color: var(--white);
+  border: 0;
+  font-weight: bold;
+}
+
+.nextQuestion {
+  grid-column: 1 / -1;
+  padding: var(--large-padding);
+  justify-content: center;
+  display: flex;
+
+  @nest & .nextButton {
+    text-transform: uppercase;
+    min-width: 10em;
+    font-weight: bold;
+  }
 }
 

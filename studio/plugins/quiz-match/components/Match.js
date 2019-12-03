@@ -1,11 +1,14 @@
 import React from 'react'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
+import Button from 'part:@sanity/components/buttons/default'
 
 import BeforeMatch from './BeforeMatch'
 import AfterMatch from './AfterMatch'
 import Question from './Question'
 import QuestionScores from './QuestionScores'
+import AnswerGraph from './AnswerGraph'
+import globals from './styles/globals.css'
 
 import styles from './styles/Match.css'
 
@@ -116,7 +119,7 @@ class Match extends React.Component {
     }
 
     return (
-      <div className={styles.container}>
+      <div className={styles.root}>
         {isNotYetStarted && (
           <BeforeMatch
             match={match}
@@ -127,19 +130,39 @@ class Match extends React.Component {
 
         {isOngoing && (
           <>
-            {/* <button onClick={this.handleCancelMatch}>Stop Game</button> */}
-
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
+            <Button onClick={this.handleCancelMatch} color="primary" className={styles.stopButton}>
+              Stop game
+            </Button>
+
             {!isCurrentQuestionOpen && (
-              <>
-                <QuestionScores match={match} />
-                {!isFinalQuestionCompleted && (
-                  <button onClick={this.handleNextQuestion}>Next question</button>
-                )}
-              </>
+              <div className={styles.resultView}>
+                <div className={styles.graphColumn}>
+                  <div>
+                    <div className={styles.squiddy}>
+                      <img src="/static/squizzy-mock.png" />
+                    </div>
+                    <h1 className={globals.heading}>What a squiddy round!</h1>
+                  </div>
+                  <AnswerGraph match={match} />
+                </div>
+
+
+                <div className={styles.leaderboardWrapper}>
+                  <QuestionScores match={match}/>
+                </div>
+                
+                 {!isFinalQuestionCompleted && (
+                    <div className={styles.nextQuestion}>
+                      <Button onClick={this.handleNextQuestion} color="primary" className={styles.nextButton}>
+                        Next question
+                      </Button>
+                    </div>
+                  )}
+              </div>
             )}
           </>
         )}

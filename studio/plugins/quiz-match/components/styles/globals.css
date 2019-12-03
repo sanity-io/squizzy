@@ -8,48 +8,4 @@
   font-size: 1.3em;
 }
 
-.button {
-  background: var(--brand-primary);
-  color: var(--white);
-  max-width: 12rem;
-  padding: 0;
-  margin: var(--small-padding) auto;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  flex-direction: column;
-  border-radius: var(--border-radius-base);
-  max-width: 22ch;
-  width: 100%;
-  min-height: 3rem;
-  border: 0;
-  font: inherit;
-  font-weight: 600;
-  text-transform: uppercase;
-  transition: transform 100ms linear;
-  border: 1px solid transparent;
-  cursor: pointer;
-
-  @nest &:focus {
-    outline: 0;
-  }
-
-  @nest & :focus .inner{
-    border: 1px dashed var(--white);
-    margin: 3px;
-    border-radius: var(--border-radius-base);
-  }
-
-  @nest & :active {
-    transform: scale(0.98);
-    /* box-shadow: inset 0 0 10px $color-green--darker; */
-  }
-
-  @nest & .inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-  }
-}
 
