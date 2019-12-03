@@ -17,8 +17,8 @@ function nextQuestion(match) {
 }
 
 class Match extends React.Component {
-  handleStart = () => {
-    console.log('start button clicked')
+  handleStartMatch = () => {
+    console.log('start match button clicked')
     const {match} = this.props
     const firstQuestionKey = match.quiz.questions[0]._key
     client
@@ -28,6 +28,30 @@ class Match extends React.Component {
         currentQuestionKey: firstQuestionKey,
         isCurrentQuestionOpen: true
       })
+      .commit()
+  }
+
+  handleFinishMatch = () => {
+    console.log('finish match button clicked')
+    const {match} = this.props
+
+    client
+      .patch(match._id)
+      .set({
+        finishedAt: new Date().toISOString(),
+        isCurrentQuestionOpen: false
+      })
+      .unset(['currentQuestionKey'])
+      .commit()
+  }
+
+  handleCancelMatch = () => {
+    console.log('cancel match button clicked')
+    const {match} = this.props
+    client
+      .patch(match._id)
+      .set({isCurrentQuestionOpen: false})
+      .unset(['startedAt', 'currentQuestionKey'])
       .commit()
   }
 
@@ -53,16 +77,6 @@ class Match extends React.Component {
       .commit()
   }
 
-  handleCancelMatch = () => {
-    console.log('cancel button clicked')
-    const {match} = this.props
-    client
-      .patch(match._id)
-      .set({isCurrentQuestionOpen: false})
-      .unset(['startedAt', 'currentQuestionKey'])
-      .commit()
-  }
-
   handleKickPlayer = playerId => {
     console.log('kick player button clicked')
     const {match} = this.props
@@ -85,6 +99,10 @@ class Match extends React.Component {
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
+    const isCurrentQuestionTheLast =
+      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
+      quiz.questions.length - 1
+    const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
 
     if (!quiz) {
       return (
@@ -102,21 +120,31 @@ class Match extends React.Component {
         {isNotYetStarted && (
           <BeforeMatch
             match={match}
-            onStart={this.handleStart}
+            onStart={this.handleStartMatch}
             onKickPlayer={this.handleKickPlayer}
           />
         )}
 
         {isOngoing && (
           <div>
-            <button onClick={this.handleCancelMatch}>Stop Game</button>
+            {isFinalQuestionCompleted && (
+              <button onClick={this.handleFinishMatch}>Finish match</button>
+            )}
+            {!isFinalQuestionCompleted && (
+              <button onClick={this.handleCancelMatch}>Cancel match</button>
+            )}
 
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
             {!isCurrentQuestionOpen && (
-              <QuestionScores match={match} onNextQuestion={this.handleNextQuestion} />
+              <>
+                <QuestionScores match={match} />
+                {!isFinalQuestionCompleted && (
+                  <button onClick={this.handleNextQuestion}>Next question</button>
+                )}
+              </>
             )}
           </div>
         )}

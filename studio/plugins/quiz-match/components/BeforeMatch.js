@@ -25,10 +25,13 @@ class BeforeStart extends React.Component {
             <img src="/static/squizzy-mock.png" />
           </div>
           <h3>{quiz.title}</h3>
-          <h4>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions! Get your Squizzies on!</h4>
+          <h4>
+            {quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions! Get
+            your Squizzies on!
+          </h4>
           <div>Waiting for players...</div>
-          {players && players.length && <h3>{players.lentgh} have joined</h3>}
-          
+          {players && players.length && <h3>{players.length} have joined</h3>}
+
           <button onClick={this.handleStart} disabled={!hasQuestions}>
             Start Game
           </button>

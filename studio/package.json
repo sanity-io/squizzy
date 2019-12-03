@@ -22,6 +22,7 @@
     "@sanity/desk-tool": "^0.146.3",
     "@sanity/uuid": "^0.146.0",
     "@sanity/vision": "^0.146.3",
+    "date-fns": "^2.8.1",
     "prop-types": "^15.6",
     "qrcode.react": "^1.0.0",
     "react": "^16.2",

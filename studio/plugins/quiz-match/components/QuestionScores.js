@@ -1,13 +1,10 @@
 import React from 'react'
 
-import {answerDistribution, choiceColors, choiceSymbols, currentScoreboard} from '../utils'
+import Scoreboard from './Scoreboard'
+import {answerDistribution, choiceColors, choiceSymbols, scoresByPlayer} from '../utils'
 import styles from './styles/Match.css'
 
 class QuestionScores extends React.Component {
-  handleNextQuestion = () => {
-    this.props.onNextQuestion()
-  }
-
   renderAnswerDistribution = () => {
     const {match} = this.props
     return answerDistribution(match, null, 2).map((choice, index) => {
@@ -24,35 +21,19 @@ class QuestionScores extends React.Component {
     })
   }
 
-  renderScoreboard = () => {
-    const {match} = this.props
-    const scoreboard = currentScoreboard(match)
-    return (
-      <table className={styles.scoreboard}>
-        <thead></thead>
-        <tbody>
-          {scoreboard.map((player, index) => {
-            return (
-              <tr key={player._id}>
-                <td>{index + 1}.</td>
-                <td>{player.name}</td>
-                <td>{Math.round(player.score)}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    )
-  }
-
   render() {
     const {match} = this.props
-
+    const playersWithScores = scoresByPlayer(match)
+    const playersWithScoresCurrentQuestion = scoresByPlayer(match, match.currentQuestionKey)
     return (
       <div>
         {this.renderAnswerDistribution()}
-        {this.renderScoreboard()}
-        <button onClick={this.handleNextQuestion}>Next question</button>
+
+        <h2>Scores - This question</h2>
+        <Scoreboard playersWithScores={playersWithScoresCurrentQuestion} />
+
+        <h2>Scores - Overall </h2>
+        <Scoreboard playersWithScores={playersWithScores} />
       </div>
     )
   }

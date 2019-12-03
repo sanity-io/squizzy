@@ -39,7 +39,7 @@ class Question extends React.Component {
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
-    console.log('lll', questionImageUrl)
+
     return (
       <div className={styles.container}>
         <div>

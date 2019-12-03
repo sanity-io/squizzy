@@ -60,10 +60,11 @@ export default {
     select: {
       title: 'quiz.title',
       slug: 'slug.current',
+      players: 'players',
       startedAt: 'startedAt',
       finishedAt: 'finishedAt'
     },
-    prepare({title, slug, startedAt, finishedAt}) {
+    prepare({title, slug, players, startedAt, finishedAt}) {
       const isOngoing = startedAt && !finishedAt
       const isNotYetStarted = !startedAt && !finishedAt
 
@@ -73,6 +74,9 @@ export default {
       } else {
         subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
       }
+      subtitle = `${subtitle} - ${players.length} ${
+        players && players.length === 1 ? 'player' : 'players'
+      }`
       return {
         title: `[${slug}] ${title}`,
         subtitle
