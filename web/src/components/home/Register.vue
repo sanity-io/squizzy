@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     ...mapState('quiz', ['match']),
-    ...mapState('player', ['isLoading'])
+    ...mapState('player', ['player', 'isLoading'])
   },
   methods: {
     registerPlayer(playerName) {
