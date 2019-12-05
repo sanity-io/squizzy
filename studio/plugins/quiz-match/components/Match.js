@@ -9,6 +9,7 @@ import Question from './quiz/Question'
 import QuestionScores from './results/QuestionScores'
 import Results from './results/Results'
 import globals from './styles/globals.css'
+import IntentButton from 'part:@sanity/components/buttons/intent'
 
 import styles from './styles/Match.css'
 
@@ -165,11 +166,14 @@ class Match extends React.Component {
             }
             {
               isFinalQuestionCompleted &&
-              <a href="/quiz-match">Play again?</a>
-              // <Button color="primary" className={styles.button}>
-              //   {/* TODO: FIX THIS */}
-              //   <a href="/desk/match">Play again?</a>
-              // </Button>
+              <IntentButton
+                color="primary"
+                intent="create"
+                params={{type: 'match'}}
+                onClick={()=>{}}
+                title="Create new match"
+                className={styles.button}
+              >Create new game</IntentButton>
             }
         </div>
       </div>
