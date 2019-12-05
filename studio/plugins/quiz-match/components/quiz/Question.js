@@ -59,9 +59,10 @@ class Question extends React.Component {
         </div>
        <div className={styles.question}>
          <h2 className={styles.matchProgress}>Question X of TOTAL Q</h2>
-        <div className={styles.questionImage}>
+          <div className={styles.questionImage}>
             <img className={styles.imageSrc} src={questionImageUrl} />
           </div>
+          {/* TODO: make question stretch and align in the middle when no image */}
           <h1>{currentQuestion.title}</h1>
           <div className={styles.questionChoices}>{this.renderChoices()}</div>
        </div>

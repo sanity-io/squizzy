@@ -1,5 +1,5 @@
 import React from 'react'
-import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
+import {StateLink, withRouterHOC, IntentLink, WithRouter} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
 import {get} from 'lodash'
@@ -184,41 +184,40 @@ class Match extends React.Component {
               className={styles.button}
             >Create new match</IntentButton>
             <p>or</p>
-            <StateLink toIndex>
-              Play another match
-            </StateLink>
+            {/* TODO: fix this. Link to list of matches */}
+            {/* <WithRouter>
+              {router => (
+                <StateLink state={{...router.state, tool: 'quiz-match'}}>
+                  Play another match
+                </StateLink>
+              )}
+            </WithRouter> */}
           </div>
         }
 
         <div className={styles.buttonsWrapper}>
-          {isNotYetStarted && hasPlayers && (
-            <Button
-              onClick={this.handleStartMatch}
-              disabled={!hasQuestions}
-              color="primary"
-              className={styles.button}
-            >
+          {!isOngoing && hasPlayers && !isFinished &&
+            <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
               Start game
             </Button>
-          )}
+            }
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
               Next question
             </Button>
           )}
-            {!isOngoing && hasPlayers && !isFinished &&
-              <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
-                Start game
-              </Button>
-            }
-            {
-              isFinalQuestionCompleted &&
-              <Button
-                color="primary"
-                onClick={this.handleFinishMatch}
-                className={styles.button}
-              >Finish game</Button>
-            }
+          {isOngoing && !isFinalQuestionCompleted && isCurrentQuestionOpen && (
+            <Button onClick={this.handleCloseQuestion} color="primary" className={styles.button}>
+              Stop question
+            </Button>
+          )}
+          {isFinalQuestionCompleted &&
+            <Button
+              color="primary"
+              onClick={this.handleFinishMatch}
+              className={styles.button}
+            >Finish game</Button>
+          }
         </div>
       </div>
     )
