@@ -14,7 +14,23 @@
   margin-top: var(--large-padding);
 }
 
-.startButton {
-  font-weight: bold;
-  text-transform: uppercase;
+.waitingPlayers {
+  margin: 0;
+  font-size: 1.3em;
+  animation-name: waiting;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes waiting {
+  from {
+    transform: scale(1)
+  }
+  50% {
+    transform: scale(0.95)
+  }
+  to {
+    transform: scale(1)
+  }
 }

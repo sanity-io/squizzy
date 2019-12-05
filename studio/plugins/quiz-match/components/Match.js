@@ -117,7 +117,7 @@ class Match extends React.Component {
     const isFinished = startedAt && finishedAt
     const isFinalQuestionCompleted = this.isCurrentQuestionTheLast() && !isCurrentQuestionOpen
 
-    const hasPlayers = match.players.length !== 0
+    const hasPlayers = match.players
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
 
     if (!quiz) {

@@ -8,7 +8,7 @@ function PlayerList(props) {
   
     return (
       <ul className={styles.root}>
-        {players.length !== 0 && players.map(player => {
+        {players && players.map(player => {
           const handleKickPlayer = () => onKickPlayer(player._id)
           return (
             <li className={styles.player} key={player._id}>
@@ -16,8 +16,8 @@ function PlayerList(props) {
             </li>
           )
         })}
-        {players.length === 0 && (
-          <li className={styles.noPlayers}>No players</li>
+        {!players && (
+          <li className={styles.noPlayers}>No players have joined yet...</li>
         )}
       </ul>
     )

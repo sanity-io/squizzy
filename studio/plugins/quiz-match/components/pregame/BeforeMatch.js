@@ -1,11 +1,9 @@
 import React from 'react'
 import {get} from 'lodash'
-import Button from 'part:@sanity/components/buttons/default'
 import MatchQrCode from './MatchQrCode'
 import PlayerList from './PlayerList'
-
-import globals from '../styles/globals.css'
 import styles from '../styles/BeforeMatch.css'
+import globals from '../styles/globals.css'
 
 class BeforeStart extends React.Component {
   handleStart = () => {
@@ -20,6 +18,7 @@ class BeforeStart extends React.Component {
     const {match} = this.props
     const {players, quiz} = match
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
+    const hasPlayers = players && players.length
     return (
       <div className={styles.container}>
         <div className={styles.gridItem}>
@@ -28,7 +27,7 @@ class BeforeStart extends React.Component {
           </div>
           <h1 className={globals.heading}>Let's get Squizzy with it!</h1>
           <p className={globals.p}>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions. Are you ready?</p>
-          <p className={globals.p}>Waiting for players...</p>
+          <p className={styles.waitingPlayers}>Waiting for players...</p>
         </div>
 
         <div className={styles.gridItem}>
