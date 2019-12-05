@@ -26,6 +26,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "quiz" */ '../views/Quiz.vue'),
     meta: {
       page: 1
+    },
+    beforeEnter(to, from, next) {
+      console.log(store.state)
+      if (store.state.quiz.match && store.state.player.player) {
+        next()
+      } else {
+        next({
+          name: 'home'
+        })
+      }
     }
   },
   {
