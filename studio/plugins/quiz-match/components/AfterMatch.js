@@ -17,7 +17,6 @@ class AfterMatch extends React.Component {
       <div>
         <h2>Match ended {formatDistance(new Date(match.finishedAt), new Date())} ago</h2>
         <Scoreboard playersWithScores={playersWithScores} />
-        <a href="/desk/match">Play again?</a>
       </div>
     )
   }

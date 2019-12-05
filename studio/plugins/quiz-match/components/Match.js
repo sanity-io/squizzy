@@ -20,7 +20,6 @@ function nextQuestion(match) {
   return questions[index + 1]
 }
 
-
 class Match extends React.Component {
   handleStartMatch = () => {
     console.log('start match button clicked')
@@ -80,6 +79,10 @@ class Match extends React.Component {
       .patch(match._id)
       .set({isCurrentQuestionOpen: false})
       .commit()
+
+    if (this.isCurrentQuestionTheLast()) {
+      this.handleFinishMatch()
+    }
   }
 
   handleKickPlayer = playerId => {
@@ -90,6 +93,14 @@ class Match extends React.Component {
       .patch(match._id)
       .unset([`players[_ref=="${playerId}"]`])
       .commit()
+  }
+
+  isCurrentQuestionTheLast = () => {
+    const {quiz, currentQuestionKey} = this.props.match
+    return (
+      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
+      quiz.questions.length - 1
+    )
   }
 
   render() {
@@ -104,10 +115,7 @@ class Match extends React.Component {
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
-    const isCurrentQuestionTheLast =
-      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
-      quiz.questions.length - 1
-    const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
+    const isFinalQuestionCompleted = this.isCurrentQuestionTheLast() && !isCurrentQuestionOpen
 
     const hasPlayers = match.players.length !== 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
@@ -135,46 +143,54 @@ class Match extends React.Component {
 
         {isOngoing && (
           <>
-            {!isFinalQuestionCompleted && 
-              <Button onClick={this.handleCancelMatch} color="primary" className={styles.stopButton}>
+            {!isFinalQuestionCompleted && (
+              <Button
+                onClick={this.handleCancelMatch}
+                color="primary"
+                className={styles.stopButton}
+              >
                 Stop game
               </Button>
-            }
+            )}
 
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            {!isCurrentQuestionOpen && (
-              <Results match={match}/>
-            )}
+            {!isCurrentQuestionOpen && <Results match={match} />}
           </>
         )}
 
         {isFinished && <AfterMatch match={match} />}
 
         <div className={styles.buttonsWrapper}>
-          {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && 
-            <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
-                Next question
+          {isNotYetStarted && hasPlayers && (
+            <Button
+              onClick={this.handleStartMatch}
+              disabled={!hasQuestions}
+              color="primary"
+              className={styles.button}
+            >
+              Start game
             </Button>
-            }
-            {!isOngoing && hasPlayers &&
-              <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
-                Start game
-              </Button>
-            }
-            {
-              isFinalQuestionCompleted &&
-              <IntentButton
-                color="primary"
-                intent="create"
-                params={{type: 'match'}}
-                onClick={()=>{}}
-                title="Create new match"
-                className={styles.button}
-              >Create new game</IntentButton>
-            }
+          )}
+          {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
+            <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
+              Next question
+            </Button>
+          )}
+          {isFinished && (
+            <IntentButton
+              color="primary"
+              intent="create"
+              params={{type: 'match'}}
+              onClick={() => {}}
+              title="Create new match"
+              className={styles.button}
+            >
+              Create new match
+            </IntentButton>
+          )}
         </div>
       </div>
     )
