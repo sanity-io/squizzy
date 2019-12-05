@@ -9,6 +9,11 @@
   grid-template-rows: 1fr min-content;
 }
 
+.missingQuiz {
+  margin: var(--large-padding) auto;
+  text-align: center;
+}
+
 .buttonsWrapper {
   display: flex;
   justify-content: center;

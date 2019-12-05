@@ -115,21 +115,33 @@ class Match extends React.Component {
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
-    const isFinalQuestionCompleted = this.isCurrentQuestionTheLast() && !isCurrentQuestionOpen
-
-    const hasPlayers = match.players
-    const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
 
     if (!quiz) {
       return (
-        <div>
-          The Match must be based on a Quiz. Go back and add one
-          <IntentLink intent="edit" params={{id: match._id}}>
-            Create
-          </IntentLink>
+        <div className={styles.missingQuiz}>
+         <p>Your match seems to be missing a quiz.</p>
+         <p>Please add one to continue!</p>
+         <div className={styles.buttonsWrapper}>
+          <IntentButton
+              color="primary"
+              intent="edit"
+              params={{id: match._id}}
+              onClick={()=>{}}
+              title="Create new match"
+              className={styles.button}
+            >Edit match</IntentButton>
+         </div>
         </div>
       )
     }
+
+    const isCurrentQuestionTheLast = 
+      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
+      quiz.questions.length - 1
+    const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
+
+    const hasPlayers = match.players
+    const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
 
     return (
       <div className={styles.root}>
