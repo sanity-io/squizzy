@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles/Match.css'
+import styles from '../styles/Match.css'
 
 function Scoreboard(props) {
   const {playersWithScores} = props

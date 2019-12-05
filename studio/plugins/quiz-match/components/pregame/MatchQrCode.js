@@ -1,8 +1,8 @@
 import React from 'react'
 import QRCode from 'qrcode.react'
-import styles from './styles/QrCode.css'
+import styles from '../styles/QrCode.css'
 
-import {assembleMatchUrl} from '../utils'
+import {assembleMatchUrl} from '../../utils'
 
 function MatchQrCode(props) {
   const url = assembleMatchUrl(props.match)

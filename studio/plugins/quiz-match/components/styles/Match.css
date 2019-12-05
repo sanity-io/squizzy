@@ -5,21 +5,26 @@
   width: 100%;
   font-size: 19px;
   box-sizing: border-box;
-}
-
-.resultView {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr min-content;
-  height: 100%;
 }
 
-.graphColumn {
-  display: grid;
-  grid-template-rows: min-content auto;
+.buttonsWrapper {
+  display: flex;
+  justify-content: center;
 
-  @nest & .squiddy {
-    padding: var(--medium-padding);
+  @nest & .button {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+    min-width: 10em;
+    margin: var(--large-padding);
+    color: var(--white);
+
+    @nest & a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 }
 
@@ -34,16 +39,5 @@
   font-weight: bold;
 }
 
-.nextQuestion {
-  grid-column: 1 / -1;
-  padding: var(--large-padding);
-  justify-content: center;
-  display: flex;
 
-  @nest & .nextButton {
-    text-transform: uppercase;
-    min-width: 10em;
-    font-weight: bold;
-  }
-}
 

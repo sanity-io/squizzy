@@ -4,7 +4,7 @@ import Spinner from 'part:@sanity/components/loading/spinner'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
 
-import Scoreboard from './Scoreboard'
+import Scoreboard from './results/Scoreboard'
 import {scoresByPlayer} from '../utils'
 import styles from './styles/Match.css'
 

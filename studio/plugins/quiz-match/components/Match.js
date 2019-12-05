@@ -2,12 +2,12 @@ import React from 'react'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
-
-import BeforeMatch from './BeforeMatch'
+import {get} from 'lodash'
+import BeforeMatch from './pregame/BeforeMatch'
 import AfterMatch from './AfterMatch'
-import Question from './Question'
-import QuestionScores from './QuestionScores'
-import AnswerGraph from './AnswerGraph'
+import Question from './quiz/Question'
+import QuestionScores from './results/QuestionScores'
+import Results from './results/Results'
 import globals from './styles/globals.css'
 
 import styles from './styles/Match.css'
@@ -18,6 +18,7 @@ function nextQuestion(match) {
   const index = questions.map(question => question._key).indexOf(currentQuestionKey)
   return questions[index + 1]
 }
+
 
 class Match extends React.Component {
   handleStartMatch = () => {
@@ -32,6 +33,19 @@ class Match extends React.Component {
         isCurrentQuestionOpen: true
       })
       .commit()
+  }
+
+  handleNextQuestion = () => {
+    console.log('next question button clicked')
+    const {match} = this.props
+
+    const next = nextQuestion(match)
+    if (next) {
+      client
+        .patch(match._id)
+        .set({currentQuestionKey: next._key, isCurrentQuestionOpen: true})
+        .commit()
+    }
   }
 
   handleFinishMatch = () => {
@@ -56,19 +70,6 @@ class Match extends React.Component {
       .set({isCurrentQuestionOpen: false})
       .unset(['startedAt', 'currentQuestionKey'])
       .commit()
-  }
-
-  handleNextQuestion = () => {
-    console.log('next question button clicked')
-    const {match} = this.props
-
-    const next = nextQuestion(match)
-    if (next) {
-      client
-        .patch(match._id)
-        .set({currentQuestionKey: next._key, isCurrentQuestionOpen: true})
-        .commit()
-    }
   }
 
   handleCloseQuestion = () => {
@@ -107,6 +108,9 @@ class Match extends React.Component {
       quiz.questions.length - 1
     const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
 
+    const hasPlayers = match.players.length !== 0
+    const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
+
     if (!quiz) {
       return (
         <div>
@@ -130,44 +134,44 @@ class Match extends React.Component {
 
         {isOngoing && (
           <>
+            {!isFinalQuestionCompleted && 
+              <Button onClick={this.handleCancelMatch} color="primary" className={styles.stopButton}>
+                Stop game
+              </Button>
+            }
+
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            <Button onClick={this.handleCancelMatch} color="primary" className={styles.stopButton}>
-              Stop game
-            </Button>
-
             {!isCurrentQuestionOpen && (
-              <div className={styles.resultView}>
-                <div className={styles.graphColumn}>
-                  <div>
-                    <div className={styles.squiddy}>
-                      <img src="/static/squizzy-mock.png" />
-                    </div>
-                    <h1 className={globals.heading}>What a squiddy round!</h1>
-                  </div>
-                  <AnswerGraph match={match} />
-                </div>
-
-
-                <div className={styles.leaderboardWrapper}>
-                  <QuestionScores match={match}/>
-                </div>
-                
-                 {!isFinalQuestionCompleted && (
-                    <div className={styles.nextQuestion}>
-                      <Button onClick={this.handleNextQuestion} color="primary" className={styles.nextButton}>
-                        Next question
-                      </Button>
-                    </div>
-                  )}
-              </div>
+              <Results match={match}/>
             )}
           </>
         )}
 
         {isFinished && <AfterMatch match={match} />}
+
+        <div className={styles.buttonsWrapper}>
+          {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && 
+            <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
+                Next question
+            </Button>
+            }
+            {!isOngoing && hasPlayers &&
+              <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
+                Start game
+              </Button>
+            }
+            {
+              isFinalQuestionCompleted &&
+              <a href="/quiz-match">Play again?</a>
+              // <Button color="primary" className={styles.button}>
+              //   {/* TODO: FIX THIS */}
+              //   <a href="/desk/match">Play again?</a>
+              // </Button>
+            }
+        </div>
       </div>
     )
   }

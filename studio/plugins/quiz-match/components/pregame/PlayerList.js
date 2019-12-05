@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles/PlayerList.css'
+import styles from '../styles/PlayerList.css'
 import KickButton from './KickButton'
 
 function PlayerList(props) {

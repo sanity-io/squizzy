@@ -9,9 +9,8 @@
 }
 
 .root {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  display: flex;
+  justify-content: center;
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
@@ -22,6 +21,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  min-width: 100px;
+  margin: 0 1rem;
 }
 
 .column {

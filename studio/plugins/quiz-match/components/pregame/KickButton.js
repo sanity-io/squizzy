@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles/KickButton.css'
+import styles from '../styles/KickButton.css'
 
 export default function KickButton(props) {
   const {onKickPlayer} = props

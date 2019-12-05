@@ -1,8 +1,8 @@
 import React from 'react'
 import Scoreboard from './Scoreboard'
-import {answerDistribution} from '../utils'
-import styles from './styles/AnswerGraph.css'
-import Icons from './Icons'
+import {answerDistribution} from '../../utils'
+import styles from '../styles/AnswerGraph.css'
+import Icons from '../Icons'
 import CheckIcon from 'part:@sanity/base/check-icon'
 
 class AnswerGraph extends React.Component {

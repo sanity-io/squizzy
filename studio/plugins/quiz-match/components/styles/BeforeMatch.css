@@ -13,3 +13,8 @@
   text-align: center;
   margin-top: var(--large-padding);
 }
+
+.startButton {
+  font-weight: bold;
+  text-transform: uppercase;
+}

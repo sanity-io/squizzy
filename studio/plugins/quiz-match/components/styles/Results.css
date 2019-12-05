@@ -1,0 +1,87 @@
+@import 'part:@sanity/base/theme/variables-style';
+
+:root {
+  --quiz-red: #FF4C54;
+  --quiz-yellow: #ffdd33;
+  --quiz-blue: #3385FF;
+  --quiz-green: #00A84D;
+  --quiz-purple: #B04CFF;
+}
+
+.root {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.heading {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.graph {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  gap: 1em;
+
+  @nest & .squiddy {
+    padding: var(--medium-padding);
+  }
+}
+
+.isCorrectAnswerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @nest & .label {
+    font-size: 1em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  @nest & .answers {
+    display: flex;
+    jusify-content: center;
+    font-size: 1.5em;
+  }
+
+  @nest & .answer {
+    display: flex;
+    align-items: center;
+    margin: 0 0.5em;
+  }
+}
+
+
+
+
+
+.symbol {
+  display: flex;
+  padding-right: 0.25em;
+  @nest & svg {
+    height: 1.5em;
+  }
+}
+
+/* choice 1 - Circle */
+.symbol[data-symbol="0"] svg {
+  fill: var(--quiz-red);
+}
+
+/* choice 2 - Star */
+.symbol[data-symbol="1"] svg {
+  fill: var(--quiz-blue);
+}
+
+/* choice 3 - Triangle */
+.symbol[data-symbol="2"] svg {
+  fill: var(--quiz-green);
+}
+
+/* choice 4 - Square */
+.symbol[data-symbol="3"] svg {
+  fill: var(--quiz-purple);
+}

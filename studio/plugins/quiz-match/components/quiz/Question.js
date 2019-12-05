@@ -1,10 +1,10 @@
 import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
-import styles from './styles/MatchQuestion.css'
-import Icons from './Icons'
+import styles from '../styles/MatchQuestion.css'
+import Icons from '../Icons'
 
-import {findCurrentQuestion, choiceColors, choiceSymbols} from '../utils'
+import {findCurrentQuestion, choiceColors, choiceSymbols} from '../../utils'
 
 import QuestionCountdown from './QuestionCountdown'
 
