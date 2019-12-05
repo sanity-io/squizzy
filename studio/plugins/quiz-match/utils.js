@@ -51,7 +51,6 @@ export const answerDistribution = match => {
 export const scoresByPlayer = (match, questionKey = 0) => {
   const {currentQuestionKey, answers, quiz, players} = match
   const {questions} = quiz
-
   const indexOfCurrentQuestion = questions
     .map(question => question._key)
     .indexOf(currentQuestionKey)
@@ -84,8 +83,14 @@ export const scoresByPlayer = (match, questionKey = 0) => {
         .sort(sortBy('submittedAt', 'asc')) // order by who answered first
         .forEach((answer, index) => {
           const correctPlayer = playersWithScores.find(player => player._id === answer.player._id)
-          correctPlayer.score = correctPlayer.score + calculateScore(index)
-        }) // mutate player score based on placing
+          if (correctPlayer) {
+            // mutate player score based on placing
+            correctPlayer.score = correctPlayer.score + calculateScore(index) //boom
+          } else {
+            // If a player joined, but left the game after submitting some answers
+            // should we add him/her to the playersWithScores list and count score?
+          }
+        })
   })
 
   return playersWithScores.sort(sortBy('score', 'desc')) // order by score high  -> low
