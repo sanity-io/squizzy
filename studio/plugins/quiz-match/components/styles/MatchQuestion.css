@@ -38,6 +38,9 @@
   grid-template-rows: 1fr 1fr;
   gap: 0.5rem;
   padding: 0.5rem;
+  min-height: 65%;
+  max-height: 65%;
+  align-self: end;
 }
 
 .questionChoices[data-grid="3"] .choiceCard:last-child {

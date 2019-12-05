@@ -4,7 +4,6 @@ import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
 import {get} from 'lodash'
 import BeforeMatch from './pregame/BeforeMatch'
-import AfterMatch from './AfterMatch'
 import Question from './quiz/Question'
 import QuestionScores from './results/QuestionScores'
 import Results from './results/Results'
@@ -118,18 +117,18 @@ class Match extends React.Component {
 
     if (!quiz) {
       return (
-        <div className={styles.missingQuiz}>
+        <div className={styles.simpleLayout}>
          <p>Your match seems to be missing a quiz.</p>
          <p>Please add one to continue!</p>
          <div className={styles.buttonsWrapper}>
           <IntentButton
-              color="primary"
-              intent="edit"
-              params={{id: match._id}}
-              onClick={()=>{}}
-              title="Create new match"
-              className={styles.button}
-            >Edit match</IntentButton>
+            color="primary"
+            intent="edit"
+            params={{id: match._id}}
+            onClick={()=>{}}
+            title="Edit new match"
+            className={styles.button}
+          >Edit match</IntentButton>
          </div>
         </div>
       )
@@ -173,7 +172,23 @@ class Match extends React.Component {
           </>
         )}
 
-        {isFinished && <AfterMatch match={match} />}
+        {isFinished && 
+          <div className={styles.simpleLayout}>
+            <h1>Match finished!</h1>
+            <IntentButton
+              color="primary"
+              intent="create"
+              params={{type: 'match'}}
+              onClick={()=>{}}
+              title="Create new match"
+              className={styles.button}
+            >Create new match</IntentButton>
+            <p>or</p>
+            <StateLink toIndex>
+              Play another match
+            </StateLink>
+          </div>
+        }
 
         <div className={styles.buttonsWrapper}>
           {isNotYetStarted && hasPlayers && (
@@ -191,18 +206,19 @@ class Match extends React.Component {
               Next question
             </Button>
           )}
-          {isFinished && (
-            <IntentButton
-              color="primary"
-              intent="create"
-              params={{type: 'match'}}
-              onClick={() => {}}
-              title="Create new match"
-              className={styles.button}
-            >
-              Create new match
-            </IntentButton>
-          )}
+            {!isOngoing && hasPlayers && !isFinished &&
+              <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
+                Start game
+              </Button>
+            }
+            {
+              isFinalQuestionCompleted &&
+              <Button
+                color="primary"
+                onClick={this.handleFinishMatch}
+                className={styles.button}
+              >Finish game</Button>
+            }
         </div>
       </div>
     )
