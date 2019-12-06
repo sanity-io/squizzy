@@ -1,5 +1,6 @@
-import axios from 'axios'
 import nanoid from 'nanoid'
+
+import {signUp} from '../squizzyServerApi'
 
 const state = {
   player: false, // object
@@ -26,37 +27,23 @@ const mutations = {
 const actions = {
   registerPlayer({commit, dispatch, rootState}, playerName) {
     commit('SET_IS_LOADING', true)
-    const url = `https://squizzy-server.sanity-io.now.sh/api/sign-up-player`
     // The registered player
     const player = {
       playerId: nanoid(),
       playerName,
       matchSlug: rootState.quiz.match.slug
     }
-    return (
-      axios
-        // Create the player with a POST
-        .post(url, player)
-        .then(response => {
-          if (response.status === 200) {
-            // Commit the player mutation
-            commit('REGISTER_PLAYER', player)
-            // Start the listener to get game updates
-            dispatch('client/startListener', {root: true})
-            // Set the loading state to false
-            commit('SET_IS_LOADING', false)
-            return Promise.resolve(true)
-          } else {
-            commit('SET_IS_LOADING', false)
-            return Promise.resolve(false)
-          }
-        })
-        .catch(error => {
-          commit('SET_IS_LOADING', false)
-          console.error(error)
-          return Promise.resolve(false)
-        })
-    )
+    return signUp(player).then(result => {
+      if (result === true) {
+        // Commit the player mutation
+        commit('REGISTER_PLAYER', player)
+        // Start the listener to get game updates
+        dispatch('client/startListener', {root: true})
+      }
+      // Set the loading state to false
+      commit('SET_IS_LOADING', false)
+      return result
+    })
   },
   kickPlayer({commit}) {
     commit('REGISTER_PLAYER', false)

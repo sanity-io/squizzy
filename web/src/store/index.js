@@ -8,6 +8,8 @@ import client from './modules/client'
 import player from './modules/player'
 import quiz from './modules/quiz'
 
+import {withdrawFromGame} from './squizzyServerApi'
+
 Vue.use(Vuex)
 
 let subscription
@@ -26,21 +28,15 @@ export default new Vuex.Store({
   actions: {
     leaveGame({commit, rootState}) {
       if (rootState.player.player && rootState.quiz.match.slug) {
-        const url = 'https://squizzy-server.sanity-io.now.sh/api/withdraw-player'
-        const postBody = {
+        const params = {
           playerId: rootState.player.player.id,
           matchSlug: rootState.quiz.match.slug
         }
-        return axios
-          .post(url, postBody)
-          .then(response => {
-            if (response.status === 200) {
-              commit('player/REGISTER_PLAYER', false, {root: true})
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        return withdrawFromGame(params).then(result => {
+          if (result === true) {
+            commit('player/REGISTER_PLAYER', false, {root: true})
+          }
+        })
       } else {
         commit('player/REGISTER_PLAYER', false, {root: true})
         commit('quiz/RESET_ALL', null, {root: true})

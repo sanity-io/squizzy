@@ -1,6 +1,6 @@
 import client from '../../sanityClient'
 import router from '../../router'
-import axios from 'axios'
+import {submitAnswerToQuestion} from '../squizzyServerApi'
 
 // Query to get all info about a match
 const query = `
@@ -109,23 +109,15 @@ const actions = {
       router.push({name: 'quiz'})
     }
   },
-  // eslint-disable-next-line no-empty-pattern
   submitAnswer({rootState}, key) {
-    const url = 'https://squizzy-server.sanity-io.now.sh/api/submit-answer'
-    const answer = {
-      playerId: rootState.player.player.id,
-      matchSlug: rootState.quiz.match.slug,
-      questionKey: rootState.quiz.currentQuestionKey,
+    const {player, quiz} = rootState
+    const params = {
+      playerId: player.player.id,
+      matchSlug: quiz.match.slug,
+      questionKey: quiz.currentQuestionKey,
       selectedChoiceKey: key
     }
-    return axios
-      .post(url, answer)
-      .then(result => {
-        console.log(result)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    return submitAnswerToQuestion(params)
   }
 }
 
