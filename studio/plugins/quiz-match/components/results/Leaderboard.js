@@ -1,6 +1,6 @@
 import React from 'react'
 import Scoreboard from './Scoreboard'
-import {answerDistribution, choiceColors, choiceSymbols, scoresByPlayer} from '../../utils'
+import {answerDistribution, scoresByPlayer} from '../../utils'
 import styles from '../styles/Leaderboard.css'
 import Icons from '../Icons'
 

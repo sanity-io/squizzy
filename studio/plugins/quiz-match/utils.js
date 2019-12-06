@@ -21,9 +21,6 @@ export const assembleMatchUrl = match => {
   return `https://squizzy-match-client.now.sh/match/${match.slug.current}`
 }
 
-export const choiceColors = ['green', 'red', 'blue', 'pink']
-export const choiceSymbols = ['⭐', '⚪', '🐹', '🟦']
-
 export function findCurrentQuestion(match) {
   return match.quiz.questions.find(question => question._key === match.currentQuestionKey)
 }
@@ -94,4 +91,12 @@ export const scoresByPlayer = (match, questionKey = 0) => {
   })
 
   return playersWithScores.sort(sortBy('score', 'desc')) // order by score high  -> low
+}
+
+export const numberOfAnswersToQuestion = (match, questionKey) => {
+  const {answers} = match
+  if (!answers || answers.length === 0 || !questionKey) {
+    return undefined
+  }
+  return match.answers.filter(answer => answer.questionKey === questionKey).length
 }

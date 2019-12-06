@@ -1,15 +1,17 @@
 import React from 'react'
+import {get} from 'lodash'
 import {StateLink, withRouterHOC, IntentLink, WithRouter} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
-import {get} from 'lodash'
+import IntentButton from 'part:@sanity/components/buttons/intent'
+
 import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
 import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
-import globals from './styles/globals.css'
-import IntentButton from 'part:@sanity/components/buttons/intent'
+import {numberOfAnswersToQuestion} from '../utils'
 
+import globals from './styles/globals.css'
 import styles from './styles/Match.css'
 
 function nextQuestion(match) {
@@ -20,6 +22,17 @@ function nextQuestion(match) {
 }
 
 class Match extends React.Component {
+  componentDidUpdate() {
+    const {match} = this.props
+    if (!match) {
+      return
+    }
+    const {players, currentQuestionKey} = match
+    if (players.length === numberOfAnswersToQuestion(match, currentQuestionKey)) {
+      this.handleCloseQuestion()
+    }
+  }
+
   handleStartMatch = () => {
     console.log('start match button clicked')
     const {match} = this.props
@@ -79,9 +92,9 @@ class Match extends React.Component {
       .set({isCurrentQuestionOpen: false})
       .commit()
 
-    // if (this.isCurrentQuestionTheLast()) {
-    //   this.handleFinishMatch()
-    // }
+    if (this.isCurrentQuestionTheLast()) {
+      this.handleFinishMatch()
+    }
   }
 
   handleKickPlayer = playerId => {
@@ -118,23 +131,25 @@ class Match extends React.Component {
     if (!quiz) {
       return (
         <div className={styles.simpleLayout}>
-         <p>Your match seems to be missing a quiz.</p>
-         <p>Please add one to continue!</p>
-         <div className={styles.buttonsWrapper}>
-          <IntentButton
-            color="primary"
-            intent="edit"
-            params={{id: match._id}}
-            onClick={()=>{}}
-            title="Edit new match"
-            className={styles.button}
-          >Edit match</IntentButton>
-         </div>
+          <p>Your match seems to be missing a quiz.</p>
+          <p>Please add one to continue!</p>
+          <div className={styles.buttonsWrapper}>
+            <IntentButton
+              color="primary"
+              intent="edit"
+              params={{id: match._id}}
+              onClick={() => {}}
+              title="Edit new match"
+              className={styles.button}
+            >
+              Edit match
+            </IntentButton>
+          </div>
         </div>
       )
     }
 
-    const isCurrentQuestionTheLast = 
+    const isCurrentQuestionTheLast =
       quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
       quiz.questions.length - 1
     const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
@@ -169,21 +184,23 @@ class Match extends React.Component {
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            {!isCurrentQuestionOpen && <Results match={match} />}
+            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} />}
           </>
         )}
 
-        {isFinished && 
+        {isFinished && (
           <div className={styles.simpleLayout}>
             <h1>Match finished!</h1>
             <IntentButton
               color="primary"
               intent="create"
               params={{type: 'match'}}
-              onClick={()=>{}}
+              onClick={() => {}}
               title="Create new match"
               className={styles.button}
-            >Create new match</IntentButton>
+            >
+              Create new match
+            </IntentButton>
             <p>or</p>
             {/* TODO: fix this. Link to list of matches */}
             {/* <WithRouter>
@@ -194,14 +211,19 @@ class Match extends React.Component {
               )}
             </WithRouter> */}
           </div>
-        }
+        )}
 
         <div className={styles.buttonsWrapper}>
-          {!isOngoing && hasPlayers && !isFinished &&
-            <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="primary" className={styles.button}>
+          {isNotYetStarted && hasPlayers && (
+            <Button
+              onClick={this.handleStartMatch}
+              disabled={!hasQuestions}
+              color="primary"
+              className={styles.button}
+            >
               Start game
             </Button>
-            }
+          )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
               Next question
@@ -212,13 +234,11 @@ class Match extends React.Component {
               Stop question
             </Button>
           )}
-          {isFinalQuestionCompleted &&
-            <Button
-              color="primary"
-              onClick={this.handleFinishMatch}
-              className={styles.button}
-            >Finish game</Button>
-          }
+          {isFinalQuestionCompleted && (
+            <Button color="primary" onClick={this.handleFinishMatch} className={styles.button}>
+              Finish game
+            </Button>
+          )}
         </div>
       </div>
     )

@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import styles from '../styles/Question.css'
 import Icons from '../Icons'
 
-import {findCurrentQuestion, choiceColors, choiceSymbols} from '../../utils'
+import {findCurrentQuestion} from '../../utils'
 
 import QuestionCountdown from './QuestionCountdown'
 
@@ -25,16 +25,12 @@ class Question extends React.Component {
     return currentQuestion.choices.map((choice, index) => {
       const Symbol = Icons[index]
       return (
-        <div
-          key={choice._key}
-          className={styles.choiceCard}
-          data-choice={index}
-        >
+        <div key={choice._key} className={styles.choiceCard} data-choice={index}>
           <div className={styles.inner}>
-          <div className={styles.symbol}>
-            <Symbol />
-          </div>
-         
+            <div className={styles.symbol}>
+              <Symbol />
+            </div>
+
             <div className={styles.choiceTitle}>{choice.title}</div>
           </div>
         </div>
@@ -52,20 +48,22 @@ class Question extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.countdown}>
-        <div>
+          <div>
             <img src="/static/squizzy-mock.png" />
           </div>
           <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
         </div>
-       <div className={styles.question}>
-         <h2 className={styles.matchProgress}>Question X of TOTAL Q</h2>
+        <div className={styles.question}>
+          <h2 className={styles.matchProgress}>Question X of TOTAL Q</h2>
           <div className={styles.questionImage}>
             <img className={styles.imageSrc} src={questionImageUrl} />
           </div>
           {/* TODO: make question stretch and align in the middle when no image */}
-          <h1 className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large}`}>{currentQuestion.title}</h1>
+          <h1 className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large}`}>
+            {currentQuestion.title}
+          </h1>
           <div className={styles.questionChoices}>{this.renderChoices()}</div>
-       </div>
+        </div>
       </div>
     )
   }
