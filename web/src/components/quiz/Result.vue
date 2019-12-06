@@ -3,7 +3,7 @@
     <div>
       <squizzy-squid />
       <h1 class="result-heading">{{ title }}</h1>
-      <h2 class="view-heading">{{ viewTitle }}</h2>
+      <h2 class="view-heading">{{ activeView.name }}</h2>
     </div>
     <section class="section">
       <transition name="swipe" mode="out-in">
@@ -13,24 +13,22 @@
       </transition>
     </section>
     <div class="view-tracker">
-      <div class="view-dot" :class="{'is-active': activeView.name === 'graph'}"></div>
-      <div class="view-dot" :class="{'is-active': activeView.name === 'leaderboard'}"></div>
+      <div
+        class="view-dot"
+        @click="swipeLeft"
+        :class="{'is-active': activeView.name === 'results'}"
+      ></div>
+      <div
+        class="view-dot"
+        @click="swipeRight"
+        :class="{'is-active': activeView.name === 'leaderboard'}"
+      ></div>
     </div>
   </div>
 </template>
 
 <script>
 import SquizzySquid from '@/components/general/SquizzySquid'
-const RESULT_VIEWS = {
-  graph: {
-    name: 'graph',
-    component: () => import('./result/Graph.vue')
-  },
-  leaderboard: {
-    name: 'leaderboard',
-    component: () => import('./result/Leaderboard.vue')
-  }
-}
 const FEEDBACK_WRONG = [
   'Inkcompetant!',
   'Eek! That sucks.',
@@ -40,6 +38,17 @@ const FEEDBACK_WRONG = [
   `An inkling tells me that's wrong`,
   'Wrong. I squid you not!'
 ]
+
+const RESULT_VIEWS = {
+  graph: {
+    name: 'results',
+    component: () => import('./result/Graph.vue')
+  },
+  leaderboard: {
+    name: 'leaderboard',
+    component: () => import('./result/Leaderboard.vue')
+  }
+}
 
 const FEEDBACK_CORRECT = [
   'You did it!',
@@ -59,7 +68,7 @@ export default {
   },
   data() {
     return {
-      activeView: RESULT_VIEWS.graph
+      activeView: null
     }
   },
   computed: {
@@ -70,23 +79,21 @@ export default {
       const randomCorrect = Math.floor(Math.random() * maxCorrect)
       const randomResult = Math.ceil(Math.random() * 2)
       return randomResult === 1 ? FEEDBACK_WRONG[randomWrong] : FEEDBACK_CORRECT[randomCorrect]
-    },
-    viewTitle() {
-      return this.activeView.name === 'graph' ? 'Results' : 'Leaderboard'
     }
+  },
+  mounted() {
+    this.activeView = RESULT_VIEWS.graph
   },
   methods: {
     swipeLeft() {
       if (this.activeView.name === 'leaderboard') {
-        console.log('show graph')
         this.activeView = RESULT_VIEWS.graph
       } else {
         return
       }
     },
     swipeRight() {
-      if (this.activeView.name === 'graph') {
-        console.log('show leaderboard')
+      if (this.activeView.name === 'results') {
         this.activeView = RESULT_VIEWS.leaderboard
       } else {
         return
@@ -98,9 +105,8 @@ export default {
 
 <style lang="sass" scoped>
 .result-page
-  border: 1px solid red
   display: grid
-  grid-template-rows: max-content minmax(20vh, auto) min-content
+  grid-template-rows: max-content auto min-content
 
 .result-heading
   font-size: 1.7rem
@@ -124,7 +130,7 @@ export default {
   display: flex
   justify-content: center
   width: 100%
-  margin: 0.5rem 0
+  margin: 1rem 0
 
   .view-dot
     height: 0.5rem

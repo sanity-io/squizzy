@@ -83,6 +83,7 @@ const actions = {
   finishGame({commit}, status) {
     commit('SET_IS_FINISHED', status)
     if (status) {
+      commit('player/REGISTER_PLAYER', false, {root: true})
       commit('SET_MATCH_DETAILS', false)
     }
   }

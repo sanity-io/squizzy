@@ -1,18 +1,20 @@
 <template>
-  <div class="choice-card" :data-choice="index">
-    <div class="inner">
-      <input
-        class="choice-radio"
-        type="radio"
-        name="choices"
-        :aria-labelledby="`choice-label-${title}`"
-        @change="$emit('change', $event)"
-        :disabled="disabled"
-      />
-      <div class="symbol">
-        <component :is="icon" />
+  <div class="choice-card choice" :data-choice="index">
+    <div class="card">
+      <div class="inner">
+        <input
+          class="choice-radio"
+          type="radio"
+          name="choices"
+          :aria-labelledby="`choice-label-${title}`"
+          @change="$emit('change', $event)"
+          :disabled="disabled"
+        />
+        <div class="symbol">
+          <component :is="icon" />
+        </div>
+        <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
       </div>
-      <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
     </div>
   </div>
 </template>
@@ -36,28 +38,29 @@ export default {
   computed: {
     icon() {
       const icons = ['Circle', 'Star', 'Triangle', 'Square']
-      return () => import(`./icons/${icons[this.index]}Icon.vue`)
+      return () => import(`../icons/${icons[this.index]}Icon.vue`)
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+@import '../../../styles/symbols.sass'
 .choice-card
   position: relative
+
+.card
   border-radius: $border-radius
   color: $color-white
   padding: 1rem
   opacity: 1
   transition: all 0.4s ease-in-out
 
-.inner
+.inner, .card
   display: flex
   align-items: center
+  justify-content: center
   height: 100%
-
-// .selected-answer .inner
-//   border: 1px dashed $color-white
 
 .disabled
   opacity: 0.3
@@ -107,20 +110,4 @@ export default {
 .symbol svg
   height: 1.5rem
   fill: $color-white
-
-// choice 1 - Circle
-.choice-card[data-choice="0"]
-  background: $color-red
-
-// choice 2 - Star
-.choice-card[data-choice="1"]
-  background: $color-blue
-
-// choice 3 - Triangle
-.choice-card[data-choice="2"]
-  background: $color-green
-
-// choice 4 - Square
-.choice-card[data-choice="3"]
-  background: $color-purple
 </style>

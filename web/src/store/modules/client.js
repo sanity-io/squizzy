@@ -81,7 +81,9 @@ const actions = {
     dispatch('quiz/getIsOngoing', isOngoing, {root: true})
 
     const isFinished = match.startedAt && match.finishedAt
-    dispatch('quiz/finishGame', isFinished, {root: true})
+    if (isFinished) {
+      dispatch('quiz/finishGame', true, {root: true})
+    }
 
     // Update player/players array
     dispatch('quiz/getPlayers', match.players, {root: true})
