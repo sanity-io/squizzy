@@ -20,9 +20,19 @@
 .question {
   height: 100%;
   display: grid;
-  grid-template-rows: min-content max-content min-content 1fr;
-  padding: var(--large-padding);
+  grid-template-rows: min-content min-content auto auto;
   box-sizing: border-box;
+}
+
+.questionTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.questionTitle.large {
+  font-size: 2.5em;
 }
 
 .matchProgress {
@@ -38,9 +48,6 @@
   grid-template-rows: 1fr 1fr;
   gap: 0.5rem;
   padding: 0.5rem;
-  min-height: 65%;
-  max-height: 65%;
-  align-self: end;
 }
 
 .questionChoices[data-grid="3"] .choiceCard:last-child {

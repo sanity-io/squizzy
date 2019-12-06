@@ -63,7 +63,7 @@ class Question extends React.Component {
             <img className={styles.imageSrc} src={questionImageUrl} />
           </div>
           {/* TODO: make question stretch and align in the middle when no image */}
-          <h1>{currentQuestion.title}</h1>
+          <h1 className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large}`}>{currentQuestion.title}</h1>
           <div className={styles.questionChoices}>{this.renderChoices()}</div>
        </div>
       </div>

@@ -13,7 +13,8 @@
     "@sanity/default-layout",
     "@sanity/default-login",
     "@sanity/desk-tool",
-    "quiz-match"
+    "quiz-match",
+    "asset-source-unsplash"
   ],
   "env": {
     "development": {
