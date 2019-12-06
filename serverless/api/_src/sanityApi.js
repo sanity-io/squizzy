@@ -46,7 +46,8 @@ export const ensurePlayerParticipation = async (player, match) => {
 export const submitAnswer = async (match, playerId, questionKey, selectedChoiceKey) => {
   // Has this player already answered the same quiestion?
   let indexOfExistingAnswer = -1
-  match.answers.forEach((answer, index) => {
+  const answers = match.answers || []
+  answers.forEach((answer, index) => {
     if (answer.questionKey === questionKey && answer.player._ref == playerId) {
       indexOfExistingAnswer = index
     }
