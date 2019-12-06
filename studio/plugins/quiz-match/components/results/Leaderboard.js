@@ -19,7 +19,9 @@ class Leaderboard extends React.Component {
                 <li className={styles.item} key={player._id}>
                   <span className={styles.rank}>{index + 1}</span>
                   <span className={styles.name}>{player.name}</span>
-                  <span className={styles.points}>{player.score > 0 ? player.score : 0} pts</span>
+                  <span className={styles.points}>
+                    {player.score > 0 ? Math.round(player.score) : 0}
+                  </span>
                 </li>
               )
             })}
