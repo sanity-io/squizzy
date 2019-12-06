@@ -1,0 +1,9 @@
+.squizzy {
+  max-height: 250px;
+  overflow: hidden;
+  display: flex;
+
+  @nest & .image {
+    object-fit: contain;
+  }
+}

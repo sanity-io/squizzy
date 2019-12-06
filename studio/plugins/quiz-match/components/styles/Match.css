@@ -3,10 +3,10 @@
 .root {
   height: 100%;
   width: 100%;
-  font-size: 19px;
+  font-size: 18px;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
 
   @nest & p {
     margin: 0;
@@ -16,6 +16,13 @@
 .simpleLayout {
   margin: var(--large-padding) auto;
   text-align: center;
+}
+
+.quizTitle {
+  text-align: center;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: uppercase;
 }
 
 .buttonsWrapper {

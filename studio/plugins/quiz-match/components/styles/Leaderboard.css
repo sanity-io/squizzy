@@ -1,0 +1,54 @@
+@import 'part:@sanity/base/theme/variables-style';
+
+.root {
+  padding: 0 var(--medium-padding);
+  display: grid;
+  grid-template-rows: min-content auto min-content
+}
+
+.heading {
+  margin: 0;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.wrapper {
+  position: relative;
+  outline: 1px solid red;
+  overflow-y: auto;
+}
+
+.list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 1000px;
+
+  @nest & .item {
+    display: flex;
+    align-items: center;
+    min-height: 1em;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: var(--small-padding) var(--medium-padding);
+
+    @nest & .rank {
+      font-weight: normal;
+      font-size: 0.85em;
+      padding-right: 0.8em;
+    }
+
+    @nest & .points {
+      margin-left: auto;
+    }
+  }
+
+  @nest & .item:nth-child(even) {
+    background: #F3F5FF;
+  }
+}

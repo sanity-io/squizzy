@@ -12,7 +12,7 @@ class AnswerGraph extends React.Component {
       <div className={styles.root}>
         {answerDistribution(match, null, 2).map((choice, index) => {
           // TODO: calculate height in % instead
-          const barHeight = 35 + choice.answerCount * 50
+          const barHeight = 5 + choice.answerCount * 50
           const Symbol = Icons[index]
           return (
             <div

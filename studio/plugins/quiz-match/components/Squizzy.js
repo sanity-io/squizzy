@@ -1,8 +1,8 @@
 import React from 'react'
-// import styles from './styles/Squizzy.css'
+import styles from './styles/Squizzy.css'
 const Squizzy = () => (
   <div className={styles.squizzy}>
-    <img src="/static/squizzy" alt="Squizzy the Squid" />
+    <img className={styles.image} src="/static/squizzy-mock.png" alt="Squizzy the Squid" />
   </div>
 )
 

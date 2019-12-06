@@ -5,7 +5,7 @@ import Button from 'part:@sanity/components/buttons/default'
 import {get} from 'lodash'
 import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
-import QuestionScores from './results/QuestionScores'
+import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
 import globals from './styles/globals.css'
 import IntentButton from 'part:@sanity/components/buttons/intent'
@@ -79,9 +79,9 @@ class Match extends React.Component {
       .set({isCurrentQuestionOpen: false})
       .commit()
 
-    if (this.isCurrentQuestionTheLast()) {
-      this.handleFinishMatch()
-    }
+    // if (this.isCurrentQuestionTheLast()) {
+    //   this.handleFinishMatch()
+    // }
   }
 
   handleKickPlayer = playerId => {
@@ -144,6 +144,7 @@ class Match extends React.Component {
 
     return (
       <div className={styles.root}>
+        <h1 className={styles.quizTitle}>{quiz.title}</h1>
         {isNotYetStarted && (
           <BeforeMatch
             match={match}

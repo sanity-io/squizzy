@@ -2,7 +2,7 @@ import React from 'react'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
-import QuestionScores from './QuestionScores'
+import Leaderboard from './Leaderboard'
 import AnswerGraph from './AnswerGraph'
 import styles from '../styles/Results.css'
 import Icons from '../Icons'
@@ -25,8 +25,8 @@ class Match extends React.Component {
       <div className={styles.root}>
         <div className={styles.graph}>
           <div>
-            {/* <Squizzy /> */}
-            <h1 className={styles.heading}>What a squiddy round!</h1>
+            <Squizzy />
+            <h2 className={styles.heading}>What a squiddy round!</h2>
           </div>
           <AnswerGraph match={match} />
           {/* TODO: add correct answer with correct symbol and color */}
@@ -43,10 +43,7 @@ class Match extends React.Component {
               </div>
           </div>
         </div>
-        
-        <div className={styles.leaderboardWrapper}>
-          <QuestionScores match={match}/>
-        </div>
+        <Leaderboard match={match}/>
       </div>
     )
   }

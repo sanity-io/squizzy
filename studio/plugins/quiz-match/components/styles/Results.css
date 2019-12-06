@@ -9,10 +9,9 @@
 }
 
 .root {
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1em;
+  gap: var(--medium-padding);
 }
 
 .heading {
@@ -23,7 +22,9 @@
 .graph {
   display: grid;
   grid-template-rows: min-content auto min-content;
-  gap: 1em;
+  gap: var(--medium-padding);
+  justify-items: center;
+  padding: 0 var(--medium-padding);
 
   @nest & .squiddy {
     padding: var(--medium-padding);
@@ -36,7 +37,7 @@
   align-items: center;
 
   @nest & .label {
-    font-size: 1em;
+    font-size: 1rem;
     text-transform: uppercase;
     text-align: center;
   }
@@ -44,13 +45,13 @@
   @nest & .answers {
     display: flex;
     jusify-content: center;
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
   @nest & .answer {
     display: flex;
     align-items: center;
-    margin: 0 0.5em;
+    margin: 0 var(--small-padding);
   }
 }
 
