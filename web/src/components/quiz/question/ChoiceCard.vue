@@ -38,7 +38,7 @@ export default {
   computed: {
     icon() {
       const icons = ['Circle', 'Star', 'Triangle', 'Square']
-      return () => import(`../icons/${icons[this.index]}Icon.vue`)
+      return () => import(`./symbols/${icons[this.index]}Icon.vue`)
     }
   }
 }
