@@ -30,7 +30,7 @@
 <script>
 import SquizzySquid from '@/components/general/SquizzySquid'
 const FEEDBACK_WRONG = [
-  'Inkcompetant!',
+  'Inkompetant!',
   'Eek! That sucks.',
   'Oops, what a squidappointment.',
   'Really, no inkling at all?',
@@ -57,7 +57,7 @@ const FEEDBACK_CORRECT = [
   'Well look at you go!',
   'You are inkredible!',
   `The smartest squid in the room!`,
-  'Inkrecible effort!',
+  'Inkredible effort!',
   `Are you squiddin' me!`,
   'How exsquidsit!',
   `That's tentacle points!`
