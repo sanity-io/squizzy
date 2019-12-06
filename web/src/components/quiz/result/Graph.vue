@@ -9,7 +9,7 @@
       />
     </div>
     <div class="correct-answers">
-      <div class="label">Correct answers</div>
+      <div class="label">Correct answer{{ correctAnswers.length > 1 ? 's' : '' }}</div>
       <div class="answers">
         <div
           class="answer choice"
@@ -87,7 +87,7 @@ export default {
   flex: 1
 
 .correct-answers
-  padding: 1rem
+  padding: 0.5rem 1rem 0
   text-align: center
 
   .label

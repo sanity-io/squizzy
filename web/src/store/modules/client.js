@@ -92,11 +92,7 @@ const actions = {
     dispatch('quiz/getIsCurrentQuestionOpen', match.isCurrentQuestionOpen, {root: true})
 
     // Get the current question key
-    if (match.isCurrentQuestionOpen) {
-      dispatch('quiz/getCurrentQuestionKey', match.currentQuestionKey, {root: true})
-    } else {
-      dispatch('quiz/getCurrentQuestionKey', null, {root: true})
-    }
+    dispatch('quiz/getCurrentQuestionKey', match.currentQuestionKey, {root: true})
 
     // Kick active player if active player is no longer in array
     const activePlayerId = rootState.player.player.id

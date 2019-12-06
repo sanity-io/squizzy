@@ -3,6 +3,7 @@
     <div>
       <squizzy-squid />
       <h1 class="result-heading">{{ title }}</h1>
+      <p>{{ currentQuestion }}</p>
       <h2 class="view-heading">{{ activeView.name }}</h2>
     </div>
     <section class="section">
@@ -72,6 +73,13 @@ export default {
     }
   },
   computed: {
+    currentQuestion() {
+      const questions = this.$store.state.quiz.questions
+      const key = this.$store.state.quiz.currentQuestionKey
+      const question = questions.find(question => question._key === key)
+
+      return `Q: ${question.title}`
+    },
     title() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length
@@ -111,6 +119,7 @@ export default {
 .result-heading
   font-size: 1.7rem
   padding: 0 0.5rem
+  margin-bottom: 0.5rem
 
 .view-heading
   text-transform: uppercase
