@@ -27,8 +27,11 @@ class Match extends React.Component {
     if (!match) {
       return
     }
-    const {players, currentQuestionKey} = match
-    if (players.length === numberOfAnswersToQuestion(match, currentQuestionKey)) {
+    const {players, currentQuestionKey, isCurrentQuestionOpen} = match
+    if (
+      isCurrentQuestionOpen &&
+      players.length === numberOfAnswersToQuestion(match, currentQuestionKey)
+    ) {
       this.handleCloseQuestion()
     }
   }

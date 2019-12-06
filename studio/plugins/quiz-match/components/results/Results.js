@@ -18,10 +18,7 @@ class Results extends React.Component {
     const choicesOnCurrentQuestion = currentQuestion.choices
 
     const correctChoices = choicesOnCurrentQuestion
-      .map((choice, index) => {
-        choice.index = index
-        return choice
-      })
+      .map((choice, index) => ({...choice, index}))
       .filter(choice => choice.isCorrect)
 
     return (
