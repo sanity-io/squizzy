@@ -7,7 +7,11 @@ import {assembleMatchUrl} from '../../utils'
 function MatchQrCode(props) {
   const url = assembleMatchUrl(props.match)
 
-  return <div className={styles.qrCode}><QRCode value={url} renderAs="svg" fgColor="#002152" bgColor="transparent"/></div>
+  return (
+    <div className={styles.qrCode}>
+      <QRCode value={url} renderAs="svg" fgColor="#002152" bgColor="transparent" />
+    </div>
+  )
 }
 
 export default MatchQrCode

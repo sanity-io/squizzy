@@ -18,7 +18,7 @@ const sortBy = (sortField, direction = 'asc') => {
 }
 
 export const assembleMatchUrl = match => {
-  return `https://exmple.com/${match.slug.current}`
+  return `https://squizzy-match-client.now.sh/match/${match.slug.current}`
 }
 
 export const choiceColors = ['green', 'red', 'blue', 'pink']
