@@ -47,7 +47,7 @@
     }
   }
 
-  @nest & .item:nth-child(even) {
+  @nest & .item:nth-child(odd) {
     background: #F3F5FF;
   }
 }
