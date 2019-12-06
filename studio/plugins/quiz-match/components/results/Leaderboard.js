@@ -7,9 +7,8 @@ import Icons from '../Icons'
 class Leaderboard extends React.Component {
   render() {
     const {match} = this.props
-    // const playersWithScores = scoresByPlayer(match)
+    const playersWithScores = scoresByPlayer(match)
     // const playersWithScoresCurrentQuestion = scoresByPlayer(match, match.currentQuestionKey)
-    const playersWithScores = match.players
     return (
       <div className={styles.root}>
         <h2 className={styles.heading}>Leaderboard</h2>
@@ -26,11 +25,6 @@ class Leaderboard extends React.Component {
             })}
           </ul>
         </div>
-        {/* TODO: Add to click/timeout between total and current scores */}
-        <p>Current/Total</p>
-        {/* <Scoreboard playersWithScores={playersWithScoresCurrentQuestion} />
-        <h2>Scores - Overall </h2>
-        <Scoreboard playersWithScores={playersWithScores} /> */}
       </div>
     )
   }
