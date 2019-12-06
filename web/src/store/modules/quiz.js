@@ -4,7 +4,8 @@ const state = {
   isQuestionOpen: false, // boolean
   currentQuestionKey: false, // string
   questions: false, // array
-  players: false // array
+  players: false, // array
+  isFinished: false // boolean
 }
 
 const getters = {
@@ -51,6 +52,9 @@ const mutations = {
     state.currentQuestionKey = null
     state.questions = null
     state.players = null
+  },
+  SET_IS_FINISHED(state, status) {
+    state.isFinished = status
   }
 }
 
@@ -75,6 +79,12 @@ const actions = {
   },
   getIsOngoing({commit}, status) {
     commit('SET_IS_ONGOING', status)
+  },
+  finishGame({commit}, status) {
+    commit('SET_IS_FINISHED', status)
+    if (status) {
+      commit('SET_MATCH_DETAILS', false)
+    }
   }
 }
 

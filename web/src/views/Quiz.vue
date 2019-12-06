@@ -18,12 +18,25 @@ const QUIZ_VIEWS = {
 }
 export default {
   computed: {
-    ...mapState('quiz', ['isOngoing', 'isQuestionOpen']),
+    ...mapState('quiz', ['match', 'isOngoing', 'isQuestionOpen', 'isFinished']),
+    ...mapState('player', ['player']),
     activeView() {
       if (this.isQuestionOpen && this.isOngoing) {
         return QUIZ_VIEWS.question
       } else {
         return QUIZ_VIEWS.result
+      }
+    }
+  },
+  watch: {
+    player() {
+      if (!this.player) {
+        this.$router.push({name: 'home'})
+      }
+    },
+    match() {
+      if (!this.match) {
+        this.$router.push({name: 'home'})
       }
     }
   }
