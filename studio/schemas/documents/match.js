@@ -67,16 +67,14 @@ export default {
     prepare({title, slug, players, startedAt, finishedAt}) {
       const isOngoing = startedAt && !finishedAt
       const isNotYetStarted = !startedAt && !finishedAt
-
+      const numberOfPlayers = players && players.length > 0 ? players.length : 0
       let subtitle
       if (isNotYetStarted) {
         subtitle = 'Not yet started'
       } else {
         subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
       }
-      subtitle = `${subtitle} - ${players.length} ${
-        players && players.length === 1 ? 'player' : 'players'
-      }`
+      subtitle = `${subtitle} - ${numberOfPlayers} player${numberOfPlayers === 1 ? '' : 's'}`
       return {
         title: `[${slug}] ${title}`,
         subtitle
