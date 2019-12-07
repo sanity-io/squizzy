@@ -66,6 +66,7 @@ $max-width: 25ch
   flex-direction: column
   justify-content: center
   align-items: center
+  text-align: center
 
 .input
   margin: 1rem 0

@@ -8,10 +8,12 @@ const query = `
     "title": quiz->title,
     "slug": slug.current,
     "questions": quiz->questions,
-    "players": players[]->,
+    players[]->,
     startedAt,
     finishedAt,
-    answers
+    quiz->,
+    answers[]{...,player->},
+    ...
   }
 `
 // Query to listen for new match updates
@@ -32,28 +34,31 @@ const mutations = {
 
 const actions = {
   // Get the match to play
-  getMatchDetails({dispatch}, slug) {
+  getMatchDetails({commit, dispatch}, slug) {
     dispatch('quiz/resetAll', null, {root: true})
     return client
       .fetch(query, {slug})
       .then(match => {
-        // Start the listener to get latest match updates
-        dispatch('startListener', match.slug)
-        // Set the match details
-        dispatch(
-          'quiz/getMatchDetails',
-          {
-            title: match.title,
-            slug: match.slug
-          },
-          {root: true}
-        )
-        // Set players
-        dispatch('quiz/getPlayers', match.players, {root: true})
-        // Set questions for this match
-        dispatch('quiz/getQuestions', match.questions, {root: true})
-        // Return resolved promise to resolve beforeEnter route on /match/:id
-        return Promise.resolve(true)
+        if (match.startedAt && match.finishedAt) {
+          const status = {
+            title: 'Oops! Game already finished',
+            message: 'Please scan another code.'
+          }
+          commit('SET_STATUS_MESSAGE', status, {root: true})
+          return Promise.resolve(false)
+        } else {
+          commit('SET_STATUS_MESSAGE', false, {root: true})
+          // Start the listener to get latest match updates
+          dispatch('startListener', match.slug)
+          // Get the match details
+          dispatch('quiz/getMatchDetails', match, {root: true})
+          // Get players
+          dispatch('quiz/getPlayers', match.players, {root: true})
+          // Get questions for this match
+          dispatch('quiz/getQuestions', match.questions, {root: true})
+          // Return resolved promise to resolve beforeEnter route on /match/:id
+          return Promise.resolve(true)
+        }
       })
       .catch(e => {
         console.error(e)
@@ -75,7 +80,7 @@ const actions = {
     console.log('Listener started stopped.')
     subscription.unsubscribe()
   },
-  updateQuiz({dispatch, rootState}, match) {
+  updateQuiz({commit, dispatch, rootState}, match) {
     // Update quiz/isOngoing
     const isOngoing = match.startedAt && !match.finishedAt
     dispatch('quiz/getIsOngoing', isOngoing, {root: true})
@@ -83,10 +88,19 @@ const actions = {
     const isFinished = match.startedAt && match.finishedAt
     if (isFinished) {
       dispatch('quiz/finishGame', true, {root: true})
+      const status = {
+        title: 'Game ended',
+        message: 'The Squizmaster ended the game.'
+      }
+      commit('SET_STATUS_MESSAGE', status, {root: true})
     }
 
     // Update player/players array
     dispatch('quiz/getPlayers', match.players, {root: true})
+
+    // Update questions
+    // dispatch('quiz/getQuestions', match.quiz.questions, {root: true})
+    // console.log('update questions')
 
     // Update quiz/isQuestionOpen
     dispatch('quiz/getIsCurrentQuestionOpen', match.isCurrentQuestionOpen, {root: true})

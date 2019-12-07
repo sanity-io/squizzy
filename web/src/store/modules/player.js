@@ -25,7 +25,7 @@ const mutations = {
 }
 
 const actions = {
-  registerPlayer({commit, dispatch, rootState}, playerName) {
+  registerPlayer({commit, rootState}, playerName) {
     commit('SET_IS_LOADING', true)
     // The registered player
     const player = {
@@ -37,8 +37,6 @@ const actions = {
       if (result === true) {
         // Commit the player mutation
         commit('REGISTER_PLAYER', player)
-        // Start the listener to get game updates
-        dispatch('client/startListener', {root: true})
       }
       // Set the loading state to false
       commit('SET_IS_LOADING', false)

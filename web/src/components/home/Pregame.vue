@@ -4,27 +4,26 @@
     <p class="page-message">
       {{ message }}
     </p>
-    <p class="page-message">{{ subMessage }}</p>
-    <!-- TODO: Add indicator for how many players have joined -->
   </div>
 </template>
 
 <script>
+// TODO: Add message if joining a match that already exists
 import {mapState} from 'vuex'
 export default {
   name: 'Gameroom',
   components: {},
   data() {
     return {
-      message: 'The game is about to start.',
-      subMessage: 'Waiting for host...'
+      message: 'Waiting for the Squizmaster to start the game... Get ready! ',
+      subMessage: ''
     }
   },
   computed: {
     ...mapState('player', ['player']),
     title() {
       const name = this.player && this.player.name
-      return `Welcome to Squizzy${name ? `, ${name}` : ''}!`
+      return `Welcome ${name ? `${name}` : ''}! `
     }
   }
 }

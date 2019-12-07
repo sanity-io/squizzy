@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       title: 'Welcome to Squizzy!',
-      message: 'Please scan a QR code to get started.'
+      message: 'Scan a QR code to get started.'
     }
   },
   beforeRouteEnter(to, from, next) {

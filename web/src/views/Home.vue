@@ -1,10 +1,26 @@
 <template>
   <div class="page home">
     <squizzy-squid />
+    <div v-if="match" class="label match-title">
+      {{ activeView.name === 'welcome' ? 'JOINING' : 'JOINED' }}: {{ match.title }}
+    </div>
+    <div class="label match-title" v-if="!match">Powered by Sanity</div>
     <section v-cloak>
       <transition name="home" mode="out-in">
-        <component :is="activeView" />
+        <component :is="activeView.component" />
       </transition>
+      <div v-if="status" class="status">
+        <h2 class="title">{{ status.title }}</h2>
+        <p>{{ status.message }}</p>
+      </div>
+      <div class="match-details" v-if="!status && match && players && players.length > 0">
+        <div class="player-count">
+          {{ players.length }}
+        </div>
+        <div class="label">
+          {{ players && players.length > 1 ? 'players have' : 'player has' }} joined
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -13,9 +29,18 @@
 import SquizzySquid from '@/components/general/SquizzySquid'
 import {mapState} from 'vuex'
 const HOME_VIEWS = {
-  welcome: () => import(`../components/home/Welcome.vue`),
-  register: () => import(`../components/home/Register.vue`),
-  pregame: () => import(`../components/home/Pregame.vue`)
+  welcome: {
+    name: 'welcome',
+    component: () => import(`../components/home/Welcome.vue`)
+  },
+  register: {
+    name: 'register',
+    component: () => import(`../components/home/Register.vue`)
+  },
+  pregame: {
+    name: 'pregame',
+    component: () => import(`../components/home/Pregame.vue`)
+  }
 }
 export default {
   name: 'Home',
@@ -23,8 +48,9 @@ export default {
     SquizzySquid
   },
   computed: {
-    ...mapState('quiz', ['match']),
+    ...mapState('quiz', ['match', 'players']),
     ...mapState('player', ['player']),
+    ...mapState(['status']),
     activeView() {
       // If no match is found
       if (!this.match) {
@@ -43,8 +69,29 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.home
+  display: grid
+  grid-template-rows: min-content min-content auto
 
-.page
-  display: flex
-  flex-direction: column
+.status
+  padding: 1rem
+  color: $color-white
+  background: $color-purple
+  border-radius: $border-radius
+  text-align: center
+  max-width: 500px
+  margin: 1rem auto
+
+  .title
+    font-size: 1.2em
+
+.match-title
+  margin-bottom: 0.5rem
+
+.match-details
+  text-align: center
+  padding: 2rem 1rem
+
+  .player-count
+    font-size: 4rem
 </style>

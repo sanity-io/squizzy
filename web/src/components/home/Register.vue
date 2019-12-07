@@ -8,9 +8,6 @@
       :is-loading="isLoading"
       @click="registerPlayer($event)"
     />
-    <!-- TODO: Add title of the quiz you're about to join -->
-    <!-- TODO: Add error message if something goes wrong -->
-    <p v-if="errorMessage">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -24,7 +21,7 @@ export default {
   },
   data() {
     return {
-      title: `Let's get squizzy with it!`,
+      title: `It's squizzy time!`,
       inputLabel: 'What do we call you?',
       buttonTitle: 'Join game',
       inputPlaceholder: 'Nickname',

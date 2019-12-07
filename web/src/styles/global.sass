@@ -8,6 +8,8 @@ body, html
   width: 100%
 
 body
+  display: grid
+  grid-template-rows: auto
   font-family: $font-family
   font-size: $font-size-base
   color: $color-black
@@ -15,8 +17,8 @@ body
     font-size: $font-size-small
 
 #app
-  height: 100vh
-  width: 100vw
+  height: 100%
+  width: 100%
   background: $color-white
   box-shadow: 0 0 10px rgba(0,0,0,0.1)
   border-radius: $border-radius
@@ -24,8 +26,8 @@ body
   display: flex;
   flex-direction: column;
   @media screen and (min-width: 768px)
-    max-height: 812px
-    max-width: 414px
+    // max-height: 812px
+    // max-width: 414px
     margin: auto
 
 [v-cloak] *
@@ -73,5 +75,12 @@ button
   padding: 0 0.5rem
 
 .page-message
-  max-width: 30ch
+  padding: 0 1rem
   margin: 0 auto
+
+.label
+  text-transform: uppercase
+  letter-spacing: 1px
+  font-size: 0.7em
+  text-align: center
+  font-weight: normal

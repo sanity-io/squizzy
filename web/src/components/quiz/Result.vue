@@ -1,5 +1,5 @@
 <template>
-  <div class="result-page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
+  <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
     <div>
       <squizzy-squid />
       <h1 class="result-heading">{{ title }}</h1>
@@ -34,10 +34,10 @@ const FEEDBACK_WRONG = [
   'Inkompetant!',
   'Eek! That sucks.',
   'Oops, what a squidappointment.',
-  'Really, no inkling at all?',
+  'Really, had you no inkling at all?',
   `Are you squddin' me!`,
-  `An inkling tells me that's wrong`,
-  'Wrong. I squid you not!'
+  `Better luck next time...`,
+  'Wrong, I squid you not!'
 ]
 
 const RESULT_VIEWS = {
@@ -52,7 +52,7 @@ const RESULT_VIEWS = {
 }
 
 const FEEDBACK_CORRECT = [
-  'You did it!',
+  'Wow, you did it!',
   'Congratulations!',
   'You get a squid pro quo!',
   'Well look at you go!',
@@ -61,7 +61,8 @@ const FEEDBACK_CORRECT = [
   'Inkredible effort!',
   `Are you squiddin' me!`,
   'How exsquidsit!',
-  `That's tentacle points!`
+  `That's tentacle points!`,
+  `Much great, many correct`
 ]
 export default {
   components: {
@@ -112,9 +113,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.result-page
+.result
   display: grid
-  grid-template-rows: max-content auto min-content
+  grid-template-rows: min-content auto min-content
 
 .result-heading
   font-size: 1.7rem

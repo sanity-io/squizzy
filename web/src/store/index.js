@@ -25,6 +25,14 @@ const vuexLocalStorage = new VuexPersist({
 
 export default new Vuex.Store({
   // strict: true,
+  state: {
+    status: false
+  },
+  mutations: {
+    SET_STATUS_MESSAGE(state, status) {
+      state.status = status
+    }
+  },
   actions: {
     leaveGame({commit, rootState}) {
       if (rootState.player.player && rootState.quiz.match.slug) {
@@ -32,6 +40,7 @@ export default new Vuex.Store({
           playerId: rootState.player.player.id,
           matchSlug: rootState.quiz.match.slug
         }
+        commit('SET_STATUS_MESSAGE', false)
         return withdrawFromGame(params).then(result => {
           if (result === true) {
             commit('player/REGISTER_PLAYER', false, {root: true})
@@ -41,6 +50,11 @@ export default new Vuex.Store({
         commit('player/REGISTER_PLAYER', false, {root: true})
         commit('quiz/RESET_ALL', null, {root: true})
         if (router.currentRoute.name !== 'home') {
+          const status = {
+            title: 'You left the game',
+            message: 'Join another one to continue.'
+          }
+          commit('SET_STATUS_MESSAGE', status)
           return router.push({name: 'home'})
         }
       }

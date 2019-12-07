@@ -63,7 +63,7 @@ export default {
   height: 100%
 
 .disabled
-  opacity: 0.3
+  opacity: 0.2
 
 .choice-radio
   position: absolute
@@ -88,17 +88,17 @@ export default {
 
 .selected-answer
   animation-name: selected
-  animation-duration: 2s
+  animation-duration: 1.5s
   animation-iteration-count: infinite
   animation-timing-function: ease-in-out
 
 @keyframes selected
   from
-    transform: scale(1)
+    transform: scale(1.02)
   50%
-    transform: scale(0.95)
+    transform: scale(0.9)
   to
-    transform: scale(1)
+    transform: scale(1.02)
 
 // Symbol representing choice
 .symbol
