@@ -2,11 +2,11 @@ import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 import {findCurrentQuestion} from '../../utils'
-import styles from '../styles/Match.css'
+import styles from '../styles/Countdown.css'
 
 const defaultTimeLimit = 20
 
-class QuestionCountdown extends React.Component {
+class Countdown extends React.Component {
   state = {
     seconds: 0
   }
@@ -36,8 +36,12 @@ class QuestionCountdown extends React.Component {
 
   render() {
     const {seconds} = this.state
-    return <h2 className={styles.countdown}>{seconds}</h2>
+    return (
+      <div className={styles.root}>
+        <h2 className={`${styles.countdown} ${seconds <= 10 ? styles.red : ''}`}>{seconds}</h2>
+      </div>
+    )
   }
 }
 
-export default QuestionCountdown
+export default Countdown

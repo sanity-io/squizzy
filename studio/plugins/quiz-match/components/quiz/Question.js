@@ -3,10 +3,8 @@ import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 import styles from '../styles/Question.css'
 import Icons from '../Icons'
-
-import {findCurrentQuestion} from '../../utils'
-
-import QuestionCountdown from './QuestionCountdown'
+import Countdown from './Countdown'
+import {findCurrentQuestion, choiceColors, choiceSymbols} from '../../utils'
 
 const builder = imageUrlBuilder(client)
 function urlFor(source) {
@@ -41,29 +39,22 @@ class Question extends React.Component {
   render() {
     const {match} = this.props
     const currentQuestion = findCurrentQuestion(match)
+    const title = currentQuestion.title
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
 
     return (
       <div className={styles.root}>
-        <div className={styles.countdown}>
-          <div>
-            <img src="/static/squizzy-mock.png" />
-          </div>
-          <QuestionCountdown match={match} onCountdownDone={this.handleCloseQuestion} />
-        </div>
+        <Countdown match={match} onCountdownDone={this.handleCloseQuestion} />
         <div className={styles.question}>
-          <h2 className={styles.matchProgress}>Question X of TOTAL Q</h2>
-          <div className={styles.questionImage}>
+          {questionImageUrl && <div className={styles.questionImage}>
             <img className={styles.imageSrc} src={questionImageUrl} />
-          </div>
-          {/* TODO: make question stretch and align in the middle when no image */}
-          <h1 className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large}`}>
-            {currentQuestion.title}
-          </h1>
-          <div className={styles.questionChoices}>{this.renderChoices()}</div>
+          </div>}
+          <h1 className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large} ${title.split('').length > 15 ? styles.short : ''}`}>{title}</h1>
         </div>
+        <Countdown match={match} onCountdownDone={this.handleCloseQuestion} />
+        <div className={styles.choices} data-grid={currentQuestion.choices.length}>{this.renderChoices()}</div>
       </div>
     )
   }

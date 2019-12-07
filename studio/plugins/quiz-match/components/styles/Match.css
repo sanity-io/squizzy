@@ -28,7 +28,7 @@
 .buttonsWrapper {
   display: flex;
   justify-content: center;
-  margin: var(--large-padding);
+  margin: var(--medium-padding);
 }
 
 .button {
@@ -38,22 +38,34 @@
   min-width: 10em;
   margin: var(--small-padding);
   color: var(--white);
-
+  font-weight: bold;
+  border: 0;
   @nest & a {
     color: inherit;
     text-decoration: none;
   }
 }
 
-.stopButton {
+.stopButton, .skipButton {
   position: absolute;
-  top: var(--small-padding);
-  left: var(--small-padding);
-  text-transform: uppercase;
+  background: color(var(--text-color) a(80%));
+  font-size: 0.7em;
+  min-width: 5em;
+}
+
+.stopButton {
+  top: var(--extra-small-padding);
+  left: var(--extra-small-padding);
+  
+}
+
+.skipButton {
+  top: var(--extra-small-padding);
+  right: var(--extra-small-padding);
+}
+
+.gray {
   background: color(#647897 l(+20%));
-  color: var(--white);
-  border: 0;
-  font-weight: bold;
 }
 
 

@@ -2,15 +2,20 @@
 :root {
 	/* Brand colors */
 	--brand-primary: #FF4C54;
-  --brand-primary--inverted: #F9FAFF;
+	--brand-primary--inverted:  var(--white);
+	--brand-secondary: #00A84D;
+	--brand-secondary--inverted:  var(--white);
 	/* Typography */
 	--font-family-sans-serif: 'Asap';
 	--font-size-base: 17px;
 	--text-color: #002152;
 	/* Main Navigation */
 	--main-navigation-color: var(--brand-primary);
-	--main-navigation-color--inverted: var(--brand-primary--inverted);
+	--main-navigation-color--inverted:  var(--white);
 	/* General */
-	--body-bg: #F9FAFF;
-	--component-bg: #F9FAFF;
+	--body-bg: var(--white);
+	--component-bg:  var(--white);
+	--white: #F9FAFF;
+	--black: #002152;
+	--state-success-color: #00A84D;
 }

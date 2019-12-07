@@ -10,18 +10,31 @@
 
 .root {
   height: 100%;
-  width: 100%;
-  overflow: hidden;
-  text-align: center;
   display: grid;
-  grid-template-columns: 1fr 2.5fr;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: minmax(100px, 350px) 1fr;
+  box-sizing: border-box;
 }
 
+
 .question {
-  height: 100%;
+  grid-column: 2;
+  grid-row: 1;
   display: grid;
-  grid-template-rows: min-content min-content auto auto;
-  box-sizing: border-box;
+  grid-template-rows: 1fr min-content;
+}
+
+.questionImage {
+  display: flex;
+  justify-content: center;
+  max-height: 350px;
+  overflow: hidden;
+
+  @nest & .imageSrc {
+    object-fit: contain;
+    padding: 0 1rem;
+    width: 100%;
+  }
 }
 
 .questionTitle {
@@ -29,20 +42,26 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  font-size: 2em;
+  padding: var(--medium-padding);
+  text-align: center;
 }
 
-.questionTitle.large {
+.short {
+  font-size: 3em;
+}
+
+.large {
   font-size: 2.5em;
 }
 
-.matchProgress {
-  text-transform: uppercase;
-  font-weight: normal;
-  font-size: 1rem;
-  letter-spacing: 1px;
+.large.short {
+  font-size: 3em;
 }
 
-.questionChoices {
+.choices {
+  grid-column: 1 / -1;
+  grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -50,7 +69,11 @@
   padding: 0.5rem;
 }
 
-.questionChoices[data-grid="3"] .choiceCard:last-child {
+.choices[data-grid="2"] .choiceCard {
+  grid-row: 1 / -1;
+}
+
+.choices[data-grid="3"] .choiceCard:last-child {
   grid-column: 1 / -1;
 }
 
@@ -106,17 +129,4 @@
 /* choice 4 - Square */
 .choiceCard[data-choice="3"] {
   background: var(--quiz-purple);
-}
-
-.questionImage {
-  display: flex;
-  justify-content: center;
-  max-height: 30vh;
-  overflow: hidden;
-}
-
-.imageSrc {
-  object-fit: contain;
-  padding: 0 1rem;
-  width: 100%;
 }

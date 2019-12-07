@@ -63,6 +63,12 @@ class Match extends React.Component {
     }
   }
 
+  handleSkipQuestion = () => {
+    console.log('skip question button clicked')
+    this.handleCloseQuestion()
+    this.handleNextQuestion()
+  }
+
   handleFinishMatch = () => {
     console.log('finish match button clicked')
     const {match} = this.props
@@ -87,6 +93,16 @@ class Match extends React.Component {
       .commit()
   }
 
+  handleRestartMatch = () => {
+    console.log('restart match button clicked')
+    const {match} = this.props
+    client
+      .patch(match._id)
+      .set({isCurrentQuestionOpen: false})
+      .unset(['startedAt', 'finishedAt'])
+      .commit()
+  }
+
   handleCloseQuestion = () => {
     console.log('closing current question')
     const {match} = this.props
@@ -94,10 +110,6 @@ class Match extends React.Component {
       .patch(match._id)
       .set({isCurrentQuestionOpen: false})
       .commit()
-
-    if (this.isCurrentQuestionTheLast()) {
-      this.handleFinishMatch()
-    }
   }
 
   handleKickPlayer = playerId => {
@@ -173,13 +185,18 @@ class Match extends React.Component {
 
         {isOngoing && (
           <>
-            {!isFinalQuestionCompleted && (
+            {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
               <Button
-                onClick={this.handleCancelMatch}
-                color="primary"
-                className={styles.stopButton}
+                onClick={this.handleCloseQuestion}
+                color="default"
+                className={`${styles.button} ${styles.stopButton}`}
               >
-                Stop game
+                Stop
+              </Button>
+            )}
+            {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
+              <Button onClick={this.handleSkipQuestion} color="default" className={`${styles.button} ${styles.skipButton}`}>
+                Skip
               </Button>
             )}
 
@@ -217,31 +234,39 @@ class Match extends React.Component {
         )}
 
         <div className={styles.buttonsWrapper}>
-          {isNotYetStarted && hasPlayers && (
-            <Button
-              onClick={this.handleStartMatch}
-              disabled={!hasQuestions}
-              color="primary"
-              className={styles.button}
-            >
+          {!isOngoing && hasPlayers && !isFinished && (
+            <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="success" className={styles.button}>
               Start game
             </Button>
           )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
-            <Button onClick={this.handleNextQuestion} color="primary" className={styles.button}>
-              Next question
-            </Button>
+            <>
+              <Button
+                onClick={this.handleCancelMatch}
+                color="primary"
+                className={`${styles.button}`}
+              >
+                Stop game
+              </Button>
+              <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>
+                Next question
+              </Button>
+            </>
           )}
-          {isOngoing && !isFinalQuestionCompleted && isCurrentQuestionOpen && (
-            <Button onClick={this.handleCloseQuestion} color="primary" className={styles.button}>
-              Stop question
-            </Button>
-          )}
-          {isFinalQuestionCompleted && (
-            <Button color="primary" onClick={this.handleFinishMatch} className={styles.button}>
-              Finish game
-            </Button>
-          )}
+          {isOngoing && isFinalQuestionCompleted &&
+            <>
+             <Button
+              color="success"
+              onClick={this.handleRestartMatch}
+              className={styles.button}
+            >Restart</Button>
+              <Button
+                color="primary"
+                onClick={this.handleFinishMatch}
+                className={styles.button}
+              >Finish game</Button>
+            </>
+          }
         </div>
       </div>
     )
