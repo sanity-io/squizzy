@@ -33,7 +33,7 @@ export default {
 .question-image
   display: flex
   justify-content: center
-  max-height: 20vh
+  max-height: 350px
   overflow: hidden
 
 .image-src

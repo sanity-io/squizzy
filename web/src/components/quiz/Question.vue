@@ -1,10 +1,10 @@
 <template>
   <div class="question-card">
-    <div class="quiz-status">Question 1 of 6</div>
+    <div class="label">Question 1 of 6</div>
     <div class="question-header">
       <question-image v-if="currentQuestion.image" :asset="currentQuestion.image.asset" />
       <h1
-        class="heading"
+        class="question-title"
         :class="{
           'heading-long': currentQuestion.title.split('').length > 80,
           'heading-img': currentQuestion.image
@@ -37,30 +37,29 @@ export default {
   flex-grow: 1
   height: 100%
   display: grid
-  grid-template-areas: status       question  options
-  grid-template-rows:  min-content  1fr       1.2fr
+  grid-template-areas: status       question               choices
+  grid-template-rows: min-content   minmax(100px, 450px)   1fr
   height: 100%
   width: 100%
   overflow: hidden
+  gap: 1rem
+  @media screen and (max-height: 1024px)
+    grid-template-rows: min-content   minmax(100px, 300px)   1fr
+  @media screen and (max-height: 737px)
+    grid-template-rows: min-content   minmax(100px, 250px)   1fr
+  @media screen and (max-height: 569px)
+    grid-template-rows: min-content   minmax(100px, 200px)   1fr
 
-.quiz-status
-  text-transform: uppercase
-  letter-spacing: 1px
-  font-size: 0.9rem
-  text-align: center
-  padding: 0.75rem 0.5rem
 
 .question-header
-  display: flex
-  flex-direction: column
-  flex-grow: 0
-  min-width: 0
+  display: grid
+  grid-template-rows: 1fr min-content
 
-.heading
+.question-title
   font-size: 2rem
   font-weight: normal
   margin: auto
-  padding: 0 0.5rem
+  padding-top: 1rem
   @media screen and (max-width: 320px)
     font-size: 1.5rem
 

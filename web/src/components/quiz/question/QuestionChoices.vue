@@ -49,6 +49,9 @@ export default {
   gap: 0.5rem
   padding: 0.5rem
 
+.question-choices[data-grid="2"] .choice-card
+  grid-row: 1 / -1
+
 .question-choices[data-grid="3"] .choice-card:last-child
   grid-column: 1 / -1
 </style>
