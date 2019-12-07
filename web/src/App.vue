@@ -30,6 +30,7 @@ export default {
   },
   destroyed() {
     this.$store.dispatch('client/stopListener')
+    this.$store.dispatch('leaveGame')
   }
 }
 </script>
