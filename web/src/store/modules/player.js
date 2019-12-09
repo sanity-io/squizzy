@@ -25,13 +25,13 @@ const mutations = {
 }
 
 const actions = {
-  registerPlayer({commit, rootState}, playerName) {
+  registerPlayer({commit, rootGetters}, playerName) {
     commit('SET_IS_LOADING', true)
     // The registered player
     const player = {
       playerId: nanoid(),
       playerName,
-      matchSlug: rootState.quiz.match.slug
+      matchSlug: rootGetters['quiz/slug']
     }
     return signUp(player).then(result => {
       if (result === true) {

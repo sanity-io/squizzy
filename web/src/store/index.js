@@ -34,11 +34,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    leaveGame({commit, rootState}) {
-      if (rootState.player.player && rootState.quiz.match.slug) {
+    leaveGame({commit, rootState, rootGetters}) {
+      const slug = rootGetters['quiz/slug']
+      if (rootState.player.player && slug) {
         const params = {
           playerId: rootState.player.player.id,
-          matchSlug: rootState.quiz.match.slug
+          matchSlug: slug
         }
         commit('SET_STATUS_MESSAGE', false)
         return withdrawFromGame(params).then(result => {

@@ -75,10 +75,7 @@ export default {
   },
   computed: {
     currentQuestion() {
-      const questions = this.$store.state.quiz.questions
-      const key = this.$store.state.quiz.currentQuestionKey
-      const question = questions.find(question => question._key === key)
-
+      const question = this.$store.getters['quiz/currentQuestion']
       return `Q: ${question.title}`
     },
     title() {

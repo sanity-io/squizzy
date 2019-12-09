@@ -2,7 +2,7 @@
   <div class="page home">
     <squizzy-squid />
     <div v-if="match" class="label match-title">
-      {{ activeView.name === 'welcome' ? 'JOINING' : 'JOINED' }}: {{ match.title }}
+      {{ activeView.name === 'welcome' ? 'JOINING' : 'JOINED' }}: {{ title }}
     </div>
     <div class="label match-title" v-if="!match">Powered by Sanity</div>
     <section v-cloak>
@@ -13,13 +13,11 @@
         <h2 class="title">{{ status.title }}</h2>
         <p>{{ status.message }}</p>
       </div>
-      <div class="match-details" v-if="!status && match && players && players.length > 0">
+      <div class="match-details" v-if="!status && playerCount">
         <div class="player-count">
-          {{ players.length }}
+          {{ playerCount }}
         </div>
-        <div class="label">
-          {{ players && players.length > 1 ? 'players have' : 'player has' }} joined
-        </div>
+        <div class="label">{{ playerCount > 1 ? 'players have' : 'player has' }} joined</div>
       </div>
     </section>
   </div>
@@ -27,7 +25,7 @@
 
 <script>
 import SquizzySquid from '@/components/general/SquizzySquid'
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 const HOME_VIEWS = {
   welcome: {
     name: 'welcome',
@@ -48,7 +46,8 @@ export default {
     SquizzySquid
   },
   computed: {
-    ...mapState('quiz', ['match', 'players']),
+    ...mapState('quiz', ['match']),
+    ...mapGetters('quiz', ['title', 'playerCount']),
     ...mapState('player', ['player']),
     ...mapState(['status']),
     activeView() {

@@ -11,17 +11,18 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 const QUIZ_VIEWS = {
   question: () => import(`../components/quiz/Question.vue`),
   result: () => import(`../components/quiz/Result.vue`)
 }
 export default {
   computed: {
-    ...mapState('quiz', ['match', 'isOngoing', 'isQuestionOpen', 'isFinished']),
+    ...mapState('quiz', ['match', 'isCurrentQuestionOpen']),
+    ...mapGetters('quiz', ['isOngoing']),
     ...mapState('player', ['player']),
     activeView() {
-      if (this.isQuestionOpen && this.isOngoing) {
+      if (this.isCurrentQuestionOpen && this.isOngoing) {
         return QUIZ_VIEWS.question
       } else {
         return QUIZ_VIEWS.result
