@@ -195,7 +195,11 @@ class Match extends React.Component {
               </Button>
             )}
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
-              <Button onClick={this.handleSkipQuestion} color="default" className={`${styles.button} ${styles.skipButton}`}>
+              <Button
+                onClick={this.handleSkipQuestion}
+                color="default"
+                className={`${styles.button} ${styles.skipButton}`}
+              >
                 Skip
               </Button>
             )}
@@ -234,11 +238,17 @@ class Match extends React.Component {
         )}
 
         <div className={styles.buttonsWrapper}>
-          {!isOngoing && hasPlayers && !isFinished && (
-            <Button onClick={this.handleStartMatch} disabled={!hasQuestions} color="success" className={styles.button}>
-              Start game
-            </Button>
-          )}
+          {isNotYetStarted &&
+            hasPlayers(
+              <Button
+                onClick={this.handleStartMatch}
+                disabled={!hasQuestions}
+                color="success"
+                className={styles.button}
+              >
+                Start game
+              </Button>
+            )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
               <Button
@@ -253,20 +263,16 @@ class Match extends React.Component {
               </Button>
             </>
           )}
-          {isOngoing && isFinalQuestionCompleted &&
+          {isOngoing && isFinalQuestionCompleted && (
             <>
-             <Button
-              color="success"
-              onClick={this.handleRestartMatch}
-              className={styles.button}
-            >Restart</Button>
-              <Button
-                color="primary"
-                onClick={this.handleFinishMatch}
-                className={styles.button}
-              >Finish game</Button>
+              <Button color="success" onClick={this.handleRestartMatch} className={styles.button}>
+                Restart
+              </Button>
+              <Button color="primary" onClick={this.handleFinishMatch} className={styles.button}>
+                Finish game
+              </Button>
             </>
-          }
+          )}
         </div>
       </div>
     )
