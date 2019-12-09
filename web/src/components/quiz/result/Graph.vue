@@ -2,10 +2,11 @@
   <div class="graph-wrapper">
     <div class="graph">
       <v-column
-        v-for="(choice, index) in result"
-        :is-correct="choice.isCorrect"
+        v-for="(choice, index) in getAnswerDistribution"
+        :choice="choice"
         :key="choice.title"
         :index="index"
+        :total="getAnswerDistribution.reduce((a, b) => a.answerCount + b.answerCount)"
       />
     </div>
     <div class="correct-answers">
@@ -27,40 +28,22 @@
 
 <script>
 import Column from './Column'
+import {answerDistribution} from '../../../utils'
 export default {
   components: {
     'v-column': Column
   },
-  data() {
-    return {
-      result: [
-        {
-          title: 'Welcome1',
-          isCorrect: false,
-          index: 0
-        },
-        {
-          title: 'Welcome2',
-          isCorrect: true,
-          index: 1
-        },
-        {
-          title: 'Welcome3',
-          isCorrect: false,
-          index: 2
-        },
-        {
-          title: 'Welcome4',
-          isCorrect: false,
-          index: 3
-        }
-      ]
-    }
-  },
   computed: {
+    getAnswerDistribution() {
+      return answerDistribution(this.$store.state.quiz.match)
+    },
     correctAnswers() {
       const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
-      return this.result
+      const choices = this.$store.getters['quiz/currentQuestion'].choices.map((choice, index) => ({
+        ...choice,
+        index
+      }))
+      return choices
         .filter(choice => choice.isCorrect)
         .map(choice => {
           return {

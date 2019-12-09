@@ -1,7 +1,7 @@
 <template>
   <div class="column-wrapper choice" :data-choice="index">
-    <div class="column" :style="{height: index > 0 ? `${index * 10}%` : '2%'}">
-      <div v-if="isCorrect" class="symbol is-correct">
+    <div class="column" :style="{height}">
+      <div v-if="choice.isCorrect" class="symbol is-correct">
         <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 40 40">
           <g><path d="m15 27l17.7-17.7 2.3 2.3-20 20-9.3-9.3 2.3-2.3z"></path></g>
         </svg>
@@ -16,19 +16,27 @@
 <script>
 export default {
   props: {
+    choice: {
+      type: Object,
+      required: true
+    },
     index: {
       type: Number,
       required: true
     },
-    isCorrect: {
-      type: Boolean,
-      default: false
+    total: {
+      type: Number,
+      required: true
     }
   },
   computed: {
     symbol() {
       const symbols = ['Circle', 'Star', 'Triangle', 'Square']
       return () => import(`../symbols/${symbols[this.index]}Icon.vue`)
+    },
+    height() {
+      const height = (100 / this.total) * this.choice.answerCount
+      return `${height}%`
     }
   }
 }
@@ -44,13 +52,14 @@ export default {
   align-items: center
   height: 100%
   padding: 0 1rem
-  padding-top: 2rem
+  padding-top: 2.5rem
 
 .column
   position: relative
   width: 100%
   max-height: 100%
   border-radius: $border-radius
+  min-height: 2%
 
 .symbol svg
   height: 2em
