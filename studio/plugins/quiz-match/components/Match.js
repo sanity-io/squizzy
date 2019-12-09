@@ -9,7 +9,7 @@ import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
 import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
-import {getCurrentProgress, getCurrentProgress} from '../utils'
+import {allPlayersHaveSubmitted, getCurrentProgress} from '../utils'
 
 import globals from './styles/globals.css'
 import styles from './styles/Match.css'
