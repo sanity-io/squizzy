@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import styles from '../styles/Question.css'
 import Icons from '../Icons'
 import Countdown from './Countdown'
-import {findCurrentQuestion, choiceColors, choiceSymbols} from '../../utils'
+import {findCurrentQuestion} from '../../utils'
 
 const builder = imageUrlBuilder(client)
 function urlFor(source) {

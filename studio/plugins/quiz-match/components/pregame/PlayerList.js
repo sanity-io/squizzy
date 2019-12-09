@@ -12,7 +12,7 @@ function PlayerList(props) {
           const handleKickPlayer = () => onKickPlayer(player._id)
           return (
             <li className={styles.player} key={player._id}>
-              - {player.name} <KickButton onKickPlayer={handleKickPlayer}/>
+              {player.name} <KickButton onKickPlayer={handleKickPlayer} />
             </li>
           )
         })}

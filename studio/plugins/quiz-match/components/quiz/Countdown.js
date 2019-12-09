@@ -38,7 +38,7 @@ class Countdown extends React.Component {
     const {seconds} = this.state
     return (
       <div className={styles.root}>
-        <h2 className={`${styles.countdown} ${seconds <= 10 ? styles.red : ''}`}>{seconds}</h2>
+        <h2 className={`${styles.countdown} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
       </div>
     )
   }

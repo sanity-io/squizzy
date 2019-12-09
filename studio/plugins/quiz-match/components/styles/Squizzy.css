@@ -2,8 +2,10 @@
   max-height: 250px;
   overflow: hidden;
   display: flex;
+  justify-content: center;
 
   @nest & .image {
     object-fit: contain;
+    width: 100%;
   }
 }

@@ -26,10 +26,10 @@ class Results extends React.Component {
         <div className={styles.graph}>
           <div>
             <Squizzy />
-            <h2 className={styles.heading}>What a squiddy round!</h2>
+            <p className={styles.label}>Question</p>
+            <h2 className={styles.heading}>{currentQuestion.title}</h2>
           </div>
           <AnswerGraph match={match} />
-          {/* TODO: add correct answer with correct symbol and color */}
           <div className={styles.correctChoicesAnswerWrapper}>
             <div className={styles.label}>Correct answer{correctChoices.length > 1 ? 's' : ''}</div>
             <div className={styles.answers}>

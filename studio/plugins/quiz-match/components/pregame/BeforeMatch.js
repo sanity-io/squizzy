@@ -22,11 +22,11 @@ class BeforeStart extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.gridItem}>
-          <div>
+          <div className={styles.squizzy}>
             <img src="/static/squizzy-mock.png" />
           </div>
           <h1 className={globals.heading}>Let's get Squizzy with it!</h1>
-          <p className={globals.p}>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions. Are you ready?</p>
+          <p>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions. Are you ready?</p>
           <p className={styles.waitingPlayers}>Waiting for players...</p>
         </div>
 

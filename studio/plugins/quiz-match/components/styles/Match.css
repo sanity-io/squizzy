@@ -6,7 +6,9 @@
   font-size: 18px;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: min-content 1fr min-content;
+  grid-template-rows: min-content auto min-content;
+  gap: 1em;
+  padding: 0 0.5em;
 
   @nest & p {
     margin: 0;
@@ -18,7 +20,7 @@
   text-align: center;
 }
 
-.quizTitle {
+.label {
   text-align: center;
   font-size: 1em;
   font-weight: normal;
@@ -30,6 +32,10 @@
   justify-content: center;
   margin: var(--medium-padding);
 }
+
+/* .buttonsWrapper:empty {
+  margin: 0;
+} */
 
 .button {
   letter-spacing: 1px;

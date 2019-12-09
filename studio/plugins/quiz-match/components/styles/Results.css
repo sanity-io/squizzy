@@ -19,6 +19,13 @@
   font-size: 1.8em;
 }
 
+.label {
+  text-align: center;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
 .graph {
   display: grid;
   grid-template-rows: min-content auto min-content;
@@ -31,7 +38,7 @@
   }
 }
 
-.isCorrectAnswerWrapper {
+.correctChoicesAnswerWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,12 +48,12 @@
     text-transform: uppercase;
     text-align: center;
   }
+}
 
-  @nest & .answers {
-    display: flex;
-    jusify-content: center;
-    font-size: 1.3em;
-  }
+.answers {
+  display: flex;
+  jusify-content: center;
+  font-size: 1.3em;
 
   @nest & .answer {
     display: flex;
@@ -54,6 +61,7 @@
     margin: 0 var(--small-padding);
   }
 }
+
 
 
 

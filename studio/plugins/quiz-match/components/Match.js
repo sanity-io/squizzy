@@ -9,7 +9,7 @@ import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
 import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
-import {numberOfAnswersToQuestion} from '../utils'
+import {numberOfAnswersToQuestion, getCurrentProgress} from '../utils'
 
 import globals from './styles/globals.css'
 import styles from './styles/Match.css'
@@ -171,10 +171,11 @@ class Match extends React.Component {
 
     const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
+    const status = `${quiz.title} (${getCurrentProgress(match)})`
 
     return (
       <div className={styles.root}>
-        <h1 className={styles.quizTitle}>{quiz.title}</h1>
+        <h1 className={styles.label}>{status}</h1>
         {isNotYetStarted && (
           <BeforeMatch
             match={match}
@@ -188,18 +189,14 @@ class Match extends React.Component {
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
               <Button
                 onClick={this.handleCloseQuestion}
-                color="default"
+                color="simple"
                 className={`${styles.button} ${styles.stopButton}`}
               >
                 Stop
               </Button>
             )}
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
-              <Button
-                onClick={this.handleSkipQuestion}
-                color="default"
-                className={`${styles.button} ${styles.skipButton}`}
-              >
+              <Button onClick={this.handleSkipQuestion} color="simple" className={`${styles.button} ${styles.skipButton}`}>
                 Skip
               </Button>
             )}

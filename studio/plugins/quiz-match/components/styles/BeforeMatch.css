@@ -6,12 +6,21 @@
   grid-template-columns: 1fr 1fr;
   height: 100%;
   overflow: hidden;
-  padding: var(--medium-padding);
 }
 
 .gridItem {
   text-align: center;
-  margin-top: var(--large-padding);
+}
+
+.squizzy {
+  display: flex;
+  max-height: 300px;
+  overflow: hidden;
+
+  @nest & img {
+    width: 100%;
+    object-fit: contain
+  }
 }
 
 .waitingPlayers {
