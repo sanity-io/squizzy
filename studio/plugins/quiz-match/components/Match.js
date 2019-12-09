@@ -169,7 +169,7 @@ class Match extends React.Component {
       quiz.questions.length - 1
     const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
 
-    const hasPlayers = match.players
+    const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
 
     return (
@@ -238,17 +238,16 @@ class Match extends React.Component {
         )}
 
         <div className={styles.buttonsWrapper}>
-          {isNotYetStarted &&
-            hasPlayers(
-              <Button
-                onClick={this.handleStartMatch}
-                disabled={!hasQuestions}
-                color="success"
-                className={styles.button}
-              >
-                Start game
-              </Button>
-            )}
+          {isNotYetStarted && hasPlayers && (
+            <Button
+              onClick={this.handleStartMatch}
+              disabled={!hasQuestions}
+              color="success"
+              className={styles.button}
+            >
+              Start game
+            </Button>
+          )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
               <Button
