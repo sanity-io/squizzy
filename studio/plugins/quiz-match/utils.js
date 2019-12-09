@@ -98,10 +98,20 @@ export const scoresByPlayer = (match, questionKey = 0) => {
   return playersWithScores.sort(sortBy('score', 'desc')) // order by score high  -> low
 }
 
-export const numberOfAnswersToQuestion = (match, questionKey) => {
-  const {answers} = match
+export const allPlayersHaveSubmitted = (match, questionKey) => {
+  const {answers, players} = match
   if (!answers || answers.length === 0 || !questionKey) {
-    return undefined
+    return false
   }
-  return match.answers.filter(answer => answer.questionKey === questionKey).length
+  const playerIdsWithSubmissions = match.answers
+    .filter(answer => answer.questionKey === questionKey)
+    .map(answer => answer.player._id)
+    .sort()
+    .join(',')
+  const playerIds = players
+    .map(player => player._id)
+    .sort()
+    .join(',')
+
+  return playerIds === playerIdsWithSubmissions
 }
