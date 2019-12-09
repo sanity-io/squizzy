@@ -56,11 +56,17 @@ const actions = {
           dispatch('quiz/getPlayers', match.players, {root: true})
           // Get questions for this match
           dispatch('quiz/getQuestions', match.questions, {root: true})
+          commit('SET_STATUS_MESSAGE', false, {root: true})
           // Return resolved promise to resolve beforeEnter route on /match/:id
           return Promise.resolve(true)
         }
       })
       .catch(e => {
+        const status = {
+          title: 'Game not found',
+          message: `Sorry, I couldn't find the game you are looking for.`
+        }
+        commit('SET_STATUS_MESSAGE', status, {root: true})
         console.error(e)
         return Promise.resolve(false)
       })
@@ -94,11 +100,12 @@ const actions = {
       }
       commit('SET_STATUS_MESSAGE', status, {root: true})
     }
+    commit('SET_STATUS_MESSAGE', false, {root: true})
 
     // Update player/players array
     dispatch('quiz/getPlayers', match.players, {root: true})
 
-    // Update questions
+    // Update questions (if host updates questions during an ongoing game)
     // dispatch('quiz/getQuestions', match.quiz.questions, {root: true})
     // console.log('update questions')
 
