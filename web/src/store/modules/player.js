@@ -4,6 +4,7 @@ import {signUp} from '../squizzyServerApi'
 
 const state = {
   player: false, // object
+  answerSubmitted: false, // boolean
   isLoading: false // boolean
 }
 
@@ -21,6 +22,9 @@ const mutations = {
   },
   SET_IS_LOADING(state, status) {
     state.isLoading = status
+  },
+  SET_ANSWER_SUBMITTED(state, status) {
+    state.answerSubmitted = status
   }
 }
 

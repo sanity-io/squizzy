@@ -77,6 +77,9 @@ const actions = {
           router.push({name: 'quiz'})
         }
         commit('quiz/SET_IS_CURRENT_QUESTION_OPEN', match.isCurrentQuestionOpen, {root: true})
+        if (match.isCurrentQuestionOpen) {
+          commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
+        }
         commit('quiz/SET_CURRENT_QUESTION_KEY', match.currentQuestionKey, {root: true})
         dispatch('updateMatch', update.result)
       })
@@ -91,7 +94,7 @@ const actions = {
       dispatch('quiz/getMatchDetails', match, {root: true})
     })
   },
-  submitAnswer({rootState}, key) {
+  submitAnswer({commit, rootState}, key) {
     const {player, quiz} = rootState
     const params = {
       playerId: player.player.id,
@@ -99,7 +102,14 @@ const actions = {
       questionKey: quiz.currentQuestionKey,
       selectedChoiceKey: key
     }
-    return submitAnswerToQuestion(params)
+    return submitAnswerToQuestion(params).then(result => {
+      if (result === true) {
+        // Commit the player mutation
+        commit('player/SET_ANSWER_SUBMITTED', true, {root: true})
+      } else {
+        commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
+      }
+    })
   }
 }
 

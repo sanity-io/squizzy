@@ -34,8 +34,11 @@ export default {
   },
   methods: {
     selectAnswer(key) {
+      const answerSubmitted = this.$store.state.player.answerSubmitted
       this.selectedAnswer = key
-      this.$store.dispatch('client/submitAnswer', key)
+      if (!answerSubmitted) {
+        this.$store.dispatch('client/submitAnswer', key)
+      }
     }
   }
 }
