@@ -171,7 +171,7 @@ class Match extends React.Component {
 
     const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
-    const status = `${quiz.title} (${getCurrentProgress(match)})`
+    const status = `${quiz.title} ${ isOngoing ? getCurrentProgress(match) : ''}`
 
     return (
       <div className={styles.root}>

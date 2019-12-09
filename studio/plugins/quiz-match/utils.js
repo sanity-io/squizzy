@@ -27,8 +27,7 @@ export function findCurrentQuestion(match) {
 
 export function getCurrentProgress(match) {
   const currentQuestionIndex = match.quiz.questions.findIndex(question => question._key === match.currentQuestionKey) + 1
-  console.log(currentQuestionIndex)
-  return `${currentQuestionIndex}/${match.quiz.questions.length}`
+  return `(${currentQuestionIndex}/${match.quiz.questions.length})`
 }
 
 export const answerDistribution = match => {
