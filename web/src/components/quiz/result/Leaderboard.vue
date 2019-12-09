@@ -1,7 +1,7 @@
 <template>
   <div class="leaderboard-wrapper">
     <div class="leaderboard">
-      <div class="item" v-for="(player, index) in players" :key="player._id">
+      <div class="item" v-for="(player, index) in getScoresByPlayer" :key="player._id">
         <span class="rank">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
         <span class="points">{{ player.score }}</span>
@@ -11,10 +11,11 @@
 </template>
 
 <script>
+import {scoresByPlayer} from '../../../utils'
 export default {
-  data() {
-    return {
-      players: [{name: 'Vic', score: 100, _id: 1}]
+  computed: {
+    getScoresByPlayer() {
+      return scoresByPlayer(this.$store.state.quiz.match)
     }
   }
 }
@@ -32,14 +33,12 @@ export default {
   left: 0
   right: 0
   height: 1000px
-  padding: 0 1rem
 
 .item
   display: flex
   align-items: center
   min-height: 1em
-  font-size: 1.1em
-  font-weight: bold
+  font-size: 1em
   padding: 0.5rem 1rem
   &:nth-child(odd)
     background: $color-gray--lightest
@@ -47,7 +46,7 @@ export default {
   .rank
     font-weight: normal
     font-size: 0.85rem
-    padding-right: 0.8rem
+    padding-right: 1rem
 
   .points
     margin-left: auto
