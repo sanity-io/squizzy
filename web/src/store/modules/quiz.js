@@ -46,7 +46,8 @@ const mutations = {
     state.currentQuestionKey = key
   },
   RESET_ALL(state) {
-    ;(state.match = false), (state.isCurrentQuestionOpen = false)
+    state.match = false
+    state.isCurrentQuestionOpen = false
     state.currentQuestionKey = false
   }
 }
