@@ -27,7 +27,7 @@ const actions = {
   // Get the match to play
   getMatchDetails({commit, dispatch}, slug) {
     dispatch('stopListener')
-    dispatch('matchStore/resetAll', {root: true})
+    dispatch('matchStore/resetAll', null, {root: true})
     return client
       .fetch(query, {slug})
       .then(match => {

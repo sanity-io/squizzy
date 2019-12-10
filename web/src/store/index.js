@@ -49,7 +49,7 @@ export default new Vuex.Store({
         })
       } else {
         commit('player/REGISTER_PLAYER', false, {root: true})
-        commit('matchStore/RESET_ALL', {root: true})
+        commit('matchStore/RESET_ALL', null, {root: true})
         if (router.currentRoute.name !== 'home') {
           const status = {
             title: 'You left the game',
