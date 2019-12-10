@@ -63,7 +63,7 @@ const actions = {
       })
   },
 
-  startListener({commit, dispatch, rootState, rootGetters}, matchSlug) {
+  startListener({commit, dispatch, rootGetters}, matchSlug) {
     const slug = matchSlug || rootGetters['matchStore/slug']
     if (slug) {
       subscription = client

@@ -5,7 +5,7 @@ import VuexPersist from 'vuex-persist'
 import axios from 'axios'
 import router from '../router'
 import client from './modules/client'
-import player from './modules/playerStore'
+import playerStore from './modules/playerStore'
 import matchStore from './modules/matchStore'
 
 import {withdrawFromGame} from './squizzyServerApi'
@@ -49,7 +49,7 @@ export default new Vuex.Store({
           }
         })
       } else {
-        commit('player/REGISTER_PLAYER', false, {root: true})
+        commit('playerStore/REGISTER_PLAYER', false, {root: true})
         commit('matchStore/RESET_ALL', null, {root: true})
         if (router.currentRoute.name !== 'home') {
           const status = {
@@ -64,7 +64,7 @@ export default new Vuex.Store({
   },
   modules: {
     client,
-    player,
+    playerStore,
     matchStore
   },
   plugins: [vuexLocalStorage.plugin]

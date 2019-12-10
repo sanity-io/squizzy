@@ -48,14 +48,14 @@ export default {
   computed: {
     ...mapState('matchStore', ['match']),
     ...mapGetters('matchStore', ['title', 'playerCount']),
-    ...mapState('playerStore', ['player']),
     ...mapState(['status']),
     activeView() {
+      const player = this.$store.state.playerStore.player
       // If no match is found
       if (!this.match) {
         // show welcome screen
         return HOME_VIEWS.welcome
-      } else if (this.match && !this.player) {
+      } else if (this.match && !player) {
         // register player if no player is registered already
         return HOME_VIEWS.register
       } else {
