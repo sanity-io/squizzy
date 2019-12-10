@@ -1,3 +1,4 @@
+
 *
   box-sizing: border-box
   margin: 0
@@ -11,10 +12,9 @@ body
   display: grid
   grid-template-rows: auto
   font-family: $font-family
-  font-size: $font-size-base
+  font-size: 20px
   color: $color-black
-  @media screen and (max-width: 320px)
-    font-size: $font-size-small
+    
 
 #app
   height: 100%
@@ -23,12 +23,8 @@ body
   box-shadow: 0 0 10px rgba(0,0,0,0.1)
   border-radius: $border-radius
   overflow: hidden
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width: 768px)
-    // max-height: 812px
-    // max-width: 414px
-    margin: auto
+  display: flex
+  flex-direction: column
 
 [v-cloak] *
   display: none
@@ -70,9 +66,8 @@ button
   grid-template-rows: min-content min-content auto
 
 .page-heading
-  font-size: 1.9rem
-  margin-bottom: 0.5rem
-  padding: 0 0.5rem
+  font-size: $font-size-xlarge
+  padding: 0.5rem
 
 .page-message
   padding: 0 1rem
@@ -81,6 +76,6 @@ button
 .label
   text-transform: uppercase
   letter-spacing: 1px
-  font-size: 0.7em
+  font-size: $font-size-small
   text-align: center
   font-weight: normal

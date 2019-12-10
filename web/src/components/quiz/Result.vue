@@ -2,9 +2,7 @@
   <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
     <div>
       <squizzy-squid />
-      <p class="label">{{ title }}</p>
-      <h1 class="result-heading">{{ currentQuestion }}</h1>
-      <h2 class="view-heading">{{ activeView.name }}</h2>
+      <h1 class="feedback-heading">{{ title }}</h1>
     </div>
     <section class="section">
       <transition name="swipe" mode="out-in">
@@ -74,10 +72,6 @@ export default {
     }
   },
   computed: {
-    currentQuestion() {
-      const question = this.$store.getters['quiz/currentQuestion']
-      return `Q: ${question.title}`
-    },
     title() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length
@@ -114,18 +108,12 @@ export default {
   display: grid
   grid-template-rows: min-content auto min-content
 
-.result-heading
-  font-size: 1.7rem
-  padding: 0 0.5rem
-  margin-bottom: 0.5rem
-
-.view-heading
-  text-transform: uppercase
-  font-weight: normal
-  letter-spacing: 1px
-  font-size: 0.85rem
-  text-align: center
-  padding: 0.5rem 0
+.feedback-heading
+  font-size: $font-size-large
+  @media screen and (min-height: 667px)
+    font-size: $font-size-xlarge
+  @media screen and (min-height: 812px)
+    font-size: $font-size-xxlarge
 
 .section
   overflow: hidden
@@ -137,7 +125,7 @@ export default {
   display: flex
   justify-content: center
   width: 100%
-  margin: 1rem 0
+  margin: 0.5rem 0 1rem
 
   .view-dot
     height: 0.5rem

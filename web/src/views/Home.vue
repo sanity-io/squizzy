@@ -71,7 +71,6 @@ export default {
 .home
   display: grid
   grid-template-rows: min-content min-content min-content auto
-  gap: 1rem
 
 .status
   padding: 1rem
@@ -83,10 +82,7 @@ export default {
   margin: 1rem auto
 
   .title
-    font-size: 1.2em
-
-.match-title
-  margin-bottom: 0.5rem
+    font-size: $font-size-medium
 
 .match-details
   text-align: center

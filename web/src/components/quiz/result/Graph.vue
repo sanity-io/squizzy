@@ -1,14 +1,6 @@
 <template>
   <div class="graph-wrapper">
-    <div class="graph">
-      <v-column
-        v-for="(choice, index) in getAnswerDistribution"
-        :choice="choice"
-        :key="choice.title"
-        :index="index"
-        :total="getAnswerDistribution.reduce((a, b) => a.answerCount + b.answerCount)"
-      />
-    </div>
+    <p class="question">{{ question.title }}</p>
     <div class="correct-answers">
       <div class="label">Correct answer{{ correctAnswers.length > 1 ? 's' : '' }}</div>
       <div class="answers">
@@ -23,6 +15,15 @@
         </div>
       </div>
     </div>
+    <div class="graph">
+      <v-column
+        v-for="(choice, index) in getAnswerDistribution"
+        :choice="choice"
+        :key="choice.title"
+        :index="index"
+        :total="getAnswerDistribution.reduce((a, b) => a.answerCount + b.answerCount)"
+      />
+    </div>
   </div>
 </template>
 
@@ -34,6 +35,10 @@ export default {
     'v-column': Column
   },
   computed: {
+    question() {
+      const question = this.$store.getters['quiz/currentQuestion']
+      return question
+    },
     getAnswerDistribution() {
       return answerDistribution(this.$store.state.quiz.match)
     },
@@ -69,14 +74,18 @@ export default {
   justify-content: center
   flex: 1
 
+.question
+  margin: 0.5rem 0
+  font-size: $font-size-base
+
 .correct-answers
-  padding: 0.5rem 1rem 0
   text-align: center
+  padding-bottom: 0.5rem
 
   .label
     text-transform: uppercase
-    font-size: 0.95rem
-    padding-bottom: 0.5rem
+    font-size: $font-size-small
+    padding: 0.5rem 0
 
   .answers
     display: flex
@@ -86,10 +95,12 @@ export default {
     display: flex
     padding: 0 1rem
     align-items: center
+    font-size: $font-size-base
 
     .symbol
       display: flex
+      padding: 0 0.25rem
 
     .symbol svg
-      height: 1.25em
+      height: $font-size-base
 </style>

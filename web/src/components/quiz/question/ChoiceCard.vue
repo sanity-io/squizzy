@@ -80,11 +80,11 @@ export default {
 
 .choice-title
   flex-grow: 1
-  font-size: 1.5rem
+  font-size: $font-size-large
   font-weight: normal
   text-align: center
   @media screen and (max-width: 320px)
-    font-size: 1.2rem
+    font-size: $font-size-medium
 
 .selected-answer
   animation-name: selected

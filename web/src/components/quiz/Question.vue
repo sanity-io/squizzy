@@ -1,13 +1,13 @@
 <template>
   <div class="question-card">
-    <div class="status label">{{ title }} {{ progress }}</div>
-    <div class="question-header">
+    <div class="progress label">{{ title }} {{ progress }}</div>
+    <div class="question">
       <question-image v-if="currentQuestion.image" :asset="currentQuestion.image" />
       <h1
-        class="question-title"
+        class="title"
         :class="{
-          'heading-long': currentQuestion.title.split('').length > 80,
-          'heading-img': currentQuestion.image
+          'title-long': currentQuestion.title.split('').length > 80,
+          'title-with-image': currentQuestion.image
         }"
       >
         {{ currentQuestion.title }}
@@ -50,37 +50,24 @@ export default {
   @media screen and (max-height: 569px)
     grid-template-rows: min-content   minmax(100px, 200px)   1fr
 
-.status
-  padding-top: 0.5rem
+.progress
+  padding-top: 1rem
 
-.question-header
+.question
   display: grid
   grid-template-rows: 1fr min-content
+  padding: 0 0.5rem
 
-.question-title
-  font-size: 2rem
-  font-weight: normal
+.title
+  font-size: 2.5rem
+  font-weight: bold
+  text-align: center
   margin: auto
   padding-top: 1rem
-  @media screen and (max-width: 320px)
-    font-size: 1.5rem
 
-.heading-img
-  margin: auto 0
+.title-long
+  font-size: $font-size-large
 
-.heading-long
-  font-size: 1.8rem
-  @media screen and (max-width: 320px)
-    font-size: 1.3rem
-
-.heading-large.heading-long
+.title-with-image
   font-size: 2rem
-  @media screen and (max-width: 320px)
-    font-size: 1.8rem
-
-.heading-large
-  grid-row: 1 / -1
-  font-size: 2.5rem
-  @media screen and (max-width: 320px)
-    font-size: 2rem
 </style>

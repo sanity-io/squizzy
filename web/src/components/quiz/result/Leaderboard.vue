@@ -32,19 +32,21 @@ export default {
   top: 0
   left: 0
   right: 0
+  height: 100%
+  width: 100%
+  padding-top: 1rem
 
 .item
   display: flex
   align-items: center
   min-height: 1em
-  font-size: 1em
   padding: 0.5rem 1rem
   &:nth-child(odd)
     background: $color-gray--lightest
 
   .rank
     font-weight: normal
-    font-size: 0.85rem
+    font-size: $font-size-small
     padding-right: 1rem
 
   .points

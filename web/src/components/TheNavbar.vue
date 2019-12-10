@@ -32,7 +32,7 @@ export default {
   justify-content: space-between
   align-items: center
   min-height: $navbar-height
-  font-size: 1.5rem
+  font-size: $font-size-medium
   font-weight: 700
   text-transform: uppercase
   padding: 0.5rem 1rem

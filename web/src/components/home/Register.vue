@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-page register">
+  <div class="register">
     <h1 class="page-heading">{{ title }}</h1>
     <input-field
       :label="inputLabel"

@@ -51,7 +51,7 @@ export default {
   justify-content: flex-end
   align-items: center
   height: 100%
-  padding: 0 1rem
+  padding: 0 0.75rem
   padding-top: 2.5rem
 
 .column
@@ -62,12 +62,12 @@ export default {
   min-height: 2%
 
 .symbol svg
-  height: 2em
+  height: 1.75rem
 
 .is-correct
   position: absolute
-  top: -3rem
-  left: calc((100% - 3rem) / 2)
+  top: -2.5rem
+  left: calc((100% - 2.5rem) / 2)
   svg
-    height: 3rem
+    height: 2.5rem
 </style>
