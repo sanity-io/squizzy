@@ -59,20 +59,20 @@
 /* choice 2 - Star */
 .choice[data-choice="1"] {
   @nest & .column {
-    background: var(--quiz-blue);
+    background: var(--quiz-green);
   }
   @nest & svg {
-    fill: var(--quiz-blue);
+    fill: var(--quiz-green);
   }
 }
 
 /* choice 3 - Triangle */
 .choice[data-choice="2"] {
   @nest & .column {
-    background: var(--quiz-green);
+    background: var(--quiz-blue);
   }
   @nest & svg {
-    fill: var(--quiz-green);
+    fill: var(--quiz-blue);
   }
 }
 

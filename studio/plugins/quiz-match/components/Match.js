@@ -214,7 +214,7 @@ class Match extends React.Component {
           <div className={styles.simpleLayout}>
             <h1>Match finished!</h1>
             <IntentButton
-              color="primary"
+              color="success"
               intent="create"
               params={{type: 'match'}}
               onClick={() => {}}
@@ -250,8 +250,8 @@ class Match extends React.Component {
             <>
               <Button
                 onClick={this.handleCancelMatch}
-                color="primary"
-                className={`${styles.button}`}
+                color="danger"
+                className={styles.button}
               >
                 Stop game
               </Button>
@@ -265,7 +265,7 @@ class Match extends React.Component {
               <Button color="success" onClick={this.handleRestartMatch} className={styles.button}>
                 Restart
               </Button>
-              <Button color="primary" onClick={this.handleFinishMatch} className={styles.button}>
+              <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
                 Finish game
               </Button>
             </>

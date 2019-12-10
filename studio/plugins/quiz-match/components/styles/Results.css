@@ -63,11 +63,6 @@
   }
 }
 
-
-
-
-
-
 .symbol {
   display: flex;
   padding-right: 0.25em;
@@ -83,12 +78,12 @@
 
 /* choice 2 - Star */
 .symbol[data-symbol="1"] svg {
-  fill: var(--quiz-blue);
+  fill: var(--quiz-green);
 }
 
 /* choice 3 - Triangle */
 .symbol[data-symbol="2"] svg {
-  fill: var(--quiz-green);
+  fill: var(--quiz-blue);
 }
 
 /* choice 4 - Square */

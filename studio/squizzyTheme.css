@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Asap&display=swap');
 :root {
 	/* Brand colors */
-	--brand-primary: #FF4C54;
+	--brand-primary: #B04CFF;
 	--brand-primary--inverted:  var(--white);
 	--brand-secondary: #00A84D;
 	--brand-secondary--inverted:  var(--white);
+	--color-red: #FF4C54;
+	--color-green: #00A84D;
 	/* Typography */
 	--font-family-sans-serif: 'Asap';
 	--font-size-base: 17px;
@@ -17,5 +19,6 @@
 	--component-bg:  var(--white);
 	--white: #F9FAFF;
 	--black: #002152;
-	--state-success-color: #00A84D;
+	--state-success-color: var(--color-green);
+	--state-danger-color: var(--color-red);
 }

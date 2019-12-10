@@ -26,7 +26,7 @@ export default {
 
 <style lang="sass" scoped>
 .navbar
-  background: $color-red
+  background: $color-purple
   color: $color-white
   display: flex
   justify-content: space-between
