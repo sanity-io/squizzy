@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('quiz', ['match']),
+    ...mapState('matchStore', ['match']),
     ...mapState('player', ['player', 'isLoading'])
   },
   methods: {

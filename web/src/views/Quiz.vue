@@ -18,8 +18,8 @@ const QUIZ_VIEWS = {
 }
 export default {
   computed: {
-    ...mapState('quiz', ['match', 'isCurrentQuestionOpen']),
-    ...mapGetters('quiz', ['isOngoing']),
+    ...mapState('matchStore', ['match', 'isCurrentQuestionOpen']),
+    ...mapGetters('matchStore', ['isOngoing']),
     ...mapState('player', ['player']),
     activeView() {
       if (this.isCurrentQuestionOpen && this.isOngoing) {

@@ -11,7 +11,7 @@ export default {
   computed: {
     showLeaveButton() {
       const player = this.$store.state.player
-      const hasMatch = this.$store.state.quiz.match
+      const hasMatch = this.$store.state.matchStore.match
       const hasPlayer = player && player.player
       return hasMatch || hasPlayer
     }

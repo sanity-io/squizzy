@@ -72,6 +72,10 @@ export default {
     }
   },
   computed: {
+    currentQuestion() {
+      const question = this.$store.getters['matchStore/currentQuestion']
+      return `Q: ${question.title}`
+    },
     title() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length

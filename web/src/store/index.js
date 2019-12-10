@@ -6,7 +6,7 @@ import axios from 'axios'
 import router from '../router'
 import client from './modules/client'
 import player from './modules/player'
-import quiz from './modules/quiz'
+import matchStore from './modules/matchStore'
 
 import {withdrawFromGame} from './squizzyServerApi'
 
@@ -35,7 +35,7 @@ export default new Vuex.Store({
   },
   actions: {
     leaveGame({commit, rootState, rootGetters}) {
-      const slug = rootGetters['quiz/slug']
+      const slug = rootGetters['matchStore/slug']
       if (rootState.player.player && slug) {
         const params = {
           playerId: rootState.player.player.id,
@@ -49,7 +49,7 @@ export default new Vuex.Store({
         })
       } else {
         commit('player/REGISTER_PLAYER', false, {root: true})
-        commit('quiz/RESET_ALL', null, {root: true})
+        commit('matchStore/RESET_ALL', {root: true})
         if (router.currentRoute.name !== 'home') {
           const status = {
             title: 'You left the game',
@@ -64,7 +64,7 @@ export default new Vuex.Store({
   modules: {
     client,
     player,
-    quiz
+    matchStore
   },
   plugins: [vuexLocalStorage.plugin]
 })

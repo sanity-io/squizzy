@@ -27,7 +27,7 @@ export default {
     QuestionChoices
   },
   computed: {
-    ...mapGetters('quiz', ['currentQuestion', 'title', 'progress'])
+    ...mapGetters('matchStore', ['currentQuestion', 'title', 'progress'])
   }
 }
 </script>

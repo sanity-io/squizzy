@@ -15,7 +15,7 @@ import {scoresByPlayer} from '../../../utils'
 export default {
   computed: {
     getScoresByPlayer() {
-      return scoresByPlayer(this.$store.state.quiz.match)
+      return scoresByPlayer(this.$store.state.matchStore.match)
     }
   }
 }

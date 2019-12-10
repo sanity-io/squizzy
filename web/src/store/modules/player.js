@@ -35,7 +35,7 @@ const actions = {
     const player = {
       playerId: nanoid(),
       playerName,
-      matchSlug: rootGetters['quiz/slug']
+      matchSlug: rootGetters['matchStore/slug']
     }
     return signUp(player).then(result => {
       if (result === true) {

@@ -46,8 +46,8 @@ export default {
     SquizzySquid
   },
   computed: {
-    ...mapState('quiz', ['match']),
-    ...mapGetters('quiz', ['title', 'playerCount']),
+    ...mapState('matchStore', ['match']),
+    ...mapGetters('matchStore', ['title', 'playerCount']),
     ...mapState('player', ['player']),
     ...mapState(['status']),
     activeView() {

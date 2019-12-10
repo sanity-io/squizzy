@@ -8,7 +8,7 @@ const query = `
 `
 
 // Query to listen for new match updates
-const listenerQuery = `*[_type == "match" && slug.current == $slug && !(_id in path("drafts.**"))]`
+const listenerQuery = `*[_type == "match" && slug.current == $slug && !(_id in path("drafts.**"))][0]`
 
 // Variable for listener to subscribe and unsubscribe
 let subscription
@@ -25,8 +25,9 @@ const mutations = {
 
 const actions = {
   // Get the match to play
-  getMatchDetails({commit, dispatch, rootState}, slug) {
-    dispatch('quiz/resetAll', null, {root: true})
+  getMatchDetails({commit, dispatch}, slug) {
+    dispatch('stopListener')
+    dispatch('matchStore/resetAll', {root: true})
     return client
       .fetch(query, {slug})
       .then(match => {
@@ -38,15 +39,16 @@ const actions = {
           commit('SET_STATUS_MESSAGE', status, {root: true})
           return false
         } else {
-          if (!rootState.quiz.match) {
-            // Start the listener to get latest match updates
-            dispatch('startListener', match.slug.current)
-          }
-          // Get the match details
-          dispatch('quiz/getMatchDetails', match, {root: true})
+          // Start the listener to get latest match updates
+          dispatch('startListener', match.slug.current)
+
+          // Set the match details
+          dispatch('matchStore/setMatchDetails', match, {root: true})
+
           // Reset status message
           commit('SET_STATUS_MESSAGE', false, {root: true})
-          // Return resolved promise to resolve beforeEnter route on /match/:id
+
+          // Return to beforeEnter route on /match/:id
           return true
         }
       })
@@ -60,40 +62,56 @@ const actions = {
         return false
       })
   },
-  startListener({commit, dispatch, rootState, rootGetters}, matchSlug) {
-    const slug = matchSlug || rootGetters['quiz/slug']
-    if (slug) {
-      console.log('listener started')
-      subscription = client.listen(listenerQuery, {slug}).subscribe(update => {
-        const match = update.result
-        // Kick active player if active player is no longer in array
-        const activePlayerId = rootState.player.player.id
-        const playerExists = match.players.find(player => player._ref === activePlayerId)
-        if (!playerExists) {
-          dispatch('player/kickPlayer', true, {root: true})
-        }
 
-        if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {
-          router.push({name: 'quiz'})
-        }
-        commit('quiz/SET_IS_CURRENT_QUESTION_OPEN', match.isCurrentQuestionOpen, {root: true})
-        if (match.isCurrentQuestionOpen) {
-          commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
-        }
-        commit('quiz/SET_CURRENT_QUESTION_KEY', match.currentQuestionKey, {root: true})
-        dispatch('updateMatch', update.result)
-      })
+  startListener({commit, dispatch, rootState, rootGetters}, matchSlug) {
+    const slug = matchSlug || rootGetters['matchStore/slug']
+    if (slug) {
+      subscription = client
+        .listen(
+          listenerQuery,
+          {slug},
+          {
+            includeResult: true,
+            visibility: 'query',
+            events: ['welcome', 'mutation', 'reconnect']
+          }
+        )
+        .subscribe(async event => {
+          console.log('Listener event!', event.type)
+
+          // Something has happened with the match doc, let's fetch it
+          const match = await client.fetch(query, {slug})
+          console.log('Listener got match', match)
+
+          dispatch('matchStore/setMatchDetails', match, {root: true})
+
+          // Kick active player if active player is no longer in array
+          const activePlayerId = rootState.player.player.id
+          console.log('player?', rootState.player.player)
+          const playerExists = match.players.find(player => player._ref === activePlayerId)
+          if (!playerExists) {
+            dispatch('player/kickPlayer', true, {root: true})
+          }
+
+          if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {
+            router.push({name: 'quiz'})
+          }
+          // commit('matchStore/SET_IS_CURRENT_QUESTION_OPEN', match.isCurrentQuestionOpen, {root: true})
+          if (match.isCurrentQuestionOpen) {
+            commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
+          }
+          // commit('matchStore/SET_CURRENT_QUESTION_KEY', match.currentQuestionKey, {root: true})
+        })
     }
   },
+
   stopListener() {
-    console.log('Listener started stopped.')
-    subscription.unsubscribe()
+    console.log('Listener stopped')
+    if (subscription) {
+      subscription.unsubscribe()
+    }
   },
-  updateMatch({dispatch}, match) {
-    client.fetch(query, {slug: match.slug.current}).then(match => {
-      dispatch('quiz/getMatchDetails', match, {root: true})
-    })
-  },
+
   submitAnswer({commit, rootState}, key) {
     const {player, quiz} = rootState
     const params = {

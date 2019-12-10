@@ -38,14 +38,14 @@ const routes = [
     }
   },
   {
-    path: '/match/:id',
+    path: '/match/:slug',
     name: 'match',
     meta: {
       page: 3
     },
     async beforeEnter(to, from, next) {
       try {
-        const isMatch = await store.dispatch('client/getMatchDetails', to.params.id)
+        const isMatch = await store.dispatch('client/getMatchDetails', to.params.slug)
         if (isMatch) {
           next({
             name: 'home'

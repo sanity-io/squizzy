@@ -40,11 +40,11 @@ export default {
       return question
     },
     getAnswerDistribution() {
-      return answerDistribution(this.$store.state.quiz.match)
+      return answerDistribution(this.$store.state.matchStore.match)
     },
     correctAnswers() {
       const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
-      const choices = this.$store.getters['quiz/currentQuestion'].choices.map((choice, index) => ({
+      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map((choice, index) => ({
         ...choice,
         index
       }))
