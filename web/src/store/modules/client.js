@@ -4,11 +4,11 @@ import {submitAnswerToQuestion} from '../squizzyServerApi'
 
 // Query to get all info about a match
 const query = `
-  *[_type == "match" && slug.current  == $slug][0]{..., quiz->, players[]->, answers[]{...,player->}}
+  *[_type == "match" && slug.current  == $slug && !(_id in path("drafts.**")][0]{..., quiz->, players[]->, answers[]{...,player->}}
 `
 
 // Query to listen for new match updates
-const listenerQuery = `*[_type == "match" && slug.current == $slug]`
+const listenerQuery = `*[_type == "match" && slug.current == $slug && !(_id in path("drafts.**")]`
 
 // Variable for listener to subscribe and unsubscribe
 let subscription
