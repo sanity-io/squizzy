@@ -36,7 +36,7 @@ const actions = {
             message: 'Please scan another code.'
           }
           commit('SET_STATUS_MESSAGE', status, {root: true})
-          return Promise.resolve(false)
+          return false
         } else {
           if (!rootState.quiz.match) {
             // Start the listener to get latest match updates
@@ -47,7 +47,7 @@ const actions = {
           // Reset status message
           commit('SET_STATUS_MESSAGE', false, {root: true})
           // Return resolved promise to resolve beforeEnter route on /match/:id
-          return Promise.resolve(true)
+          return true
         }
       })
       .catch(e => {
@@ -57,7 +57,7 @@ const actions = {
         }
         commit('SET_STATUS_MESSAGE', status, {root: true})
         console.error(e)
-        return Promise.resolve(false)
+        return false
       })
   },
   startListener({commit, dispatch, rootState, rootGetters}, matchSlug) {
