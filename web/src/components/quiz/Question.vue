@@ -2,7 +2,7 @@
   <div class="question-card">
     <div class="label">Question 1 of 6</div>
     <div class="question-header">
-      <question-image v-if="currentQuestion.image" :asset="currentQuestion.image.asset" />
+      <question-image v-if="currentQuestion.image" :asset="currentQuestion.image" />
       <h1
         class="question-title"
         :class="{
