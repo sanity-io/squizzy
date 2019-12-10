@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      activeView: null
+      activeView: RESULT_VIEWS.graph
     }
   },
   computed: {
@@ -80,9 +80,6 @@ export default {
       const randomResult = Math.ceil(Math.random() * 2)
       return randomResult === 1 ? FEEDBACK_WRONG[randomWrong] : FEEDBACK_CORRECT[randomCorrect]
     }
-  },
-  mounted() {
-    this.activeView = RESULT_VIEWS.graph
   },
   methods: {
     swipeLeft() {
