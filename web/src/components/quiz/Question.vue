@@ -1,6 +1,6 @@
 <template>
   <div class="question-card">
-    <div class="label">Question 1 of 6</div>
+    <div class="status label">{{ title }} {{ progress }}</div>
     <div class="question-header">
       <question-image v-if="currentQuestion.image" :asset="currentQuestion.image" />
       <h1
@@ -27,7 +27,7 @@ export default {
     QuestionChoices
   },
   computed: {
-    ...mapGetters('quiz', ['currentQuestion'])
+    ...mapGetters('quiz', ['currentQuestion', 'title', 'progress'])
   }
 }
 </script>
@@ -50,6 +50,8 @@ export default {
   @media screen and (max-height: 569px)
     grid-template-rows: min-content   minmax(100px, 200px)   1fr
 
+.status
+  padding-top: 0.5rem
 
 .question-header
   display: grid

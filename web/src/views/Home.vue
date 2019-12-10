@@ -1,5 +1,9 @@
 <template>
   <div class="page home">
+    <div v-if="status" class="status">
+      <h2 class="title">{{ status.title }}</h2>
+      <p>{{ status.message }}</p>
+    </div>
     <squizzy-squid />
     <div v-if="match" class="label match-title">
       {{ activeView.name === 'welcome' ? 'JOINING' : 'JOINED' }}: {{ title }}
@@ -9,10 +13,6 @@
       <transition name="home" mode="out-in">
         <component :is="activeView.component" />
       </transition>
-      <div v-if="status" class="status">
-        <h2 class="title">{{ status.title }}</h2>
-        <p>{{ status.message }}</p>
-      </div>
       <div class="match-details" v-if="!status && playerCount">
         <div class="player-count">
           {{ playerCount }}
@@ -70,7 +70,8 @@ export default {
 <style lang="sass" scoped>
 .home
   display: grid
-  grid-template-rows: min-content min-content auto
+  grid-template-rows: min-content min-content min-content auto
+  gap: 1rem
 
 .status
   padding: 1rem
@@ -78,7 +79,7 @@ export default {
   background: $color-purple
   border-radius: $border-radius
   text-align: center
-  max-width: 500px
+  max-width: 450px
   margin: 1rem auto
 
   .title

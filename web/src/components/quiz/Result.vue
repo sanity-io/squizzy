@@ -2,8 +2,8 @@
   <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
     <div>
       <squizzy-squid />
-      <h1 class="result-heading">{{ title }}</h1>
-      <p>{{ currentQuestion }}</p>
+      <p class="label">{{ title }}</p>
+      <h1 class="result-heading">{{ currentQuestion }}</h1>
       <h2 class="view-heading">{{ activeView.name }}</h2>
     </div>
     <section class="section">
