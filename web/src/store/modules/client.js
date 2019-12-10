@@ -89,9 +89,7 @@ const actions = {
           // const activePlayerId = rootState.player.player.id
           // const playerExists = match.players.find(player => player._ref === activePlayerId)
 
-          // if (!playerExists) {
-          //   dispatch('playerStore/kickPlayer', true, {root: true})
-          // }
+          // TODO if player is no longer i match.players array, don't delte player data, just redirect to /home
 
           if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {
             router.push({name: 'quiz'})
