@@ -5,7 +5,7 @@ import VuexPersist from 'vuex-persist'
 import axios from 'axios'
 import router from '../router'
 import client from './modules/client'
-import player from './modules/player'
+import player from './modules/playerStore'
 import matchStore from './modules/matchStore'
 
 import {withdrawFromGame} from './squizzyServerApi'
@@ -36,15 +36,16 @@ export default new Vuex.Store({
   actions: {
     leaveGame({commit, rootState, rootGetters}) {
       const slug = rootGetters['matchStore/slug']
-      if (rootState.player.player && slug) {
+      const player = rootState.playerStore.player
+      if (player && slug) {
         const params = {
-          playerId: rootState.player.player.id,
+          playerId: player.id,
           matchSlug: slug
         }
         commit('SET_STATUS_MESSAGE', false)
         return withdrawFromGame(params).then(result => {
           if (result === true) {
-            commit('player/REGISTER_PLAYER', false, {root: true})
+            commit('playerStore/REGISTER_PLAYER', false, {root: true})
           }
         })
       } else {

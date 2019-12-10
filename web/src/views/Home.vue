@@ -48,7 +48,7 @@ export default {
   computed: {
     ...mapState('matchStore', ['match']),
     ...mapGetters('matchStore', ['title', 'playerCount']),
-    ...mapState('player', ['player']),
+    ...mapState('playerStore', ['player']),
     ...mapState(['status']),
     activeView() {
       // If no match is found

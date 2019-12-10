@@ -30,14 +30,14 @@ export default {
   },
   computed: {
     ...mapState('matchStore', ['match']),
-    ...mapState('player', ['player', 'isLoading'])
+    ...mapState('playerStore', ['player', 'isLoading'])
   },
   methods: {
     registerPlayer(playerName) {
       this.$store
-        .dispatch('player/registerPlayer', playerName)
+        .dispatch('playerStore/registerPlayer', playerName)
         .then(() => {
-          console.log(this.player.name, 'has been registered!')
+          console.log(playerName, 'has been registered!')
         })
         .catch(() => {
           this.errorMessage = 'Something went wrong :( Please try again!'

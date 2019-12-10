@@ -20,7 +20,7 @@ export default {
   computed: {
     ...mapState('matchStore', ['match', 'isCurrentQuestionOpen']),
     ...mapGetters('matchStore', ['isOngoing']),
-    ...mapState('player', ['player']),
+    ...mapState('playerStore', ['player']),
     activeView() {
       if (this.isCurrentQuestionOpen && this.isOngoing) {
         return QUIZ_VIEWS.question

@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('player', ['player']),
+    ...mapState('playerStore', ['player']),
     title() {
       const name = this.player && this.player.name
       return `Welcome ${name ? `${name}` : ''}! `

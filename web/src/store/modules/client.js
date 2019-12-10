@@ -85,22 +85,21 @@ const actions = {
 
           dispatch('matchStore/setMatchDetails', match, {root: true})
 
-          // Kick active player if active player is no longer in array
-          const activePlayerId = rootState.player.player.id
-          console.log('player?', rootState.player.player)
-          const playerExists = match.players.find(player => player._ref === activePlayerId)
-          if (!playerExists) {
-            dispatch('player/kickPlayer', true, {root: true})
-          }
+          // Remove player from store if not in match.players array
+          // const activePlayerId = rootState.player.player.id
+          // const playerExists = match.players.find(player => player._ref === activePlayerId)
+
+          // if (!playerExists) {
+          //   dispatch('playerStore/kickPlayer', true, {root: true})
+          // }
 
           if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {
             router.push({name: 'quiz'})
           }
-          // commit('matchStore/SET_IS_CURRENT_QUESTION_OPEN', match.isCurrentQuestionOpen, {root: true})
+
           if (match.isCurrentQuestionOpen) {
-            commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
+            commit('playerStore/SET_ANSWER_SUBMITTED', false, {root: true})
           }
-          // commit('matchStore/SET_CURRENT_QUESTION_KEY', match.currentQuestionKey, {root: true})
         })
     }
   },
@@ -123,9 +122,9 @@ const actions = {
     return submitAnswerToQuestion(params).then(result => {
       if (result === true) {
         // Commit the player mutation
-        commit('player/SET_ANSWER_SUBMITTED', true, {root: true})
+        commit('playerStore/SET_ANSWER_SUBMITTED', true, {root: true})
       } else {
-        commit('player/SET_ANSWER_SUBMITTED', false, {root: true})
+        commit('playerStore/SET_ANSWER_SUBMITTED', false, {root: true})
       }
     })
   }
