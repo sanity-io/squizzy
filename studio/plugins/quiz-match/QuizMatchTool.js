@@ -1,6 +1,7 @@
 import React from 'react'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import Spinner from 'part:@sanity/components/loading/spinner'
+import Squizzy from './components/Squizzy'
 import Preview from 'part:@sanity/base/preview'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
@@ -129,9 +130,7 @@ class QuizMatchTool extends React.Component {
           <>
             {this.renderMatchList()}
             <div className={styles.welcome}>
-              <div className={styles.squizzy}>
-                <img src="/static/squizzy-mock.png" />
-              </div>
+              <Squizzy />
               <h1>Welcome to Squizzy!</h1>
               <p>Please select a match to get started.</p>
             </div>

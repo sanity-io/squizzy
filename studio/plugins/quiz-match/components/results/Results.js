@@ -25,7 +25,7 @@ class Results extends React.Component {
       <div className={styles.root}>
         <div className={styles.graph}>
           <div>
-            <Squizzy />
+            <Squizzy expression={{eyes: 'default', mouth: 'happy'}}/>
             <p className={styles.label}>Question</p>
             <h2 className={styles.heading}>{currentQuestion.title}</h2>
           </div>

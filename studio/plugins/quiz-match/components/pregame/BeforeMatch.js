@@ -1,6 +1,7 @@
 import React from 'react'
 import {get} from 'lodash'
 import MatchQrCode from './MatchQrCode'
+import Squizzy from '../Squizzy'
 import PlayerList from './PlayerList'
 import styles from '../styles/BeforeMatch.css'
 import globals from '../styles/globals.css'
@@ -22,9 +23,7 @@ class BeforeStart extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.gridItem}>
-          <div className={styles.squizzy}>
-            <img src="/static/squizzy-mock.png" />
-          </div>
+          <Squizzy expression={{eyes: 'default', mouth: 'happy'}}/>
           <h1 className={globals.heading}>Let's get Squizzy with it!</h1>
           <p>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions. Are you ready?</p>
           <p className={styles.waitingPlayers}>Waiting for players...</p>
