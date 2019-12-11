@@ -37,7 +37,8 @@ export default {
     selectAnswer(choiceKey) {
       const playerId = this.$store.getters['playerStore/playerId']
       const match = this.$store.state.matchStore.match
-      const didAnswerQuestion = match.answers.some(
+      const {answers = []} = match
+      const didAnswerQuestion = answers.some(
         answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
       )
       if (!didAnswerQuestion) {
