@@ -3,43 +3,44 @@
 .container {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--medium-padding);
   height: 100%;
   overflow: hidden;
-}
-
-.gridItem {
   text-align: center;
 }
 
-.squizzy {
-  display: flex;
-  max-height: 300px;
-  overflow: hidden;
+.section {
+  padding-top: var(--large-padding);
+}
 
-  @nest & img {
-    width: 100%;
-    object-fit: contain
+.qrWrapper {
+  padding-top: 10em;
+
+  @nest & .instructions {
+    font-size: 1.5rem;
+    padding-top: var(--small-padding);
   }
 }
 
-.waitingPlayers {
+.infoLabel {
+  text-align: center;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.quizName {
   margin: 0;
-  font-size: 1.3em;
-  animation-name: waiting;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  font-size: 2.5rem;
+  padding-bottom: var(--small-padding);
 }
 
-@keyframes waiting {
-  from {
-    transform: scale(1)
-  }
-  50% {
-    transform: scale(0.95)
-  }
-  to {
-    transform: scale(1)
-  }
+.questionNumber {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.playerListHeading {
+  padding-top: var(--large-padding);
 }

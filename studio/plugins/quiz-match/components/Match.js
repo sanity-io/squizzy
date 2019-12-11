@@ -173,7 +173,6 @@ class Match extends React.Component {
 
     return (
       <div className={styles.root}>
-        <h1 className={styles.label}>{status}</h1>
         {isNotYetStarted && (
           <BeforeMatch
             match={match}

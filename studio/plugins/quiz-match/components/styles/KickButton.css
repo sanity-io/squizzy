@@ -6,6 +6,10 @@
   border: 0;
   outline: 0;
   font-size: 0.9rem;
-  color: var(--brand-primary);
+  color: var(--gray);
   cursor: pointer;
+
+  @nest & :hover {
+    color: var(--state-danger-color);
+  }
 }

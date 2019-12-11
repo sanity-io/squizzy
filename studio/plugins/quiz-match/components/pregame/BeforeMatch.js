@@ -4,7 +4,6 @@ import MatchQrCode from './MatchQrCode'
 import Squizzy from '../Squizzy'
 import PlayerList from './PlayerList'
 import styles from '../styles/BeforeMatch.css'
-import globals from '../styles/globals.css'
 
 class BeforeStart extends React.Component {
   handleStart = () => {
@@ -22,18 +21,25 @@ class BeforeStart extends React.Component {
     const hasPlayers = players && players.length
     return (
       <div className={styles.container}>
-        <div className={styles.gridItem}>
+        <section className={styles.section}>
           <Squizzy expression={{eyes: 'default', mouth: 'happy'}}/>
-          <h1 className={globals.heading}>Let's get Squizzy with it!</h1>
-          <p>{quiz.questions && <span>This quiz has {quiz.questions.length}</span>} questions. Are you ready?</p>
-          <p className={styles.waitingPlayers}>Waiting for players...</p>
-        </div>
+          <div>
+            <div className={styles.infoLabel}>Quiz Name</div>
+            <h1 className={styles.quizName}>{quiz.title}</h1>
+            <div className={styles.infoLabel}>No. Questions</div>
+            <div className={styles.questionNumber}>{quiz.questions.length}</div>
+          </div>
+        </section>
 
-        <div className={styles.gridItem}>
-          <MatchQrCode match={match} />
-          <p className={globals.p}>Scan the QR code to get started!</p>
+        <section className={styles.section}>
+          <h2>Players in-game</h2>
           <PlayerList match={match} onKickPlayer={this.handleKickPlayer} />
-        </div>
+        </section>
+
+        <section className={`${styles.section} ${styles.qrWrapper}`}>
+            <MatchQrCode match={match} />
+            <p className={styles.instructions}>Scan the QR code to get started!</p>
+        </section>
       </div>
     )
   }

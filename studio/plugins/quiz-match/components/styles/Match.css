@@ -6,7 +6,7 @@
   font-size: 18px;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: auto min-content;
   gap: 1em;
   padding: 0 0.5em;
 

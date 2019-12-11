@@ -1,7 +1,4 @@
 .root {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-flow: dense;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -12,7 +9,6 @@
   display: flex;
   align-items: center;
   cursor: default;
-  justify-content: center;
   font-size: 1.25em;
   @nest & button {
     opacity: 0;
@@ -20,8 +16,8 @@
   }
 }
 
-.player:nth-child(3n+1) {
-  grid-column: 2;
+.player:nth-child(odd) {
+  background: #F3F5FF;
 }
 
 .player:hover {
