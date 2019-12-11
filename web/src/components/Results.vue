@@ -1,7 +1,7 @@
 <template>
   <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
     <div>
-      <squizzy-squid />
+      <squizzy-squid :expression="expression" />
       <h1 class="feedback-heading">{{ title }}</h1>
     </div>
     <section class="section">
@@ -73,6 +73,9 @@ export default {
     }
   },
   computed: {
+    playerAnswer() {
+      return this.$store.getters['playerStore/playerAnswer']
+    },
     title() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length
@@ -81,9 +84,14 @@ export default {
       // Get a random feedback sentence for correct answer
       const randomCorrect = Math.floor(Math.random() * maxCorrect)
       // Get the status of the player's answer from the store
-      const playerAnswer = this.$store.getters['playerStore/playerAnswer']
+      const playerAnswer = this.playerAnswer
       // Select feedback sentence based on player answer
       return playerAnswer.isCorrect ? FEEDBACK_CORRECT[randomCorrect] : FEEDBACK_WRONG[randomWrong]
+    },
+    expression() {
+      return this.playerAnswer.isCorrect
+        ? {eyes: 'happy', mouth: 'happy'}
+        : {eyes: 'default', mouth: 'sad-open'}
     }
   },
   methods: {

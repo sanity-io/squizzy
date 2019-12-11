@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <squizzy-squid />
+    <squizzy-squid :expression="expression" />
     <div v-if="status" class="label">
       {{ status }}
     </div>
@@ -21,7 +21,8 @@ export default {
     return {
       title: 'Welcome to Squizzy!',
       subtitle: 'Scan a QR code to get started.',
-      status: 'Powered by Sanity'
+      status: 'Powered by Sanity',
+      expression: {eyes: 'default', mouth: 'happy'}
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -29,6 +30,7 @@ export default {
       next(vm => {
         vm.title = to.params.title
         vm.subtitle = to.params.subtitle
+        vm.expression = {eyes: 'default', mouth: 'sad-open'}
       })
     } else {
       next()

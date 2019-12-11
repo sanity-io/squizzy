@@ -19,9 +19,13 @@ const getters = {
     // Get the ID of the player
     const playerId = state.player.id
     // Find the answer that the player selected
-    const playerAnswerKey = match.answers.find(
+    const playerAnswer = match.answers.find(
       answer => answer.player._id === playerId && answer.questionKey === match.currentQuestionKey
-    ).selectedChoiceKey
+    )
+
+    if (!playerAnswer) return false
+
+    const playerAnswerKey = playerAnswer.selectedChoiceKey
     // Check if the player's answer is a correct one
     const correctAnswer = currentQuestion.choices.some(
       answer => answer._key === playerAnswerKey && answer.isCorrect

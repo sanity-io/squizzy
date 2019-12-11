@@ -1,6 +1,6 @@
 <template>
   <div class="view prequiz">
-    <squizzy-squid />
+    <squizzy-squid :expression="activeView.expression" />
     <div class="label" v-if="status">
       {{ status }}
     </div>
@@ -41,7 +41,8 @@ export default {
       if (!player)
         return {
           name: 'register',
-          title: `Squizzy time!`
+          title: `Squizzy time!`,
+          expression: {eyes: 'happy', mouth: 'default'}
           // component: () => import('../components/home/Register')
         }
 
@@ -49,7 +50,8 @@ export default {
       return {
         name: 'lobby',
         title: `Welcome ${player.name}!`,
-        subtitle: `Waiting for the Squizmaster to start the game... Get ready!`
+        subtitle: `Waiting for the Squizmaster to start the game... Get ready!`,
+        expression: {eyes: 'default', mouth: 'happy'}
         // component: () => import('../components/Lobby')
       }
     },
