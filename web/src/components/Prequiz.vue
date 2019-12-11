@@ -46,13 +46,26 @@ export default {
           // component: () => import('../components/home/Register')
         }
 
+      const match = this.$store.state.matchStore.match
+      const isPlayerInMatch = match.players.some(player => player._id === player.id)
       // Wait in lobby if there is a match and we have a player
+      if (isPlayerInMatch) {
+        return {
+          name: 'lobby',
+          title: `Welcome ${player.name}!`,
+          subtitle: `Waiting for the Squizmaster to start the game... Get ready!`,
+          expression: {eyes: 'default', mouth: 'happy'}
+          // component: () => import('../components/Lobby')
+        }
+      }
+      const playerHasLeftMatch = player && match && !isPlayerInMatch
+
+      const subtitle = playerHasLeftMatch ? `You've left the match` : 'Scan a QR code to get started!'
       return {
-        name: 'lobby',
-        title: `Welcome ${player.name}!`,
-        subtitle: `Waiting for the Squizmaster to start the game... Get ready!`,
-        expression: {eyes: 'default', mouth: 'happy'}
-        // component: () => import('../components/Lobby')
+        name: 'welcome',
+        title: `Hello ${player.name}!`,
+        subtitle,
+        expression: {eyes: 'default', mouth: (playerHasLeftMatch ? 'sad' : 'happy')}
       }
     },
     playerCount() {
