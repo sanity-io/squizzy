@@ -373,5 +373,21 @@ export default {
 
 #body
   transform-origin: 50% 50%
-  transform: rotate(15deg)
+  animation: float 4s infinite ease-in-out forwards
+
+#body-background
+  transform-origin: 50% 50%
+  animation: background 3s 0.5s infinite ease-in-out forwards
+
+@keyframes float
+  0%, 100%
+    transform: translateX(5px) rotate(10deg)
+  50%
+	  transform: translateX(-5px) rotate(10deg)
+
+@keyframes background
+  0%, 100%
+    transform: scale(0.95) rotate(-10deg)
+  50%
+	  transform: scale(0.90) rotate(0deg)
 </style>
