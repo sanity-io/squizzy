@@ -7,7 +7,7 @@
       :index="index"
       @change="selectAnswer(choice._key)"
       :class="{
-        disabled: playerHasAnsweredQuestion() && !choiceIsSelected(choice._key),
+        disabled: playerHasAnsweredQuestion(),
         'selected-answer': choiceIsSelected(choice._key)
       }"
       :disabled="playerHasAnsweredQuestion()"
@@ -29,7 +29,8 @@ export default {
   },
   data() {
     return {
-      answerSubmitted: false
+      answerSubmitted: false,
+      selectedChoice: null
     }
   },
   methods: {
@@ -41,6 +42,7 @@ export default {
       )
       if (!didAnswerQuestion) {
         this.answerSubmitted = true
+        this.selectedChoice = choiceKey
         this.$store.dispatch('client/submitAnswer', choiceKey)
       }
     },
@@ -58,6 +60,10 @@ export default {
     },
 
     choiceIsSelected(choiceKey) {
+      if (this.selectedChoice) {
+        // shortcut for a more snappy client experience
+        return this.selectedChoice === choiceKey
+      }
       const playerId = this.$store.getters['playerStore/playerId']
       const match = this.$store.state.matchStore.match
       const answer = match.answers.find(
