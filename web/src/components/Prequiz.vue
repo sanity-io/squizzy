@@ -1,0 +1,74 @@
+<template>
+  <div class="view prequiz">
+    <squizzy-squid />
+    <div class="label" v-if="status">
+      {{ status }}
+    </div>
+    <h1 class="page-title">{{ activeView.title }}</h1>
+    <p v-if="activeView.subtitle" class="page-subtitle">
+      {{ activeView.subtitle }}
+    </p>
+    <register-player v-if="activeView.name === 'register'" />
+    <div class="match-details">
+      <div class="player-count">
+        {{ playerCount }}
+      </div>
+      <div class="label">{{ playerCount !== 1 ? 'players have' : 'player has' }} joined</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import SquizzySquid from '../components/general/SquizzySquid'
+import RegisterPlayer from '../components/general/RegisterPlayer'
+export default {
+  components: {
+    SquizzySquid,
+    RegisterPlayer
+  },
+  computed: {
+    status() {
+      const match = this.$store.state.matchStore.match
+      return this.activeView.name !== 'lobby'
+        ? `${this.activeView.name === 'welcome' ? 'Joining' : 'Joined'}: ${match.title}`
+        : 'Powered by Sanity'
+    },
+    activeView() {
+      // Get the player object from the store
+      const player = this.$store.state.playerStore.player
+
+      // Register for match if no Player
+      if (!player)
+        return {
+          name: 'register',
+          title: `Squizzy time!`
+          // component: () => import('../components/home/Register')
+        }
+
+      // Wait in lobby if there is a match and we have a player
+      return {
+        name: 'lobby',
+        title: `Welcome ${player.name}!`,
+        subtitle: `Waiting for the Squizmaster to start the game... Get ready!`
+        // component: () => import('../components/Lobby')
+      }
+    },
+    playerCount() {
+      return this.$store.getters['matchStore/playerCount']
+    }
+  }
+}
+</script>
+
+<style lang="sass" scoped>
+.prequiz
+  display: grid
+  grid-template-rows: repeat(4, min-content) auto
+
+.match-details
+  text-align: center
+  padding: 2rem 1rem
+
+  .player-count
+    font-size: 4rem
+</style>

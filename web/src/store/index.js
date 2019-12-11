@@ -35,6 +35,7 @@ export default new Vuex.Store({
   },
   actions: {
     leaveGame({commit, rootState, rootGetters}) {
+      const currentRoute = router.currentRoute.name
       const slug = rootGetters['matchStore/slug']
       const player = rootState.playerStore.player
       if (player && slug) {
@@ -46,12 +47,13 @@ export default new Vuex.Store({
         return withdrawFromGame(params).then(result => {
           if (result === true) {
             commit('playerStore/REGISTER_PLAYER', false, {root: true})
+            if (currentRoute !== 'home') return router.push({name: 'home'})
           }
         })
       } else {
         commit('playerStore/REGISTER_PLAYER', false, {root: true})
         commit('matchStore/RESET_ALL', null, {root: true})
-        if (router.currentRoute.name !== 'home') {
+        if (currentRoute !== 'home') {
           const status = {
             title: 'You left the game',
             message: 'Join another one to continue.'

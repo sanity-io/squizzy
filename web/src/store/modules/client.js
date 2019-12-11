@@ -1,5 +1,4 @@
 import client from '../../sanityClient'
-import router from '../../router'
 import {submitAnswerToQuestion} from '../squizzyServerApi'
 
 // Query to get all info about a match
@@ -63,7 +62,7 @@ const actions = {
       })
   },
 
-  startListener({commit, dispatch, rootGetters}, matchSlug) {
+  startListener({dispatch, rootGetters}, matchSlug) {
     const slug = matchSlug || rootGetters['matchStore/slug']
     if (slug) {
       subscription = client
@@ -90,14 +89,6 @@ const actions = {
           // const playerExists = match.players.find(player => player._ref === activePlayerId)
 
           // TODO if player is no longer i match.players array, don't delte player data, just redirect to /home
-
-          if (router.currentRoute.name !== 'quiz' && match.isCurrentQuestionOpen) {
-            router.push({name: 'quiz'})
-          }
-
-          if (match.isCurrentQuestionOpen) {
-            commit('playerStore/SET_ANSWER_SUBMITTED', false, {root: true})
-          }
         })
     }
   },
@@ -109,22 +100,15 @@ const actions = {
     }
   },
 
-  submitAnswer({commit, rootState}, key) {
-    const {player, quiz} = rootState
+  submitAnswer({rootState}, key) {
+    const {playerStore, matchStore} = rootState
     const params = {
-      playerId: player.player.id,
-      matchSlug: quiz.match.slug.current,
-      questionKey: quiz.currentQuestionKey,
+      playerId: playerStore.player.id,
+      matchSlug: matchStore.match.slug.current,
+      questionKey: matchStore.match.currentQuestionKey,
       selectedChoiceKey: key
     }
-    return submitAnswerToQuestion(params).then(result => {
-      if (result === true) {
-        // Commit the player mutation
-        commit('playerStore/SET_ANSWER_SUBMITTED', true, {root: true})
-      } else {
-        commit('playerStore/SET_ANSWER_SUBMITTED', false, {root: true})
-      }
-    })
+    return submitAnswerToQuestion(params)
   }
 }
 

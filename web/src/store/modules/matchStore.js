@@ -17,6 +17,10 @@ const getters = {
     return get(state, 'match.players', []).length
   },
 
+  currentQuestionKey(state) {
+    return get(state, 'match.currentQuestionKey')
+  },
+
   currentQuestion(state) {
     const currentQuestionKey = get(state, 'match.currentQuestionKey')
     const question = get(state, 'match.quiz.questions').find(

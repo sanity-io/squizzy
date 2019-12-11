@@ -34,9 +34,14 @@ export default {
   },
   methods: {
     selectAnswer(key) {
-      const answerSubmitted = this.$store.state.player.answerSubmitted
+      const playerId = this.$store.getters['playerStore/playerId']
+      const match = this.$store.state.matchStore.match
+      const currentQuestionKey = this.$store.getters['matchStore/currentQuestionKey']
+      const didAnswerQuestion = match.answers.find(
+        answer => answer.questionKey === currentQuestionKey && answer.player._id === playerId
+      )
       this.selectedAnswer = key
-      if (!answerSubmitted) {
+      if (!didAnswerQuestion) {
         this.$store.dispatch('client/submitAnswer', key)
       }
     }

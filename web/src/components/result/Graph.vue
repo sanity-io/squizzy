@@ -21,7 +21,8 @@
         :choice="choice"
         :key="choice.title"
         :index="index"
-        :total="getAnswerDistribution.reduce((a, b) => a.answerCount + b.answerCount)"
+        :total="totalAnswerCount"
+        :player-answer="playerAnswer._key === choice._key ? playerAnswer : false"
       />
     </div>
   </div>
@@ -29,25 +30,48 @@
 
 <script>
 import Column from './Column'
-import {answerDistribution} from '../../../utils'
+import {answerDistribution} from '../../utils'
 export default {
   components: {
     'v-column': Column
   },
   computed: {
+    match() {
+      return this.$store.state.matchStore.match
+    },
     question() {
-      const question = this.$store.getters['quiz/currentQuestion']
+      const question = this.$store.getters['matchStore/currentQuestion']
       return question
     },
+    totalAnswerCount() {
+      const count = this.getAnswerDistribution.reduce((sum, {answerCount}) => sum + answerCount, 0)
+      return count
+    },
+    playerAnswer() {
+      // Get the key of the current question
+      const currentQuestionKey = this.question._key
+      // Get the ID of the player
+      const playerId = this.$store.getters['playerStore/playerId']
+      // Find the answer that the player selected
+      const playerAnswerKey = this.match.answers.find(
+        answer => answer.player._id === playerId && answer.questionKey === currentQuestionKey
+      ).selectedChoiceKey
+      // Check if the player's answer is a correct one
+      const correctAnswer = this.correctAnswers.some(answer => answer._key === playerAnswerKey)
+      // Return an object with the answer key and whether the answer is correct or not
+      return {_key: playerAnswerKey, isCorrect: correctAnswer}
+    },
     getAnswerDistribution() {
-      return answerDistribution(this.$store.state.matchStore.match)
+      return answerDistribution(this.match)
     },
     correctAnswers() {
       const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
-      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map((choice, index) => ({
-        ...choice,
-        index
-      }))
+      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map(
+        (choice, index) => ({
+          ...choice,
+          index
+        })
+      )
       return choices
         .filter(choice => choice.isCorrect)
         .map(choice => {
@@ -62,7 +86,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../styles/symbols.sass'
+@import '../../styles/symbols.sass'
 .graph-wrapper
   height: 100%
   display: flex

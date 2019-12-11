@@ -1,11 +1,7 @@
 <template>
   <div id="app" v-cloak>
     <the-navbar />
-    <main class="main">
-      <transition :name="transitionName" :key="$route.name">
-        <router-view />
-      </transition>
-    </main>
+    <router-view />
   </div>
 </template>
 
@@ -14,16 +10,6 @@ import TheNavbar from '@/components/TheNavbar'
 export default {
   components: {
     TheNavbar
-  },
-  data() {
-    return {
-      transitionName: ''
-    }
-  },
-  watch: {
-    $route(to, from) {
-      this.transitionName = to.meta.page > from.meta.page ? 'next' : 'prev'
-    }
   },
   mounted() {
     this.$store.dispatch('client/startListener')

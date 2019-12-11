@@ -1,5 +1,5 @@
 <template>
-  <div class="input-field">
+  <div class="register-player">
     <label :for="`input-${label}-id`">{{ label }}</label>
     <input
       class="input"
@@ -10,7 +10,6 @@
       @keydown.enter="validateName"
       autocomplete="off"
     />
-    <p v-if="error">{{ errorMessage }}</p>
     <v-button @click.native="validateName" :title="buttonTitle" :is-loading="isLoading" />
   </div>
 </template>
@@ -21,36 +20,31 @@ export default {
   components: {
     'v-button': Button
   },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    placeholder: {
-      type: String,
-      required: true
-    },
-    buttonTitle: {
-      type: String,
-      required: true
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
+      label: 'What do we call you?',
+      placeholder: 'Nickname',
       playerName: null,
-      errorMessage: null,
-      error: null
+      buttonTitle: 'Join quiz'
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.playerStore.isLoading
     }
   },
   methods: {
     validateName() {
       const name = this.playerName
       if (name) {
-        this.$emit('click', this.playerName)
+        this.$store
+          .dispatch('playerStore/registerPlayer', name)
+          .then(() => {
+            console.log(name, 'has been registered!')
+          })
+          .catch(() => {
+            console.log('something went wrong')
+          })
       }
     }
   }
@@ -61,7 +55,7 @@ export default {
 
 $max-width: 25ch
 
-.input-field
+.register-player
   display: flex
   flex-direction: column
   justify-content: center

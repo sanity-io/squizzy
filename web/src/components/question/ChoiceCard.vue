@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../styles/symbols.sass'
+@import '../../styles/symbols.sass'
 .choice-card
   position: relative
 

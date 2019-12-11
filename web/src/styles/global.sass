@@ -19,12 +19,12 @@ body
 #app
   height: 100%
   width: 100%
+  display: grid
+  grid-template-rows: min-content auto
   background: $color-white
   box-shadow: 0 0 10px rgba(0,0,0,0.1)
   border-radius: $border-radius
   overflow: hidden
-  display: flex
-  flex-direction: column
 
 [v-cloak] *
   display: none
@@ -65,11 +65,11 @@ button
   display: grid
   grid-template-rows: min-content min-content auto
 
-.page-heading
+.page-title
   font-size: $font-size-xlarge
   padding: 0.5rem
 
-.page-message
+.page-subtitle
   padding: 0 1rem
   margin: 0 auto
 
