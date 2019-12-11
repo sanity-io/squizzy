@@ -54,7 +54,8 @@ export default {
       }
       const playerId = this.$store.getters['playerStore/playerId']
       const match = this.$store.state.matchStore.match
-      return match.answers.some(
+      const {answers = []} = match
+      return answers.some(
         answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
       )
     },
@@ -66,7 +67,8 @@ export default {
       }
       const playerId = this.$store.getters['playerStore/playerId']
       const match = this.$store.state.matchStore.match
-      const answer = match.answers.find(
+      const {answers = []} = match
+      const answer = answers.find(
         answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
       )
       return answer && answer.selectedChoiceKey === choiceKey

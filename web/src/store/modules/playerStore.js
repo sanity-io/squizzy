@@ -13,13 +13,13 @@ const getters = {
     return state.player.id
   },
   playerAnswer(state, getters, rootState, rootGetters) {
-    // Get the key of the current question
     const match = rootState.matchStore.match
     const currentQuestion = rootGetters['matchStore/currentQuestion']
     // Get the ID of the player
     const playerId = state.player.id
     // Find the answer that the player selected
-    const playerAnswer = match.answers.find(
+    const {answers = []} = match
+    const playerAnswer = answers.find(
       answer => answer.player._id === playerId && answer.questionKey === match.currentQuestionKey
     )
 
