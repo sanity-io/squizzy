@@ -10,13 +10,12 @@ export default {
     activeView() {
       // Get the match object from the store
       const match = this.$store.state.matchStore.match
-
-      if (!match) return () => import('../components/Prequiz.vue')
-
+      // Get the player object from the store
+      const player = this.$store.state.playerStore.player
       // Get status of the Match
       const isOngoing = match.startedAt && !match.finishedAt
 
-      if (!isOngoing) return () => import('../components/Prequiz.vue')
+      if (!match || !isOngoing || !player) return () => import('../components/Prequiz.vue')
 
       return () => import('../components/Quiz.vue')
     }

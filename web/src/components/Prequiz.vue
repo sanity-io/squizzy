@@ -30,7 +30,7 @@ export default {
     status() {
       const match = this.$store.state.matchStore.match
       return this.activeView.name !== 'lobby'
-        ? `${this.activeView.name === 'welcome' ? 'Joining' : 'Joined'}: ${match.title}`
+        ? `${this.activeView.name === 'welcome' ? 'Joining' : 'Joined'}: ${match.quiz.title}`
         : 'Powered by Sanity'
     },
     activeView() {
