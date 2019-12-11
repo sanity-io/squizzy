@@ -381,9 +381,9 @@ export default {
 
 @keyframes float
   0%, 100%
-    transform: translateX(5px) rotate(10deg)
+    transform: translateY(5px) rotate(10deg) scale(0.95)
   50%
-	  transform: translateX(-5px) rotate(10deg)
+	  transform: translateY(-5px) rotate(10deg) scale(0.95)
 
 @keyframes background
   0%, 100%
