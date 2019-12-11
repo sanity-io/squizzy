@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles/Squizzy.css'
 const Squizzy = (props) => {
-  const {expression} = props
+  const {expression, className} = props
   console.log(expression)
+  const classes = `${styles.squizzy} ${className ? className : ''}`
   return (
-    <div className={styles.squizzy}>
+    <div className={classes}>
      <svg viewBox="0 0 195 232" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="squizzy">
           <path

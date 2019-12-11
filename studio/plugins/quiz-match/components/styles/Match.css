@@ -7,7 +7,6 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto min-content;
-  gap: 1em;
   padding: 0 0.5em;
 
   @nest & p {

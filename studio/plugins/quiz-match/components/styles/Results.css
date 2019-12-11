@@ -11,7 +11,11 @@
 .root {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--medium-padding);
+}
+
+.resultSquizzy {
+  max-height: 200px;
+  padding: 0;
 }
 
 .heading {
@@ -29,14 +33,9 @@
 
 .graph {
   display: grid;
-  grid-template-rows: min-content auto min-content;
-  gap: var(--medium-padding);
+  grid-template-rows: min-content min-content auto;
   justify-items: center;
   padding: 0 var(--medium-padding);
-
-  @nest & .squiddy {
-    padding: var(--medium-padding);
-  }
 }
 
 .correctChoicesAnswerWrapper {
@@ -65,9 +64,9 @@
 
 .symbol {
   display: flex;
-  padding-right: 0.25em;
+  padding-right: 0.2rem;
   @nest & svg {
-    height: 1.5em;
+    height: 1.5rem;
   }
 }
 

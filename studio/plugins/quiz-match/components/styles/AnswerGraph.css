@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: flex-end;
   min-width: 100px;
-  margin: 1.5em 1rem 0;
+  margin: 3rem 1rem 0;
 }
 
 .column {
@@ -31,14 +31,15 @@
   color: var(--white);
   opacity: 1;
   width: 100%;
+  min-height: 2%;
 }
 
 .isCorrect {
   position: absolute;
   top: -3rem;
-  left: calc((100% - 50px) / 2);
+  left: calc((100% - 3rem) / 2);
   display: flex;
-  font-size: 50px;
+  font-size: 3rem;
 }
 
 .symbol > svg {
