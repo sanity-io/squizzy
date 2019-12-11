@@ -75,12 +75,9 @@ const actions = {
             events: ['welcome', 'mutation', 'reconnect']
           }
         )
-        .subscribe(async event => {
-          console.log('Listener event!', event.type)
-
+        .subscribe(async () => {
           // Something has happened with the match doc, let's fetch it
           const match = await client.fetch(query, {slug})
-          console.log('Listener got match', match)
 
           dispatch('matchStore/setMatchDetails', match, {root: true})
 
@@ -94,7 +91,6 @@ const actions = {
   },
 
   stopListener() {
-    console.log('Listener stopped')
     if (subscription) {
       subscription.unsubscribe()
     }

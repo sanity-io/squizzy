@@ -7,10 +7,10 @@
       :index="index"
       @change="selectAnswer(choice._key)"
       :class="{
-        disabled: selectedAnswer && selectedAnswer !== choice._key,
-        'selected-answer': selectedAnswer === choice._key
+        disabled: playerHasAnsweredQuestion() && selectedAnswerKey !== choice._key,
+        'selected-answer': selectedAnswerKey === choice._key
       }"
-      :disabled="selectedAnswer && selectedAnswer !== choice._key"
+      :disabled="playerHasAnsweredQuestion()"
     />
   </div>
 </template>
@@ -36,14 +36,20 @@ export default {
     selectAnswer(key) {
       const playerId = this.$store.getters['playerStore/playerId']
       const match = this.$store.state.matchStore.match
-      const currentQuestionKey = this.$store.getters['matchStore/currentQuestionKey']
       const didAnswerQuestion = match.answers.find(
-        answer => answer.questionKey === currentQuestionKey && answer.player._id === playerId
+        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
       )
-      this.selectedAnswer = key
+      this.selectedAnswerKey = key
       if (!didAnswerQuestion) {
         this.$store.dispatch('client/submitAnswer', key)
       }
+    },
+    playerHasAnsweredQuestion() {
+      const playerId = this.$store.getters['playerStore/playerId']
+      const match = this.$store.state.matchStore.match
+      return match.answers.find(
+        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
+      )
     }
   }
 }
