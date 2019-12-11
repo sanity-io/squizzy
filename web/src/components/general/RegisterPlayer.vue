@@ -53,8 +53,6 @@ export default {
 
 <style lang="sass" scoped>
 
-$max-width: 25ch
-
 .register-player
   display: flex
   flex-direction: column
@@ -63,7 +61,7 @@ $max-width: 25ch
   text-align: center
 
 .input
-  margin: 1rem 0
+  margin: 1rem
   color: inherit
   font: inherit
   outline: 0
@@ -75,7 +73,7 @@ $max-width: 25ch
   text-align: center
   font-size: $font-size-large
   font-weight: 600
-  max-width: $max-width
+  max-width: 18rem
   width: 100%
 
 .input::placeholder

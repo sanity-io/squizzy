@@ -37,16 +37,15 @@ export default {
 button
   background: $color-gray--darker
   color: $color-white
-  max-width: 12rem
   padding: 0
   display: flex
   align-items: stretch
   justify-content: stretch
   flex-direction: column
   border-radius: $border-radius
-  max-width: 22ch
+  max-width: 10rem
   width: 100%
-  min-height: 3rem
+  padding: 0.5rem 1rem
   border: 0
   font: inherit
   font-weight: 600

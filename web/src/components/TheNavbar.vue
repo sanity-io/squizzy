@@ -38,11 +38,11 @@ export default {
   display: flex
   justify-content: space-between
   align-items: center
-  min-height: $navbar-height
   padding: 0.5rem
   font-weight: 700
   font-size: $font-size-large
-  // text-transform: uppercase
+  @media screen and (max-width: 374px)
+    font-size: $font-size-medium
 
 .leave-button
   font-size: $font-size-small

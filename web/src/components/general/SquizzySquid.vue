@@ -363,7 +363,7 @@ export default {
   display: flex
   justify-content: center
   text-align: center
-  margin: 1rem auto
+  margin: 0.5rem auto
   max-height: 200px
   height: 100%
   @media screen and (min-height: 736px)

@@ -29,8 +29,9 @@ export default {
   computed: {
     status() {
       const match = this.$store.state.matchStore.match
+      const player = this.$store.state.playerStore.player
       return this.activeView.name !== 'lobby'
-        ? `${this.activeView.name === 'welcome' ? 'Joining' : 'Joined'}: ${match.quiz.title}`
+        ? `${match && player ? 'Joined' : 'Joined'}: ${match.quiz.title}`
         : 'Powered by Sanity'
     },
     activeView() {
@@ -60,12 +61,14 @@ export default {
       }
       const playerHasLeftMatch = player && match && !isPlayerInMatch
 
-      const subtitle = playerHasLeftMatch ? `You've left the match` : 'Scan a QR code to get started!'
+      const subtitle = playerHasLeftMatch
+        ? `You've left the match`
+        : 'Scan a QR code to get started!'
       return {
         name: 'welcome',
         title: `Hello ${player.name}!`,
         subtitle,
-        expression: {eyes: 'default', mouth: (playerHasLeftMatch ? 'sad' : 'happy')}
+        expression: {eyes: 'default', mouth: playerHasLeftMatch ? 'sad' : 'happy'}
       }
     },
     playerCount() {
@@ -83,7 +86,11 @@ export default {
 .match-details
   text-align: center
   padding: 2rem 1rem
+  @media screen and (max-width: 374px)
+    padding: 1rem
 
   .player-count
     font-size: 4rem
+    @media screen and (max-width: 374px)
+      font-size: $font-size-xlarge
 </style>
