@@ -23,6 +23,16 @@ export default {
       subtitle: 'Scan a QR code to get started.',
       status: 'Powered by Sanity'
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (to.params.title && to.params.subtitle) {
+      next(vm => {
+        vm.title = to.params.title
+        vm.subtitle = to.params.subtitle
+      })
+    } else {
+      next()
+    }
   }
 }
 </script>

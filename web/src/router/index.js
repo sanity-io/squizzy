@@ -3,19 +3,21 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import Home from '../views/Home'
 
-// const matchFound = store.state.match && store.state.match.slug
-// const matchHasStarted = matchFound && store.state.match.startedAt
-// const showQuestion = store.state.isQuestionOpen
-// const hasPlayer = store.state.player
-
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '*', redirect: '/'},
+  {
+    path: '*',
+    redirect: '/'
+  },
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    beforeEnter(to, from, next) {
+      const match = store.state.matchStore.match
+      return match ? next({name: 'match', params: {slug: match.slug.current}}) : next()
+    }
   },
   {
     path: '/match/:slug',
@@ -24,25 +26,24 @@ const routes = [
     async beforeEnter(to, from, next) {
       try {
         const isMatch = await store.dispatch('client/getMatchDetails', to.params.slug)
-        if (isMatch) {
-          next()
-        } else {
-          next({
-            name: 'home'
-          })
-        }
-      } catch (e) {
-        console.log(e)
+        isMatch
+          ? next()
+          : next({
+              name: 'home',
+              params: {
+                title: 'Match not found!',
+                subtitle: 'Please scan another QR code to try again.'
+              }
+            })
+      } catch (error) {
+        console.error(error)
       }
     }
   },
   {
     path: '/matches',
     name: 'matches',
-    component: () => import(/* webpackChunkName: "matches" */ '../views/Matches.vue'),
-    meta: {
-      page: 6
-    }
+    component: () => import(/* webpackChunkName: "matches" */ '../views/Matches.vue')
   }
 ]
 
