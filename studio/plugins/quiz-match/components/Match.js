@@ -1,5 +1,6 @@
 import React from 'react'
 import {get} from 'lodash'
+
 import {StateLink, withRouterHOC, IntentLink, WithRouter} from 'part:@sanity/base/router'
 import client from 'part:@sanity/base/client'
 import Button from 'part:@sanity/components/buttons/default'
@@ -248,11 +249,7 @@ class Match extends React.Component {
           )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
-              <Button
-                onClick={this.handleCancelMatch}
-                color="danger"
-                className={styles.button}
-              >
+              <Button onClick={this.handleCancelMatch} color="danger" className={styles.button}>
                 Stop game
               </Button>
               <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>

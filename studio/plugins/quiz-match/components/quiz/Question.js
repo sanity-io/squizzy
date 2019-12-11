@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactPlayer from 'react-player'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 import styles from '../styles/Question.css'
@@ -63,9 +64,16 @@ class Question extends React.Component {
           </h1>
         </div>
         <Countdown match={match} onCountdownDone={this.handleCloseQuestion} />
+
         <div className={styles.choices} data-grid={currentQuestion.choices.length}>
           {this.renderChoices()}
         </div>
+
+        {match.musicUrl && (
+          <div className={styles.musicPlayer}>
+            <ReactPlayer url={match.musicUrl} playing light />
+          </div>
+        )}
       </div>
     )
   }
