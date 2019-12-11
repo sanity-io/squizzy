@@ -2,6 +2,7 @@
 
 .root {
   padding: 0 var(--medium-padding);
+  padding-top: 5rem;
   display: grid;
   grid-template-rows: min-content auto min-content
 }
