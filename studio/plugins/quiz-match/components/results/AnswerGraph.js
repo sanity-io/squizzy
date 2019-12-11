@@ -8,11 +8,12 @@ import CheckIcon from 'part:@sanity/base/check-icon'
 class AnswerGraph extends React.Component {
   render() {
     const {match} = this.props
+    const totalAnswerCount = answerDistribution(match, null, 2).reduce((sum, {answerCount}) => sum + answerCount, 0)
     return (
       <div className={styles.root}>
         {answerDistribution(match, null, 2).map((choice, index) => {
-          // TODO: calculate height in % instead
-          const barHeight = 5 + choice.answerCount * 50
+          const height = (100 / totalAnswerCount) * choice.answerCount
+          console.log(height)
           const Symbol = Icons[index]
           return (
             <div
@@ -20,7 +21,7 @@ class AnswerGraph extends React.Component {
               className={styles.choice}
               data-choice={index}
             >
-              <div className={styles.column} style={{height: `${barHeight}%`}}>
+              <div className={styles.column} style={{height: `${height}%`}}>
                 {choice.isCorrect && <div className={styles.isCorrect}><CheckIcon/></div>}
               </div>
               <div className={styles.symbol} data-symbol={index}><Symbol/></div>
