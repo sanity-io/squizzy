@@ -131,8 +131,8 @@ class QuizMatchTool extends React.Component {
             {this.renderMatchList()}
             <div className={styles.welcome}>
               <Squizzy />
-              <h1>Welcome to Squizzy!</h1>
-              <p>Please select a match to get started.</p>
+              <h1 className={styles.welcomeMessage}>Welcome to Squizzy!</h1>
+              <p className={styles.welcomeMessage}>Please select a match to get started.</p>
             </div>
           </>
         )}
