@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import nanoid from 'nanoid'
 
 import {signUp} from '../squizzyServerApi'
@@ -10,6 +11,24 @@ const state = {
 const getters = {
   playerId(state) {
     return state.player.id
+  },
+  playerAnswer(state, getters, rootState, rootGetters) {
+    // Get the key of the current question
+    const match = rootState.matchStore.match
+    const currentQuestion = rootGetters['matchStore/currentQuestion']
+    // Get the ID of the player
+    const playerId = state.player.id
+    // Find the answer that the player selected
+    const playerAnswerKey = match.answers.find(
+      answer => answer.player._id === playerId && answer.questionKey === match.currentQuestionKey
+    ).selectedChoiceKey
+    // Check if the player's answer is a correct one
+    const correctAnswer = currentQuestion.choices.some(
+      answer => answer._key === playerAnswerKey && answer.isCorrect
+    )
+    // Return an object with the answer key and whether the answer is correct or not
+    return {_key: playerAnswerKey, isCorrect: correctAnswer}
+    // return playerAnswerKey
   }
 }
 

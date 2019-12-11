@@ -48,18 +48,7 @@ export default {
       return count
     },
     playerAnswer() {
-      // Get the key of the current question
-      const currentQuestionKey = this.question._key
-      // Get the ID of the player
-      const playerId = this.$store.getters['playerStore/playerId']
-      // Find the answer that the player selected
-      const playerAnswerKey = this.match.answers.find(
-        answer => answer.player._id === playerId && answer.questionKey === currentQuestionKey
-      ).selectedChoiceKey
-      // Check if the player's answer is a correct one
-      const correctAnswer = this.correctAnswers.some(answer => answer._key === playerAnswerKey)
-      // Return an object with the answer key and whether the answer is correct or not
-      return {_key: playerAnswerKey, isCorrect: correctAnswer}
+      return this.$store.getters['playerStore/playerAnswer']
     },
     getAnswerDistribution() {
       return answerDistribution(this.match)

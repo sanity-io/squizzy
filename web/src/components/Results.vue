@@ -38,17 +38,6 @@ const FEEDBACK_WRONG = [
   'Wrong, I squid you not!'
 ]
 
-const RESULT_VIEWS = {
-  graph: {
-    name: 'results',
-    component: () => import('./result/Graph.vue')
-  },
-  leaderboard: {
-    name: 'leaderboard',
-    component: () => import('./result/Leaderboard.vue')
-  }
-}
-
 const FEEDBACK_CORRECT = [
   'Wow, you did it!',
   'Congratulations!',
@@ -62,6 +51,18 @@ const FEEDBACK_CORRECT = [
   `That's tentacle points!`,
   `Much great, many correct`
 ]
+
+const RESULT_VIEWS = {
+  graph: {
+    name: 'results',
+    component: () => import('./result/Graph.vue')
+  },
+  leaderboard: {
+    name: 'leaderboard',
+    component: () => import('./result/Leaderboard.vue')
+  }
+}
+
 export default {
   components: {
     SquizzySquid
@@ -72,17 +73,17 @@ export default {
     }
   },
   computed: {
-    currentQuestion() {
-      const question = this.$store.getters['matchStore/currentQuestion']
-      return `Q: ${question.title}`
-    },
     title() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length
+      // Get a random feedback sentence for wrong answers
       const randomWrong = Math.floor(Math.random() * maxWrong)
+      // Get a random feedback sentence for correct answer
       const randomCorrect = Math.floor(Math.random() * maxCorrect)
-      const randomResult = Math.ceil(Math.random() * 2)
-      return randomResult === 1 ? FEEDBACK_WRONG[randomWrong] : FEEDBACK_CORRECT[randomCorrect]
+      // Get the status of the player's answer from the store
+      const playerAnswer = this.$store.getters['playerStore/playerAnswer']
+      // Select feedback sentence based on player answer
+      return playerAnswer.isCorrect ? FEEDBACK_CORRECT[randomCorrect] : FEEDBACK_WRONG[randomWrong]
     }
   },
   methods: {
