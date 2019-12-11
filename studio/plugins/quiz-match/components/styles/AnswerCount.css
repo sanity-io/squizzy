@@ -1,0 +1,20 @@
+@import 'part:@sanity/base/theme/variables-style';
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  font-size: 3rem;
+  border: 5px solid var(--black);
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+}
