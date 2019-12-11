@@ -29,7 +29,6 @@ class Results extends React.Component {
             <p className={styles.label}>Question</p>
             <h2 className={styles.heading}>{currentQuestion.title}</h2>
           </div>
-          <AnswerGraph match={match} />
           <div className={styles.correctChoicesAnswerWrapper}>
             <div className={styles.label}>Correct answer{correctChoices.length > 1 ? 's' : ''}</div>
             <div className={styles.answers}>
@@ -46,6 +45,7 @@ class Results extends React.Component {
               })}
             </div>
           </div>
+          <AnswerGraph match={match} />
         </div>
         <Leaderboard match={match} />
       </div>
