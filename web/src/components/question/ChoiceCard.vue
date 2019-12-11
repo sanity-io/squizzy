@@ -63,7 +63,8 @@ export default {
   height: 100%
 
 .disabled
-  opacity: 0.2
+  opacity: 0.7
+  transition: all 0.4s ease-in-out
 
 .choice-radio
   position: absolute
