@@ -14,6 +14,10 @@
   grid-template-columns: 1fr 3fr;
   gap: 1rem;
   box-sizing: border-box;
+  @media screen and (max-width: 650px) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
 
 .questionWrapper {
@@ -39,6 +43,10 @@
     max-height: 300px;
   }
 
+  @media screen and (max-width: 650px) {
+    max-height: 200px;
+  }
+
   @nest & .imageSrc {
     object-fit: contain;
     padding: 0 1rem;
@@ -55,18 +63,30 @@
   font-size: 3em;
   padding: var(--medium-padding);
   text-align: center;
+  @media screen and (max-width: 650px) {
+   font-size: 2em;
+  }
 }
 
 .titleWithImage {
   font-size: 2.5em;
+  @media screen and (max-width: 650px) {
+    font-size: 1.5em;
+  }
 }
 
 .titleWithImage.titleLong {
   font-size: 2.3em;
+  @media screen and (max-width: 650px) {
+    font-size: 1.5em;
+  }
 }
 
 .titleShort {
   font-size: 3.5em;
+  @media screen and (max-width: 650px) {
+    font-size: 1em;
+  }
 }
 
 .choices {
@@ -122,6 +142,9 @@
 .symbol svg {
   height: 2.25em;
   fill: var(--white);
+  @media screen and (max-width: 650px) {
+    height: 1.5em;
+  }
 }
 
 /* choice 1 - Circle */

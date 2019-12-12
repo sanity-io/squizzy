@@ -60,11 +60,15 @@ class Countdown extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.countdownWrapper}>
-          <h2 className={`${styles.seconds} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
-          <p className={styles.label}>Seconds left</p>
+          <div>
+            <h2 className={`${styles.seconds} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
+            <p className={styles.label}>Seconds left</p>
+          </div>
           <Squizzy className={styles.countdownSquizzy} mouth={mouth}/>
-          <h2 className={styles.answers}>0</h2>
-          <p className={styles.label}>answers</p>
+          <div>
+            <h2 className={styles.answers}>0</h2>
+            <p className={styles.label}>answers</p>
+          </div>
         </div>
       </div>
     )

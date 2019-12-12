@@ -10,16 +10,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  @media screen and (max-width: 650px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-top: 1rem;
+    @nest & div {
+      text-align: center;
+    }
+  }
 }
 
 .countdownSquizzy {
   max-height: 270px;
   transform: scale(1.15);
+  @media screen and (max-width: 650px) {
+    max-height: 100px;
+  }
 }
 
 .countdown {
   padding: 0 var(--medium-padding);
-  text-align: center;
 }
 
 .seconds {
@@ -27,6 +38,9 @@
   font-weight: normal;
   margin: 0;
   line-height: 1;
+  @media screen and (max-width: 650px) {
+    font-size: 3rem;
+  }
 }
 
 .red {
@@ -38,6 +52,9 @@
   font-weight: normal;
   margin: 0;
   line-height: 1;
+  @media screen and (max-width: 650px) {
+    font-size: 3rem;
+  }
 }
 
 .label {
@@ -45,4 +62,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0;
+  @media screen and (max-width: 650px) {
+    font-size: 1rem;
+  }
 }
