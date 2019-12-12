@@ -22,7 +22,7 @@ class BeforeStart extends React.Component {
     return (
       <div className={styles.container}>
         <section className={styles.section}>
-          <Squizzy expression={{eyes: 'default', mouth: 'happy'}}/>
+          <Squizzy mouth="happy"/>
           <div>
             <div className={styles.infoLabel}>Quiz Name</div>
             <h1 className={styles.quizName}>{quiz.title}</h1>

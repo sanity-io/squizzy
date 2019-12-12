@@ -43,38 +43,38 @@ class Question extends React.Component {
     const {musicUrl} = match.quiz
     const currentQuestion = findCurrentQuestion(match)
     const title = currentQuestion.title
+    const titleLength = title.split('').length
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
-
+    console.log(titleLength)
     return (
       <div className={styles.root}>
-        <AnswerCount match={match} />
-        <div className={styles.question}>
-          {questionImageUrl && (
+        <Countdown match={match} onCountdownDone={this.handleCloseQuestion}/>
+        <div className={styles.questionWrapper}>
+          <div className={styles.title}>
             <div className={styles.questionImage}>
-              <img className={styles.imageSrc} src={questionImageUrl} />
+              {questionImageUrl && <img className={styles.imageSrc} src={questionImageUrl} />}
             </div>
-          )}
-          <h1
-            className={`${styles.questionTitle} ${questionImageUrl ? '' : styles.large} ${
-              title.split('').length > 15 ? styles.short : ''
-            }`}
-          >
-            {title}
-          </h1>
+            <h1
+              className={`
+                ${styles.questionTitle} 
+                ${questionImageUrl ? styles.titleWithImage : ''} 
+                ${titleLength >= 70 ? styles.titleLong : ''}
+                ${titleLength <= 20 ? styles.titleShort : ''}`}
+            >
+              {title}
+            </h1>
+          </div>
+          <div className={styles.choices} data-grid={currentQuestion.choices.length}>
+            {this.renderChoices()}
+          </div>
         </div>
-        <Countdown match={match} onCountdownDone={this.handleCloseQuestion} />
-
-        <div className={styles.choices} data-grid={currentQuestion.choices.length}>
-          {this.renderChoices()}
-        </div>
-
-        {musicUrl && (
+        {/* {match.musicUrl && (
           <div className={styles.musicPlayer}>
             <ReactPlayer url={musicUrl} playing />
           </div>
-        )}
+        )} */}
       </div>
     )
   }

@@ -2,24 +2,47 @@
 
 .root {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
+.countdownWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdownSquizzy {
+  max-height: 270px;
+  transform: scale(1.15);
+}
 
 .countdown {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-  font-size: 3rem;
-  border: 5px solid var(--black);
-  height: 6rem;
-  width: 6rem;
-  border-radius: 50%;
+  padding: 0 var(--medium-padding);
+  text-align: center;
+}
+
+.seconds {
+  font-size: 9rem;
+  font-weight: normal;
+  margin: 0;
+  line-height: 1;
 }
 
 .red {
-  color: var(--brand-primary);
-  border-color: var(--brand-primary);
+  color: var(--state-danger-color);
+}
+
+.answers {
+  font-size: 5rem;
+  font-weight: normal;
+  margin: 0;
+  line-height: 1;
+}
+
+.label {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
 }

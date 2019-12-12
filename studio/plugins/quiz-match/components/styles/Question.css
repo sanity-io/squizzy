@@ -11,29 +11,39 @@
 .root {
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: minmax(100px, 350px) 1fr;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
   box-sizing: border-box;
 }
 
+.questionWrapper {
+  display: flex;
+  flex-direction: column;
+}
 
-.question {
-  grid-column: 2;
-  grid-row: 1;
-  display: grid;
-  grid-template-rows: 1fr min-content;
+.title {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
 }
 
 .questionImage {
   display: flex;
   justify-content: center;
-  max-height: 350px;
+  max-height: 200px;
   overflow: hidden;
+  padding-top: var(--large-padding);
+
+  @media screen and (min-height: 1000px) {
+    max-height: 300px;
+  }
 
   @nest & .imageSrc {
     object-fit: contain;
     padding: 0 1rem;
     width: 100%;
+    height: auto;
   }
 }
 
@@ -42,33 +52,31 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  font-size: 2em;
+  font-size: 3em;
   padding: var(--medium-padding);
   text-align: center;
 }
 
-.short {
-  font-size: 3em;
-}
-
-.large {
+.titleWithImage {
   font-size: 2.5em;
 }
 
-.large.short {
-  font-size: 3em;
+.titleWithImage.titleLong {
+  font-size: 2.3em;
+}
+
+.titleShort {
+  font-size: 3.5em;
 }
 
 .choices {
-  grid-column: 1 / -1;
-  grid-row: 2;
+  flex-grow: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0.5rem;
-  max-width: 1200px;
   width: 100%;
-  margin: 0 auto;
+  max-height: 50%;
 }
 
 .choices[data-grid="2"] .choiceCard {
@@ -123,12 +131,12 @@
 
 /* choice 2 - Star */
 .choiceCard[data-choice="1"] {
-  background: var(--quiz-blue);
+  background: var(--quiz-green);
 }
 
 /* choice 3 - Triangle */
 .choiceCard[data-choice="2"] {
-  background: var(--quiz-green);
+  background: var(--quiz-blue);
 }
 
 /* choice 4 - Square */

@@ -10,12 +10,17 @@
 
 .root {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--medium-padding);
 }
 
 .resultSquizzy {
-  max-height: 200px;
-  padding: 0;
+  max-height: 300px;
+  padding-top: var(--large-padding);
+  @media screen and (max-height: 800px) {
+    max-height: 250px;
+    padding: 0;
+  }
 }
 
 .heading {
@@ -35,7 +40,6 @@
   display: grid;
   grid-template-rows: min-content min-content auto;
   justify-items: center;
-  padding: 0 var(--medium-padding);
 }
 
 .correctChoicesAnswerWrapper {

@@ -2,13 +2,15 @@ import React from 'react'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 import {findCurrentQuestion} from '../../utils'
+import Squizzy from '../Squizzy'
 import styles from '../styles/Countdown.css'
 
 const defaultTimeLimit = 20
 
 class Countdown extends React.Component {
   state = {
-    seconds: 0
+    seconds: 0,
+    mouth: 'happy'
   }
 
   handleCountdownDone = () => {
@@ -21,6 +23,25 @@ class Countdown extends React.Component {
     this.setState({seconds: currentQuestion.timeLimit || defaultTimeLimit})
     this.myInterval = setInterval(() => {
       const {seconds} = this.state
+      const timeLimit = currentQuestion.timeLimit
+      const halfTime = (timeLimit / 2)
+      if(seconds <= halfTime + 1) {
+        this.setState({
+          mouth: 'default'
+        })
+      }
+
+      if(seconds <= 11) {
+        this.setState({
+          mouth: 'line'
+        })
+      }
+
+      if(seconds <= 6) {
+        this.setState({
+          mouth: 'sad'
+        })
+      }
 
       if (seconds > 0) {
         this.setState(({seconds}) => ({
@@ -35,10 +56,16 @@ class Countdown extends React.Component {
   }
 
   render() {
-    const {seconds} = this.state
+    const {seconds, mouth} = this.state
     return (
       <div className={styles.root}>
-        <h2 className={`${styles.countdown} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
+        <div className={styles.countdownWrapper}>
+          <h2 className={`${styles.seconds} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
+          <p className={styles.label}>Seconds left</p>
+          <Squizzy className={styles.countdownSquizzy} mouth={mouth}/>
+          <h2 className={styles.answers}>0</h2>
+          <p className={styles.label}>answers</p>
+        </div>
       </div>
     )
   }

@@ -186,7 +186,6 @@ class Match extends React.Component {
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
               <Button
                 onClick={this.handleCloseQuestion}
-                color="simple"
                 className={`${styles.button} ${styles.stopButton}`}
               >
                 Stop
@@ -195,7 +194,6 @@ class Match extends React.Component {
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
               <Button
                 onClick={this.handleSkipQuestion}
-                color="simple"
                 className={`${styles.button} ${styles.skipButton}`}
               >
                 Skip

@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles/Squizzy.css'
 const Squizzy = (props) => {
-  const {expression, className} = props
-  console.log(expression)
+  const {eyes, mouth, className} = props
   const classes = `${styles.squizzy} ${className ? className : ''}`
   return (
     <div className={classes}>
@@ -249,7 +248,7 @@ const Squizzy = (props) => {
                   fill="#002152"
                 />
               </g>
-              {expression.eyes === 'default' && (
+              {eyes === 'default' && (
                 <g id="default-eyes">
                 <path
                   id="left"
@@ -263,7 +262,7 @@ const Squizzy = (props) => {
                 />
               </g>
               )}
-              {expression.eyes === 'happy' && (
+              {eyes === 'happy' && (
                 <g id="happy-eyes">
                 <path
                   id="left_2"
@@ -281,7 +280,7 @@ const Squizzy = (props) => {
                 />
               </g>
               )}
-              {expression.eyes === 'sad' && (
+              {eyes === 'sad' && (
                 <g id="sad-eyes">
                 <path
                   id="left_3"
@@ -301,7 +300,7 @@ const Squizzy = (props) => {
               )}
             </g>
             <g id="mouth">
-              {expression.mouth === 'happy' && (
+              {mouth === 'happy' && (
                 <g id="happy-mouth">
                 <path
                   id="fill"
@@ -317,7 +316,7 @@ const Squizzy = (props) => {
                 />
               </g>
               )}
-              {expression.mouth === 'sad-open' && (
+              {mouth === 'sad-open' && (
                 <g id="sad-open">
                 <path
                   id="happy_3"
@@ -333,7 +332,7 @@ const Squizzy = (props) => {
                 />
               </g>
               )}
-              {expression.mouth === 'default' && (
+              {mouth === 'default' && (
                 <path
                   id="smiling-mouth"
                   fillRule="evenodd"
@@ -342,7 +341,7 @@ const Squizzy = (props) => {
                   fill="#002152"
                 />
               )}
-              {expression.mouth === 'sad' && (
+              {mouth === 'sad' && (
                 <path
                   id="sad-mouth"
                   fillRule="evenodd"
@@ -351,7 +350,7 @@ const Squizzy = (props) => {
                   fill="#002152"
                 />
               )}
-              {expression.mouth === 'line' && (
+              {mouth === 'line' && (
                 <path
                   id="line"
                   fillRule="evenodd"
@@ -369,11 +368,13 @@ const Squizzy = (props) => {
 }
 
 Squizzy.propTypes = {
-  expression: PropTypes.object
+ eyes: PropTypes.string,
+ mouth: PropTypes.string
 }
 
 Squizzy.defaultProps = {
-  expression: {eyes: 'default', mouth: 'default'}
+ eyes: 'default',
+ mouth: 'default'
 }
 
 export default Squizzy
