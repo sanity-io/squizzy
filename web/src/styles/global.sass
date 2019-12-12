@@ -67,6 +67,9 @@ button
   display: grid
   grid-template-rows: min-content min-content auto
 
+.progress
+  padding-top: 0.5rem
+
 .page-title
   font-size: $font-size-xlarge
   padding: 0.5rem
@@ -83,3 +86,5 @@ button
   font-size: $font-size-small
   text-align: center
   font-weight: normal
+  @media screen and (max-width: 320px)
+    font-size: $font-size-xsmall

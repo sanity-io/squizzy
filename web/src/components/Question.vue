@@ -50,9 +50,6 @@ export default {
   @media screen and (max-height: 569px)
     grid-template-rows: min-content   minmax(100px, 200px)   1fr
 
-.progress
-  padding-top: 1rem
-
 .question
   display: grid
   grid-template-rows: 1fr min-content

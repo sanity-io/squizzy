@@ -1,8 +1,9 @@
 <template>
   <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
+    <div class="progress label">{{ title }} {{ progress }}</div>
     <div>
       <squizzy-squid :expression="expression" />
-      <h1 class="feedback-heading">{{ title }}</h1>
+      <h1 class="feedback-heading">{{ feedbackTitle }}</h1>
     </div>
     <section class="section">
       <transition name="swipe" mode="out-in">
@@ -62,7 +63,7 @@ const RESULT_VIEWS = {
     component: () => import('./result/Leaderboard.vue')
   }
 }
-
+import {mapGetters} from 'vuex'
 export default {
   components: {
     SquizzySquid
@@ -73,10 +74,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('matchStore', ['currentQuestion', 'title', 'progress']),
     playerAnswer() {
       return this.$store.getters['playerStore/playerAnswer']
     },
-    title() {
+    feedbackTitle() {
       const maxWrong = FEEDBACK_WRONG.length
       const maxCorrect = FEEDBACK_CORRECT.length
       // Get a random feedback sentence for wrong answers
@@ -116,7 +118,7 @@ export default {
 <style lang="sass" scoped>
 .result
   display: grid
-  grid-template-rows: min-content auto min-content
+  grid-template-rows: min-content min-content auto min-content
 
 .feedback-heading
   font-size: $font-size-large

@@ -366,8 +366,10 @@ export default {
   margin: 0.5rem auto
   max-height: 200px
   height: 100%
-  @media screen and (min-height: 736px)
-    max-height: 250px
+  @media screen and (max-width: 320px)
+    max-height: 150px
+  @media screen and (min-height: 800px)
+    max-height: 200px
   & svg
     width: 100%
 
