@@ -30,27 +30,27 @@
 <script>
 import SquizzySquid from '@/components/general/SquizzySquid'
 const FEEDBACK_WRONG = [
-  'Inkompetant!',
+  'So inkompetant.',
   'Eek! That sucks.',
-  'Oops, what a squidappointment.',
-  'Really, had you no inkling at all?',
+  'What a squidappointment.',
+  'Really, no inkling at all?',
   `Are you squddin' me!`,
   `Better luck next time...`,
-  'Wrong, I squid you not!'
+  'Wrong, I squid you not!',
+  `You don’t know squid!`,
+  `No tentacle points for you...`
 ]
 
 const FEEDBACK_CORRECT = [
-  'Wow, you did it!',
-  'Congratulations!',
-  'You get a squid pro quo!',
-  'Well look at you go!',
+  `Wow, you're squidding it!`,
+  'Consquidulations!',
+  'You got a squid pro quo!',
   'You are inkredible!',
-  `The smartest squid in the room!`,
+  `Aren't you the smartest squid in the room`,
   'Inkredible effort!',
-  `Are you squiddin' me!`,
   'How exsquidsit!',
-  `That's tentacle points!`,
-  `Much great, many correct`
+  `Tentacle points for you!`,
+  `You're kraken it!`
 ]
 
 const RESULT_VIEWS = {

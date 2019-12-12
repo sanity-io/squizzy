@@ -1,12 +1,13 @@
 <template>
   <div class="leaderboard-wrapper">
-    <ul class="leaderboard">
+    <ul class="leaderboard" :class="{'top-players': topPlayers}">
       <li
         class="item"
         :class="{'current-player': player._id === playerId}"
         v-for="(player, index) in getScoresByPlayer"
         :key="player._id"
       >
+        <slot name="crown" :index="index" />
         <span class="rank">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
         <span class="points">{{ Math.round(player.score) }}</span>
@@ -18,12 +19,20 @@
 <script>
 import {scoresByPlayer} from '../../utils'
 export default {
+  props: {
+    topPlayers: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     playerId() {
       return this.$store.state.playerStore.player.id
     },
     getScoresByPlayer() {
-      return scoresByPlayer(this.$store.state.matchStore.match)
+      return this.topPlayers
+        ? scoresByPlayer(this.$store.state.matchStore.match).slice(0, 2)
+        : scoresByPlayer(this.$store.state.matchStore.match)
     }
   },
   mounted() {
@@ -48,8 +57,14 @@ export default {
   height: 100%
   width: 100%
   list-style: none
-  padding: 0 0.5rem;
+  padding: 0 0.5rem
   padding-top: 1rem
+
+.top-players
+  position: static
+  padding: 0
+  margin: 0 1rem
+  width: auto
 
 .item
   display: flex
