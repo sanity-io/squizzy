@@ -1,4 +1,5 @@
 import UUID from '@sanity/uuid'
+const createSlug = () => UUID().substring(0, 5)
 
 export default {
   name: 'match',
@@ -11,7 +12,7 @@ export default {
       title: 'Slug',
       type: 'slug',
       options: {
-        slugify: () => UUID().substring(0, 5)
+        slugify: createSlug
       }
     },
     {
@@ -56,6 +57,12 @@ export default {
       of: [{type: 'answer'}]
     }
   ],
+  initialValue: () => ({
+    slug: {
+      current: createSlug(),
+      _type: 'slug'
+    }
+  }),
   preview: {
     select: {
       title: 'quiz.title',
