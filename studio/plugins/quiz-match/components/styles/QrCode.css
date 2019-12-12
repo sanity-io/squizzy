@@ -4,7 +4,9 @@
   display: flex;
   overflow: hidden;
   @nest & svg {
-    height: 100%;
+    height: auto;
     flex: 1;
+    width: 100%;
+    padding: 1rem;
   }
 }

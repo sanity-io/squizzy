@@ -21,24 +21,37 @@ class BeforeStart extends React.Component {
     const hasPlayers = players && players.length
     return (
       <div className={styles.container}>
-        <section className={styles.section}>
-          <Squizzy mouth="happy"/>
+        <div className={styles.qrCodeMobile}>
+            <MatchQrCode match={match} />
+            <p className={styles.instructions}>Scan the QR code to get started!</p>
+          </div>
+        <section className={`${styles.section} ${styles.matchInfo}`}>
+          <Squizzy mouth="happy" className={styles.squizzy}/>
           <div>
             <div className={styles.infoLabel}>Quiz Name</div>
             <h1 className={styles.quizName}>{quiz.title}</h1>
-            <div className={styles.infoLabel}>No. Questions</div>
-            <div className={styles.questionNumber}>{quiz.questions.length}</div>
+            <div className={styles.matchDetails}>
+              <div>
+                <div className={styles.questionNumber}>{quiz.questions.length}</div>
+                <div className={styles.infoLabel}>Questions</div>
+              </div>
+              <div>
+                <div className={styles.questionNumber}>{players.length}</div>
+                <div className={styles.infoLabel}>Players</div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className={styles.section}>
-          <h2>Players in-game</h2>
-          <PlayerList match={match} onKickPlayer={this.handleKickPlayer} />
-        </section>
-
-        <section className={`${styles.section} ${styles.qrWrapper}`}>
+        <section className={`${styles.section} ${styles.matchPlayers}`}>
+          <div className={styles.playerList}>
+            <h2>Players</h2>
+            <PlayerList match={match} onKickPlayer={this.handleKickPlayer} />
+          </div>
+          <div className={styles.qrCodeDesktop}>
             <MatchQrCode match={match} />
             <p className={styles.instructions}>Scan the QR code to get started!</p>
+          </div>
         </section>
       </div>
     )

@@ -3,15 +3,70 @@
 .container {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: var(--medium-padding);
   height: 100%;
   overflow: hidden;
   text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  @media screen and (max-width: 650px) {
+    padding-top: 0;
+    grid-template-columns: 1fr;
+  }
+}
+
+.qrCodeDesktop {
+  @media screen and (max-width: 650px) {
+    display: none;
+  }
+}
+
+.qrCodeMobile {
+  display: none;
+  @media screen and (max-width: 650px) {
+    display: block;
+  }
 }
 
 .section {
   padding-top: var(--large-padding);
+  @media screen and (max-width: 650px) {
+    padding-top: 0;
+  }
+}
+
+.matchPlayers {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  @media screen and (max-width: 650px) {
+    grid-template-rows: 1fr;
+  }
+}
+
+.matchDetails {
+  display: flex;
+  justify-content: center;
+  @nest & div {
+    margin: 0 1rem;
+  }
+}
+
+.playerList {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  @nest & h2 {
+    margin: 0;
+  }
+}
+
+.squizzy {
+  @media screen and (max-width: 650px) {
+    max-height: 200px;
+  }
 }
 
 .qrWrapper {
@@ -28,17 +83,26 @@
   font-size: 1em;
   font-weight: normal;
   text-transform: uppercase;
+  @media screen and (max-width: 650px) {
+    font-size: 1rem;
+  }
 }
 
 .quizName {
   margin: 0;
   font-size: 2.5rem;
   padding-bottom: var(--small-padding);
+  @media screen and (max-width: 650px) {
+    font-size: 1.5em;
+  }
 }
 
 .questionNumber {
   font-size: 5rem;
   line-height: 1;
+  @media screen and (max-width: 650px) {
+    font-size: 3em;
+  }
 }
 
 .playerListHeading {

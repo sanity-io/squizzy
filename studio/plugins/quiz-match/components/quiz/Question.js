@@ -47,7 +47,6 @@ class Question extends React.Component {
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
-    console.log(titleLength)
     return (
       <div className={styles.root}>
         <Countdown match={match} onCountdownDone={this.handleCloseQuestion}/>
