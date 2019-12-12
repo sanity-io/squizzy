@@ -4,7 +4,7 @@
       <div class="item" v-for="(player, index) in getScoresByPlayer" :key="player._id">
         <span class="rank">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
-        <span class="points">{{ player.score }}</span>
+        <span class="points">{{ Math.round(player.score) }}</span>
       </div>
     </div>
   </div>
