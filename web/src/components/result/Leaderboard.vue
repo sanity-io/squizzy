@@ -1,12 +1,17 @@
 <template>
   <div class="leaderboard-wrapper">
-    <div class="leaderboard">
-      <div class="item" v-for="(player, index) in getScoresByPlayer" :key="player._id">
+    <ul class="leaderboard">
+      <li
+        class="item"
+        :class="{'current-player': player._id === playerId}"
+        v-for="(player, index) in getScoresByPlayer"
+        :key="player._id"
+      >
         <span class="rank">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
         <span class="points">{{ Math.round(player.score) }}</span>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -14,9 +19,16 @@
 import {scoresByPlayer} from '../../utils'
 export default {
   computed: {
+    playerId() {
+      return this.$store.state.playerStore.player.id
+    },
     getScoresByPlayer() {
       return scoresByPlayer(this.$store.state.matchStore.match)
     }
+  },
+  mounted() {
+    const currentPlayer = this.$el.getElementsByClassName('current-player')[0]
+    currentPlayer.scrollIntoView()
   }
 }
 </script>
@@ -26,6 +38,7 @@ export default {
   position: relative
   overflow-y: auto
   height: 100%
+  margin: 0 -0.5rem
 
 .leaderboard
   position: absolute
@@ -34,6 +47,8 @@ export default {
   right: 0
   height: 100%
   width: 100%
+  list-style: none
+  padding: 0 0.5rem;
   padding-top: 1rem
 
 .item
@@ -41,6 +56,7 @@ export default {
   align-items: center
   min-height: 1em
   padding: 0.5rem 1rem
+  border-radius: 5px
   &:nth-child(odd)
     background: $color-gray--lightest
 
@@ -51,4 +67,8 @@ export default {
 
   .points
     margin-left: auto
+
+.current-player
+  font-weight: bold
+  border: 1px solid $color-purple
 </style>
