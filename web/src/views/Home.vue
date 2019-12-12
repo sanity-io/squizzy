@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <squizzy-squid :mouth="expression.mouth" />
+    <squizzy-squid :mouth="expression.mouth" class="home-squizzy" />
     <div v-if="status" class="label">
-      {{ status }}
+      <a href="https://sanity.io" target="_blank" rel="noopener noreferrer" class="sanity-link">
+        {{ status }}
+      </a>
     </div>
     <h1 class="page-title">{{ title }}</h1>
     <p class="page-subtitle">
@@ -38,3 +40,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.home-squizzy
+  max-height: 300px
+</style>
