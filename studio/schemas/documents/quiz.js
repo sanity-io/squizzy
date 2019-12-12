@@ -20,6 +20,12 @@ export default {
       title: 'Questions',
       type: 'array',
       of: [{type: 'question'}]
+    },
+    {
+      name: 'musicUrl',
+      title: 'URL to a music resource',
+      type: 'url',
+      description: 'Played while a question is open for answering'
     }
   ],
   preview: {

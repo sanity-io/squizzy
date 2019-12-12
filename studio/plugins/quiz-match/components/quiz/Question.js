@@ -40,6 +40,7 @@ class Question extends React.Component {
 
   render() {
     const {match} = this.props
+    const {musicUrl} = match.quiz
     const currentQuestion = findCurrentQuestion(match)
     const title = currentQuestion.title
     const questionImageUrl = urlFor(currentQuestion.image)
@@ -69,9 +70,9 @@ class Question extends React.Component {
           {this.renderChoices()}
         </div>
 
-        {match.musicUrl && (
+        {musicUrl && (
           <div className={styles.musicPlayer}>
-            <ReactPlayer url={match.musicUrl} playing light />
+            <ReactPlayer url={musicUrl} playing />
           </div>
         )}
       </div>

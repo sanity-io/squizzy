@@ -54,12 +54,6 @@ export default {
       title: 'Answers',
       type: 'array',
       of: [{type: 'answer'}]
-    },
-    {
-      name: 'musicUrl',
-      title: 'URL to a music resource',
-      type: 'url',
-      description: 'Played while a question is open for answering'
     }
   ],
   preview: {
