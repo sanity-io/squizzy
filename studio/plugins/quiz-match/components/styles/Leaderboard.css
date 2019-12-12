@@ -8,6 +8,10 @@
   width: 100%;
   margin: 0 auto;
   font-size: 1.25rem;
+  @media screen and (max-width: 768px) {
+    padding: 0;
+    min-height: 300px;
+  }
 }
 
 .heading {

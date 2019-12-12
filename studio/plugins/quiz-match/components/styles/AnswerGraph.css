@@ -14,6 +14,9 @@
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
+  @media screen and (max-width: 768px) {
+   min-height: 200px;
+  }
 }
 
 .choice {
@@ -23,6 +26,9 @@
   justify-content: flex-end;
   min-width: 85px;
   margin: 3rem 1rem 0;
+  @media screen and (max-width: 768px) {
+    min-width: 3rem;
+  }
 }
 
 .column {

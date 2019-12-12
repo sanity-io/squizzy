@@ -10,16 +10,22 @@
 
 .root {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--medium-padding);
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
 }
 
 .resultSquizzy {
   max-height: 300px;
   padding-top: var(--large-padding);
-  @media screen and (max-height: 800px) {
+  @media screen and (max-height: 768px) {
     max-height: 250px;
     padding: 0;
+  }
+  @media screen and (max-height: 1024px) {
+    max-height: 230px;
   }
 }
 
@@ -27,6 +33,10 @@
   margin: 0;
   font-size: 1.8em;
   text-align: center;
+}
+
+.long {
+  font-size: 1.5em;
 }
 
 .label {

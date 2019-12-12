@@ -8,6 +8,9 @@
   display: grid;
   grid-template-rows: auto min-content;
   padding: 0 0.5em;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
 
   @nest & p {
     margin: 0;
