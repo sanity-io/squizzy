@@ -1,0 +1,52 @@
+.root {
+
+  @nest & ul {
+    position: static;
+    padding-top: 1rem;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @nest & h2 {
+    font-size: 1.4em;
+    margin: 0.5em 0 0;
+  }
+}
+
+.header {
+  text-align: center;
+
+  @nest & h1 {
+    margin: 0;
+    font-size: 2.2em;
+  }
+
+  @nest & p {
+    font-size: 1.3em;
+  }
+}
+
+.squizzy {
+  padding: 0;
+  max-height: 250px;
+}
+
+.crown svg {
+  height: 1.1em;
+  transform: rotate(-10deg);
+  padding-right: 0.5em;
+}
+
+.crown[data-rank="0"] svg {
+  fill: #FFD84C;
+}
+
+.crown[data-rank="1"] svg {
+  fill: #A6B2C3;
+}
+
+.crown[data-rank="2"] svg {
+  fill: #ED7F12;
+}
+

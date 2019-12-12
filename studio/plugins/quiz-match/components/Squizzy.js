@@ -6,7 +6,7 @@ const Squizzy = (props) => {
   const classes = `${styles.squizzy} ${className ? className : ''}`
   return (
     <div className={classes}>
-     <svg viewBox="0 0 195 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <svg viewBox="0 0 195 242" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="squizzy">
           <path
             id={styles.bodyBackground}

@@ -10,10 +10,11 @@ import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
 import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
-import {allPlayersHaveSubmitted, getCurrentProgress} from '../utils'
+import {allPlayersHaveSubmitted, getCurrentProgress, scoresByPlayer} from '../utils'
 
 import globals from './styles/globals.css'
 import styles from './styles/Match.css'
+import TopPlayers from './TopPlayers'
 
 function nextQuestion(match) {
   const {currentQuestionKey, quiz} = match
@@ -170,7 +171,7 @@ class Match extends React.Component {
     const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
     const status = `${quiz.title} ${isOngoing ? getCurrentProgress(match) : ''}`
-
+    const topPlayers = scoresByPlayer(match).slice(0, 2)
     return (
       <div className={styles.root}>
         {isNotYetStarted && (
@@ -210,26 +211,19 @@ class Match extends React.Component {
 
         {isFinished && (
           <div className={styles.simpleLayout}>
-            <h1>Match finished!</h1>
-            <IntentButton
-              color="success"
-              intent="create"
-              params={{type: 'match'}}
-              onClick={() => {}}
-              title="Create new match"
-              className={styles.button}
-            >
-              Create new match
-            </IntentButton>
-            <p>or</p>
-            {/* TODO: fix this. Link to list of matches */}
-            {/* <WithRouter>
-              {router => (
-                <StateLink state={{...router.state, tool: 'quiz-match'}}>
-                  Play another match
-                </StateLink>
-              )}
-            </WithRouter> */}
+            <div className={styles.finishedMatch}>
+              <TopPlayers players={topPlayers}/>
+              <IntentButton
+                color="success"
+                intent="create"
+                params={{type: 'match'}}
+                onClick={() => {}}
+                title="Create new match"
+                className={styles.button}
+              >
+                Create new match
+              </IntentButton>
+            </div>
           </div>
         )}
 
@@ -254,15 +248,10 @@ class Match extends React.Component {
               </Button>
             </>
           )}
-          {isOngoing && isFinalQuestionCompleted && (
-            <>
-              <Button color="success" onClick={this.handleRestartMatch} className={styles.button}>
-                Restart
-              </Button>
-              <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
-                Finish game
-              </Button>
-            </>
+          {isOngoing && isFinalQuestionCompleted && ( 
+            <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
+              Finish game
+            </Button>
           )}
         </div>
       </div>

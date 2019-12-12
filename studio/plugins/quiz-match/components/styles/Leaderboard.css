@@ -44,6 +44,7 @@
     font-size: 1.3em;
     font-weight: bold;
     padding: var(--small-padding) var(--medium-padding);
+    border-radius: 5px;
 
     @nest & .rank {
       font-weight: normal;

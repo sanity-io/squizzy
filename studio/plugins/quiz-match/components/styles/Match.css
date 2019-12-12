@@ -20,6 +20,8 @@
 .simpleLayout {
   margin: var(--large-padding) auto;
   text-align: center;
+  max-width: 750px;
+  width: 100%;
 }
 
 .label {
@@ -34,10 +36,6 @@
   justify-content: center;
   margin: var(--medium-padding);
 }
-
-/* .buttonsWrapper:empty {
-  margin: 0;
-} */
 
 .button {
   letter-spacing: 1px;
@@ -76,5 +74,8 @@
   background: color(#647897 l(+20%));
 }
 
-
-
+.finishedMatch {
+  @nest & h1 {
+    margin: 0;
+  }
+}

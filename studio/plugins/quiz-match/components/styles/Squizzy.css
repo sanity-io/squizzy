@@ -13,7 +13,7 @@
 
 #body {
   transform-origin: 50% 50%;
-  animation: float 4s infinite ease-in-out forwards;
+  animation: float 5s infinite ease-in-out forwards;
 }
 
 #bodyBackground {
@@ -26,7 +26,7 @@
     transform: translateY(5px) rotate(10deg) scale(1);
   }
   50% {
-    transform: translateY(-5px) rotate(10deg) scale(0.95);
+    transform: translateY(-5px) rotate(10deg) scale(1);
   }
 }
 
@@ -35,6 +35,6 @@
     transform: scale(1) rotate(0deg);
   }
   50% {
-    transform: scale(0.90) rotate(-10deg)
+    transform: scale(0.95) rotate(-10deg)
   }
 }
