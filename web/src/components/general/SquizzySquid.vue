@@ -391,7 +391,7 @@ export default {
 
 @keyframes background
   0%, 100%
-    transform: scale(0.95) rotate(-10deg)
+    transform: scale(1) rotate(0deg)
   50%
-	  transform: scale(0.90) rotate(0deg)
+	  transform: scale(0.95) rotate(-10deg)
 </style>
