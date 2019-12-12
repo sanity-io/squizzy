@@ -242,7 +242,7 @@
                 fill="#002152"
               />
             </g>
-            <g id="default-eyes" v-if="expression.eyes === 'default'">
+            <g id="default-eyes" v-if="eyes === 'default'">
               <path
                 id="left"
                 d="M85.8691 149.524C83.3751 148.35 82.3015 145.364 83.475 142.871C84.6483 140.377 87.6346 139.302 90.1285 140.475C92.6237 141.649 93.6976 144.635 92.524 147.128C91.3505 149.623 88.3649 150.699 85.8691 149.524Z"
@@ -254,7 +254,7 @@
                 fill="#002152"
               />
             </g>
-            <g id="happy-eyes" v-if="expression.eyes === 'happy'">
+            <g id="happy-eyes" v-if="eyes === 'happy'">
               <path
                 id="left_2"
                 fill-rule="evenodd"
@@ -270,7 +270,7 @@
                 fill="#002152"
               />
             </g>
-            <g id="sad-eyes" v-if="expression.eyes === 'sad'">
+            <g id="sad-eyes" v-if="eyes === 'sad'">
               <path
                 id="left_3"
                 fill-rule="evenodd"
@@ -288,7 +288,7 @@
             </g>
           </g>
           <g id="mouth">
-            <g id="happy-mouth" v-if="expression.mouth === 'happy'">
+            <g id="happy-mouth" v-if="mouth === 'happy'">
               <path
                 id="fill"
                 d="M105.889 158.354L93.2732 158.238C93.2732 158.238 92.8537 164.339 99.265 164.552C106.106 164.779 105.889 158.354 105.889 158.354Z"
@@ -302,7 +302,7 @@
                 fill="#002152"
               />
             </g>
-            <g id="sad-open" v-if="expression.mouth === 'sad-open'">
+            <g id="sad-open" v-if="mouth === 'sad-open'">
               <path
                 id="happy_3"
                 d="M93.0032 163.157L105.619 163.272C105.619 163.272 106.039 157.172 99.6273 156.959C92.7866 156.732 93.0032 163.157 93.0032 163.157Z"
@@ -317,7 +317,7 @@
               />
             </g>
             <path
-              v-if="expression.mouth === 'default'"
+              v-if="mouth === 'default'"
               id="smiling-mouth"
               fill-rule="evenodd"
               clip-rule="evenodd"
@@ -325,7 +325,7 @@
               fill="#002152"
             />
             <path
-              v-if="expression.mouth === 'sad'"
+              v-if="mouth === 'sad'"
               id="sad-mouth"
               fill-rule="evenodd"
               clip-rule="evenodd"
@@ -333,7 +333,7 @@
               fill="#002152"
             />
             <path
-              v-if="expression.mouth === 'line'"
+              v-if="mouth === 'line'"
               id="line"
               fill-rule="evenodd"
               clip-rule="evenodd"
@@ -350,9 +350,13 @@
 <script>
 export default {
   props: {
-    expression: {
-      type: Object,
-      default: () => ({eyes: 'default', mouth: 'default'})
+    eyes: {
+      type: String,
+      default: 'default'
+    },
+    mouth: {
+      type: String,
+      default: 'default'
     }
   }
 }

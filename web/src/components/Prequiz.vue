@@ -1,6 +1,6 @@
 <template>
   <div class="view prequiz">
-    <squizzy-squid :expression="activeView.expression" />
+    <squizzy-squid :mouth="activeView.expression.mouth" :eyes="activeView.expression.eyes" />
     <div class="label" v-if="status">
       {{ status }}
     </div>

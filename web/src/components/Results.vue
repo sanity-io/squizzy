@@ -1,8 +1,8 @@
 <template>
   <div class="result page" v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft">
-    <div class="progress label">{{ title }} {{ progress }}</div>
+    <div class="progress label">{{ status }}</div>
     <div>
-      <squizzy-squid :expression="expression" />
+      <squizzy-squid :mouth="expression.mouth" :eyes="expression.eyes" />
       <h1 class="feedback-heading">{{ feedbackTitle }}</h1>
     </div>
     <section class="section">
@@ -70,7 +70,8 @@ export default {
   },
   data() {
     return {
-      activeView: RESULT_VIEWS.graph
+      activeView: RESULT_VIEWS.graph,
+      status: 'Waiting for Squizzmaster...'
     }
   },
   computed: {
