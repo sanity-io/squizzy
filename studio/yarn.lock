@@ -729,6 +729,11 @@
     fs-extra "^6.0.1"
     promise-props-recursive "^1.0.0"
 
+"@sanity/cli@^0.147.3":
+  version "0.147.3"
+  resolved "https://registry.yarnpkg.com/@sanity/cli/-/cli-0.147.3.tgz#e94dd12e6c4a9cc66b8fd390683d40593a6048cd"
+  integrity sha512-bjmSWF+mSH2zVZX4beQLF5RqE5ODhCjoXyxtLQfqN/y6I2QjGlvUB73ZJ491eU7HPxJqKUspwNphu9VJyKR+OA==
+
 "@sanity/client@0.147.3":
   version "0.147.3"
   resolved "https://registry.npmjs.org/@sanity/client/-/client-0.147.3.tgz#4ac0beb56df455441f203c6bfc8306e3b6c2b191"
@@ -856,8 +861,9 @@
     "@sanity/rich-date-input" "0.147.0"
 
 "@sanity/default-layout@^0.147.4":
-  version "0.147.3"
-  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-0.147.3.tgz#d506ab960f12defe693841b275f03dff47dacfc6"
+  version "0.147.4"
+  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-0.147.4.tgz#bd4d16ca33a339ea00fed68e2cc9c1d340e774f3"
+  integrity sha512-2LiitXiuREuouq7f15Rbtu2cVBibbfRlbSn+gSKsHHPh20XD5/NctV5Ny5bugajIEv4ECTi/a5Fy3ygtJsT32w==
   dependencies:
     "@sanity/generate-help-url" "0.147.0"
     is-hotkey "^0.1.4"

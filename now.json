@@ -1,20 +1,42 @@
 {
   "version": 2,
   "name": "squizzy",
-  "builds": [
-    {"src": "api/package.json", "use": "@now/node"},
-    {"src": "web/package.json", "use": "@now/static-build"},
-    {"src": "studio/package.json", "use": "@now/static-build"}
+  "builds": [{
+      "src": "api/**",
+      "use": "@now/node"
+    },
+    {
+      "src": "web/package.json",
+      "use": "@now/static-build"
+    },
+    {
+      "src": "studio/package.json",
+      "use": "@now/static-build"
+    }
   ],
-  "routes": [
-    {"src": "^/studio/static/(.*)", "dest": "/studio/static/$1"},
-    {"src": "^/studio/(.*)", "dest": "/studio/index.html"},
-    {"src": "^/studio", "dest": "/studio/index.html"},
-    {"src": "^/api/(.*)", "dest": "/api/$1"},
-    {"src": "^/css/(.*)", "dest": "/web/css/$1"},
-    {"src": "^/js/(.*)", "dest": "/web/js/$1"},
-    {"src": "^/favicon.ico", "dest": "/web/favicon.ico"},
-    {"src": "^/(.*)", "dest": "/web/index.html"},
-    {"src": "^/", "dest": "/web/index.html"}
+  "routes": [{
+      "src": "^/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "^/studio/static/(.*)",
+      "dest": "/studio/static/$1"
+    },
+    {
+      "src": "^/studio(.*)",
+      "dest": "/studio/index.html"
+    },
+    {
+      "src": "^/(js|css)/(.*)",
+      "dest": "/web/$1/$2"
+    },
+    {
+      "src": "^/favicon.ico",
+      "dest": "/web/favicon.ico"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/web/index.html"
+    }
   ]
 }
