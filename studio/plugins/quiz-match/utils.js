@@ -26,7 +26,8 @@ export function findCurrentQuestion(match) {
 }
 
 export function getCurrentProgress(match) {
-  const currentQuestionIndex = match.quiz.questions.findIndex(question => question._key === match.currentQuestionKey) + 1
+  const currentQuestionIndex =
+    match.quiz.questions.findIndex(question => question._key === match.currentQuestionKey) + 1
   return `(${currentQuestionIndex}/${match.quiz.questions.length})`
 }
 
@@ -51,11 +52,15 @@ export const answerDistribution = match => {
 
 // Use the questionKey parameter to get scores for that particular question only
 export const scoresByPlayer = (match, questionKey = 0) => {
-  const {currentQuestionKey, answers, quiz, players} = match
+  const {currentQuestionKey, answers, quiz, players = []} = match
   const {questions} = quiz
   const indexOfCurrentQuestion = questions
     .map(question => question._key)
     .indexOf(currentQuestionKey)
+
+  if (players.length === 0) {
+    return []
+  }
 
   // gather all answered questions
   let questionsToCalculate

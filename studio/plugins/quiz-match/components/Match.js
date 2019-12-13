@@ -15,6 +15,7 @@ import {allPlayersHaveSubmitted, getCurrentProgress, scoresByPlayer} from '../ut
 import globals from './styles/globals.css'
 import styles from './styles/Match.css'
 import TopPlayers from './TopPlayers'
+import MediaPlayer from './MediaPlayer'
 
 function nextQuestion(match) {
   const {currentQuestionKey, quiz} = match
@@ -88,7 +89,7 @@ class Match extends React.Component {
     client
       .patch(match._id)
       .set({isCurrentQuestionOpen: false})
-      .unset(['startedAt', 'currentQuestionKey'])
+      .unset(['startedAt', 'currentQuestionKey', 'players', 'answers'])
       .commit()
   }
 
@@ -212,7 +213,7 @@ class Match extends React.Component {
         {isFinished && (
           <div className={styles.simpleLayout}>
             <div className={styles.finishedMatch}>
-              <TopPlayers players={topPlayers}/>
+              <TopPlayers players={topPlayers} />
               <IntentButton
                 color="success"
                 intent="create"
@@ -248,12 +249,15 @@ class Match extends React.Component {
               </Button>
             </>
           )}
-          {isOngoing && isFinalQuestionCompleted && ( 
+          {isOngoing && isFinalQuestionCompleted && (
             <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
               Finish game
             </Button>
           )}
         </div>
+        {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
+          <MediaPlayer match={match} />
+        )}
       </div>
     )
   }

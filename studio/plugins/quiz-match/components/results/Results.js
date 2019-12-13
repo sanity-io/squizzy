@@ -25,9 +25,11 @@ class Results extends React.Component {
       <div className={styles.root}>
         <div className={styles.graph}>
           <div>
-            <Squizzy mouth="happy" className={styles.resultSquizzy}/>
+            <Squizzy mouth="happy" className={styles.resultSquizzy} />
             <p className={styles.label}>Question</p>
-            <h2 className={`${styles.heading} ${titleLength >= 50 ? styles.long : ''}`}>{currentQuestion.title}</h2>
+            <h2 className={`${styles.heading} ${titleLength >= 50 ? styles.long : ''}`}>
+              {currentQuestion.title}
+            </h2>
           </div>
           <div className={styles.correctChoicesAnswerWrapper}>
             <div className={styles.label}>Correct answer{correctChoices.length > 1 ? 's' : ''}</div>

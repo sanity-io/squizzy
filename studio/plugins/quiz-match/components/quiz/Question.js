@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactPlayer from 'react-player'
 import client from 'part:@sanity/base/client'
 import imageUrlBuilder from '@sanity/image-url'
 import styles from '../styles/Question.css'
@@ -40,16 +39,16 @@ class Question extends React.Component {
 
   render() {
     const {match} = this.props
-    const {musicUrl} = match.quiz
     const currentQuestion = findCurrentQuestion(match)
     const title = currentQuestion.title
     const titleLength = title.split('').length
     const questionImageUrl = urlFor(currentQuestion.image)
       .width(300)
       .url()
+
     return (
       <div className={styles.root}>
-        <Countdown match={match} onCountdownDone={this.handleCloseQuestion}/>
+        <Countdown match={match} onCountdownDone={this.handleCloseQuestion} />
         <div className={styles.questionWrapper}>
           <div className={styles.title}>
             <div className={styles.questionImage}>
@@ -57,8 +56,8 @@ class Question extends React.Component {
             </div>
             <h1
               className={`
-                ${styles.questionTitle} 
-                ${questionImageUrl ? styles.titleWithImage : ''} 
+                ${styles.questionTitle}
+                ${questionImageUrl ? styles.titleWithImage : ''}
                 ${titleLength >= 70 ? styles.titleLong : ''}
                 ${titleLength <= 20 ? styles.titleShort : ''}`}
             >
@@ -69,11 +68,6 @@ class Question extends React.Component {
             {this.renderChoices()}
           </div>
         </div>
-        {/* {match.musicUrl && (
-          <div className={styles.musicPlayer}>
-            <ReactPlayer url={musicUrl} playing />
-          </div>
-        )} */}
       </div>
     )
   }

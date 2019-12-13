@@ -16,17 +16,17 @@ class BeforeStart extends React.Component {
 
   render() {
     const {match} = this.props
-    const {players, quiz} = match
+    const {players = [], quiz} = match
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
-    const hasPlayers = players && players.length
+
     return (
       <div className={styles.container}>
         <div className={styles.qrCodeMobile}>
-            <MatchQrCode match={match} />
-            <p className={styles.instructions}>Scan the QR code to get started!</p>
-          </div>
+          <MatchQrCode match={match} />
+          <p className={styles.instructions}>Scan the QR code to get started!</p>
+        </div>
         <section className={`${styles.section} ${styles.matchInfo}`}>
-          <Squizzy mouth="happy" className={styles.squizzy}/>
+          <Squizzy mouth="happy" className={styles.squizzy} />
           <div>
             <div className={styles.infoLabel}>Quiz Name</div>
             <h1 className={styles.quizName}>{quiz.title}</h1>
