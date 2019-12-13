@@ -1,8 +1,10 @@
 {
   "version": 2,
   "name": "squizzy",
-  "builds": [
-    {
+  "env": {
+    "SQUIZZY_WRITE_TOKEN": "@squizzy_write_token"
+  },
+  "builds": [{
       "src": "api/**",
       "use": "@now/node"
     },
@@ -15,8 +17,7 @@
       "use": "@now/static-build"
     }
   ],
-  "routes": [
-    {
+  "routes": [{
       "src": "^/api/(.*)",
       "dest": "/api/$1.js"
     },
