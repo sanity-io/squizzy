@@ -78,7 +78,7 @@ const actions = {
         .subscribe(async () => {
           // Something has happened with the match doc, let's fetch it
           const match = await client.fetch(query, {slug})
-
+          console.log('match updated', match)
           dispatch('matchStore/setMatchDetails', match, {root: true})
 
           // Remove player from store if not in match.players array

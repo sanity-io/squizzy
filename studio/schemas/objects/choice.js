@@ -1,4 +1,4 @@
-const maxAnswerLength = 40
+const maxAnswerLength = 50
 
 export default {
   name: 'choice',

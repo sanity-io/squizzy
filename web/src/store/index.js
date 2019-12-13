@@ -55,7 +55,7 @@ export default new Vuex.Store({
         commit('matchStore/RESET_ALL', null, {root: true})
         if (currentRoute !== 'home') {
           const status = {
-            title: 'You left the game',
+            title: 'You left the match',
             message: 'Join another one to continue.'
           }
           commit('SET_STATUS_MESSAGE', status)
