@@ -20,5 +20,4 @@ export default {
 <style lang="sass" scoped>
 .qrcode
   padding-top: 1em
-
 </style>
