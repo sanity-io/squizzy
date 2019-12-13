@@ -1,20 +1,5 @@
 <template>
   <div class="graph-wrapper">
-    <p class="question">{{ question.title }}</p>
-    <div class="correct-answers">
-      <div class="label">Correct answer{{ correctAnswers.length > 1 ? 's' : '' }}</div>
-      <div class="answers">
-        <div
-          class="answer choice"
-          v-for="choice in correctAnswers"
-          :key="choice.title"
-          :data-choice="choice.index"
-        >
-          <div class="symbol"><component :is="choice.icon" /></div>
-          {{ choice.title }}
-        </div>
-      </div>
-    </div>
     <div class="graph">
       <v-column
         v-for="(choice, index) in getAnswerDistribution"
@@ -39,10 +24,6 @@ export default {
     match() {
       return this.$store.state.matchStore.match
     },
-    question() {
-      const question = this.$store.getters['matchStore/currentQuestion']
-      return question
-    },
     totalAnswerCount() {
       const count = this.getAnswerDistribution.reduce((sum, {answerCount}) => sum + answerCount, 0)
       return count
@@ -52,30 +33,12 @@ export default {
     },
     getAnswerDistribution() {
       return answerDistribution(this.match)
-    },
-    correctAnswers() {
-      const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
-      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map(
-        (choice, index) => ({
-          ...choice,
-          index
-        })
-      )
-      return choices
-        .filter(choice => choice.isCorrect)
-        .map(choice => {
-          return {
-            ...choice,
-            icon: () => import(`../symbols/${ICONS[choice.index]}Icon.vue`)
-          }
-        })
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-@import '../../styles/symbols.sass'
 .graph-wrapper
   height: 100%
   width: 100%
@@ -87,34 +50,4 @@ export default {
   display: flex
   justify-content: center
   flex: 1
-
-.question
-  margin: 0.5rem 0
-  font-size: $font-size-base
-
-.correct-answers
-  text-align: center
-  padding-bottom: 0.5rem
-
-  .label
-    text-transform: uppercase
-    font-size: $font-size-small
-    padding: 0.5rem 0
-
-  .answers
-    display: flex
-    justify-content: center
-
-  .answer
-    display: flex
-    padding: 0 1rem
-    align-items: center
-    font-size: $font-size-base
-
-    .symbol
-      display: flex
-      padding: 0 0.25rem
-
-    .symbol svg
-      height: $font-size-base
 </style>

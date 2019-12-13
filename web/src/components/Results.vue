@@ -4,6 +4,21 @@
     <div>
       <squizzy-squid :mouth="expression.mouth" :eyes="expression.eyes" />
       <h1 class="feedback-heading">{{ feedbackTitle }}</h1>
+      <p class="question">{{ question.title }}</p>
+      <div class="correct-answers">
+        <div class="label">Correct answer{{ correctAnswers.length > 1 ? 's' : '' }}</div>
+        <div class="answers">
+          <div
+            class="answer choice"
+            v-for="choice in correctAnswers"
+            :key="choice.title"
+            :data-choice="choice.index"
+          >
+            <div class="symbol"><component :is="choice.icon" /></div>
+            {{ choice.title }}
+          </div>
+        </div>
+      </div>
     </div>
     <section class="section">
       <keep-alive>
@@ -96,6 +111,27 @@ export default {
       return this.playerAnswer.isCorrect
         ? {eyes: 'happy', mouth: 'happy'}
         : {eyes: 'default', mouth: 'sad-open'}
+    },
+    question() {
+      const question = this.$store.getters['matchStore/currentQuestion']
+      return question
+    },
+    correctAnswers() {
+      const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
+      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map(
+        (choice, index) => ({
+          ...choice,
+          index
+        })
+      )
+      return choices
+        .filter(choice => choice.isCorrect)
+        .map(choice => {
+          return {
+            ...choice,
+            icon: () => import(`./symbols/${ICONS[choice.index]}Icon.vue`)
+          }
+        })
     }
   },
   methods: {
@@ -120,6 +156,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../styles/symbols.sass'
 .result
   display: grid
   grid-template-rows: min-content min-content auto min-content
@@ -130,6 +167,36 @@ export default {
     font-size: $font-size-xlarge
   @media screen and (min-height: 812px)
     font-size: $font-size-xxlarge
+
+.question
+  margin: 0.5rem 0
+  font-size: $font-size-base
+
+.correct-answers
+  text-align: center
+  padding-bottom: 0.5rem
+
+  .label
+    text-transform: uppercase
+    font-size: $font-size-small
+    padding: 0.5rem 0
+
+  .answers
+    display: flex
+    justify-content: center
+
+  .answer
+    display: flex
+    padding: 0 1rem
+    align-items: center
+    font-size: $font-size-base
+
+    .symbol
+      display: flex
+      padding: 0 0.25rem
+
+    .symbol svg
+      height: $font-size-base
 
 .section
   display: grid
