@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios'
 
-const backendRootUrl = 'https://squizzy-server.sanity-io.now.sh/api'
+const backendRootUrl = '/api'
 
 export const withdrawFromGame = ({playerId, matchSlug}) => {
   const url = `${backendRootUrl}/withdraw-player`
