@@ -6,11 +6,11 @@
       <h1 class="feedback-heading">{{ feedbackTitle }}</h1>
     </div>
     <section class="section">
-      <transition name="swipe" mode="out-in">
-        <keep-alive>
-          <component :is="activeView.component" />
-        </keep-alive>
-      </transition>
+      <keep-alive>
+        <transition :name="transitionName">
+          <component :is="activeView.component" :key="activeView.name" class="transition" />
+        </transition>
+      </keep-alive>
     </section>
     <div class="view-tracker">
       <div
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       activeView: RESULT_VIEWS.graph,
+      transitionName: 'next',
       status: 'Waiting for Squizzmaster...'
     }
   },
@@ -100,6 +101,7 @@ export default {
   methods: {
     swipeLeft() {
       if (this.activeView.name === 'leaderboard') {
+        this.transitionName = 'prev'
         this.activeView = RESULT_VIEWS.graph
       } else {
         return
@@ -107,6 +109,7 @@ export default {
     },
     swipeRight() {
       if (this.activeView.name === 'results') {
+        this.transitionName = 'next'
         this.activeView = RESULT_VIEWS.leaderboard
       } else {
         return
@@ -129,9 +132,16 @@ export default {
     font-size: $font-size-xxlarge
 
 .section
+  display: grid
   overflow: hidden
   max-height: 100%
   min-height: 0
+  grid-template-columns: 1fr
+  grid-template-rows: 1fr
+
+  .transition
+    grid-column: 1
+    grid-row: 1
 
 .view-tracker
   justify-self: flex-end
@@ -146,7 +156,31 @@ export default {
     background: $color-gray
     border-radius: 50%
     margin: 0 0.25rem
+    transition: all .7s ease-in-out
 
     &.is-active
+      transform: scale(1.1)
       background: $color-gray--darker
+
+.next-leave-active,
+.next-enter-active
+  transition: transform 0.7s ease-in-out
+  z-index: 1
+
+.prev-leave-active,
+.prev-enter-active
+  transition: transform 0.7s ease-in-out
+  z-index: 0
+
+.next-enter
+  transform: translate(100%, 0)
+
+.next-leave-to
+  transform: translate(-100%, 0)
+
+.prev-enter
+  transform: translate(-100%, 0)
+
+.prev-leave-to
+  transform: translate(100%, 0)
 </style>

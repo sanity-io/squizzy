@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     const currentPlayer = this.$el.getElementsByClassName('current-player')[0]
-    currentPlayer.scrollIntoView()
+    if (currentPlayer) return currentPlayer.scrollIntoView()
   }
 }
 </script>
@@ -47,7 +47,7 @@ export default {
   position: relative
   overflow-y: auto
   height: 100%
-  margin: 0 -0.5rem
+  width: 100%
 
 .leaderboard
   position: absolute
@@ -57,7 +57,7 @@ export default {
   height: 100%
   width: 100%
   list-style: none
-  padding: 0 0.5rem
+  padding: 0
   padding-top: 1rem
 
 .top-players
