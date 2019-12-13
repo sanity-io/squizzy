@@ -2,22 +2,26 @@
   <div class="home">
     <squizzy-squid :mouth="expression.mouth" class="home-squizzy" />
     <div v-if="status" class="label">
-      <a href="https://sanity.io" target="_blank" rel="noopener noreferrer" class="sanity-link">
-        {{ status }}
-      </a>
+      <a
+        href="https://sanity.io"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sanity-link"
+      >{{ status }}</a>
     </div>
     <h1 class="page-title">{{ title }}</h1>
-    <p class="page-subtitle">
-      {{ subtitle }}
-    </p>
+    <p class="page-subtitle">{{ subtitle }}</p>
+    <QrCodeReader />
   </div>
 </template>
 
 <script>
 import SquizzySquid from '@/components/general/SquizzySquid'
+import QrCodeReader from '@/components/general/QrCodeReader'
 export default {
   components: {
-    SquizzySquid
+    SquizzySquid,
+    QrCodeReader
   },
   data() {
     return {
