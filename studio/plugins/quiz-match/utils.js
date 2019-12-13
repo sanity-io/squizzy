@@ -1,5 +1,5 @@
-const correctAnswerScore = 100
-const firstAnswerScore = 50
+import * as config from '../../quizConfig'
+const {correctAnswerScore, firstAnswerScore} = config.default.match
 
 const calculateScore = placing => {
   return correctAnswerScore + firstAnswerScore / (placing + 1)

@@ -5,7 +5,8 @@ import {findCurrentQuestion} from '../../utils'
 import Squizzy from '../Squizzy'
 import styles from '../styles/Countdown.css'
 
-const defaultTimeLimit = 20
+import * as config from '../../../../quizConfig'
+const {defaultTimeLimit} = config.default.schema
 
 class Countdown extends React.Component {
   state = {
@@ -24,20 +25,20 @@ class Countdown extends React.Component {
     this.myInterval = setInterval(() => {
       const {seconds} = this.state
       const timeLimit = currentQuestion.timeLimit
-      const halfTime = (timeLimit / 2)
-      if(seconds <= halfTime + 1) {
+      const halfTime = timeLimit / 2
+      if (seconds <= halfTime + 1) {
         this.setState({
           mouth: 'default'
         })
       }
 
-      if(seconds <= 11) {
+      if (seconds <= 11) {
         this.setState({
           mouth: 'line'
         })
       }
 
-      if(seconds <= 6) {
+      if (seconds <= 6) {
         this.setState({
           mouth: 'sad'
         })
@@ -64,7 +65,7 @@ class Countdown extends React.Component {
             <h2 className={`${styles.seconds} ${seconds <= 5 ? styles.red : ''}`}>{seconds}</h2>
             <p className={styles.label}>Seconds left</p>
           </div>
-          <Squizzy className={styles.countdownSquizzy} mouth={mouth}/>
+          <Squizzy className={styles.countdownSquizzy} mouth={mouth} />
           <div>
             <h2 className={styles.answers}>0</h2>
             <p className={styles.label}>answers</p>

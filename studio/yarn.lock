@@ -856,8 +856,8 @@
     "@sanity/rich-date-input" "0.147.0"
 
 "@sanity/default-layout@^0.147.4":
-  version "0.147.3"
-  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-0.147.3.tgz#d506ab960f12defe693841b275f03dff47dacfc6"
+  version "0.147.4"
+  resolved "https://registry.yarnpkg.com/@sanity/default-layout/-/default-layout-0.147.4.tgz#bd4d16ca33a339ea00fed68e2cc9c1d340e774f3"
   dependencies:
     "@sanity/generate-help-url" "0.147.0"
     is-hotkey "^0.1.4"

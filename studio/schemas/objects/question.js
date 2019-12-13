@@ -1,6 +1,10 @@
-const maxNumberOfChoices = 4
-const minNumberOfChoices = 2
-const maxQuestionLength = 100
+import * as config from '../../quizConfig'
+const {
+  minNumberOfChoices,
+  maxNumberOfChoices,
+  maxQuestionLength,
+  defaultTimeLimit
+} = config.default.schema
 
 export default {
   name: 'question',
@@ -24,6 +28,14 @@ export default {
         })
     },
     {
+      name: 'timeLimit',
+      title: 'Time Limit',
+      type: 'number',
+      placeholder: defaultTimeLimit,
+      description: 'Given in seconds',
+      validation: Rule => Rule.required()
+    },
+    {
       name: 'image',
       title: 'Image',
       type: 'image',
@@ -42,20 +54,13 @@ export default {
             return true
           }
           if (choices.length < minNumberOfChoices) {
-            return 'A question must have at least 2 choices'
+            return `A question must have at least ${minNumberOfChoices} choices`
           }
           if (choices.length > maxNumberOfChoices) {
-            return 'A question can have a maximum of 4 choices'
+            return `A question can have a maximum of ${maxNumberOfChoices} choices`
           }
           return true
         })
-    },
-    {
-      name: 'timeLimit',
-      title: 'Time Limit',
-      type: 'number',
-      placeholder: '20',
-      description: 'Given in seconds'
     }
   ],
   preview: {

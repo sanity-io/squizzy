@@ -1,4 +1,5 @@
-const maxAnswerLength = 50
+import * as config from '../../quizConfig'
+const {maxAnswerLength} = config.default.schema
 
 export default {
   name: 'choice',
