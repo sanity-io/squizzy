@@ -1,7 +1,8 @@
 {
   "version": 2,
   "name": "squizzy",
-  "builds": [{
+  "builds": [
+    {
       "src": "api/**",
       "use": "@now/node"
     },
@@ -14,9 +15,10 @@
       "use": "@now/static-build"
     }
   ],
-  "routes": [{
+  "routes": [
+    {
       "src": "^/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/api/$1.js"
     },
     {
       "src": "^/studio/static/(.*)",
