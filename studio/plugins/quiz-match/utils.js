@@ -1,46 +1,49 @@
 import * as config from '../../quizConfig'
+
 const {correctAnswerScore, firstAnswerScore} = config.default.match
 
-const calculateScore = placing => {
-  return correctAnswerScore + firstAnswerScore / (placing + 1)
-}
+const calculateScore = placing =>
+  correctAnswerScore + firstAnswerScore / (placing + 1)
 
-const sortBy = (sortField, direction = 'asc') => {
-  return (a, b) => {
-    if (a[sortField] < b[sortField]) {
-      return direction === 'asc' ? -1 : 1
-    }
-    if (a[sortField] > b[sortField]) {
-      return direction === 'asc' ? 1 : -1
-    }
-    return 0
+const sortBy = (sortField, direction = 'asc') => (a, b) => {
+  if (a[sortField] < b[sortField]) {
+    return direction === 'asc' ? -1 : 1
   }
+  if (a[sortField] > b[sortField]) {
+    return direction === 'asc' ? 1 : -1
+  }
+  return 0
 }
 
-export const assembleMatchUrl = match => {
-  return `https://squizzy-match-client.now.sh/match/${match.slug.current}`
-}
+export const assembleMatchUrl = match => match.slug.current
 
 export function findCurrentQuestion(match) {
-  return match.quiz.questions.find(question => question._key === match.currentQuestionKey)
+  return match.quiz.questions.find(
+    question => question._key === match.currentQuestionKey
+  )
 }
 
 export function getCurrentProgress(match) {
   const currentQuestionIndex =
-    match.quiz.questions.findIndex(question => question._key === match.currentQuestionKey) + 1
+    match.quiz.questions.findIndex(
+      question => question._key === match.currentQuestionKey
+    ) + 1
   return `(${currentQuestionIndex}/${match.quiz.questions.length})`
 }
 
 export const answerDistribution = match => {
   const {currentQuestionKey, answers, quiz} = match
   const {questions} = quiz
-  const currentQuestion = questions.find(question => question._key === currentQuestionKey)
+  const currentQuestion = questions.find(
+    question => question._key === currentQuestionKey
+  )
 
   const choicesWithAnswerCount = currentQuestion.choices.map(choice => {
     const answersToThisChoice = answers
       ? answers.filter(
           answer =>
-            answer.questionKey === currentQuestionKey && answer.selectedChoiceKey === choice._key
+            answer.questionKey === currentQuestionKey &&
+            answer.selectedChoiceKey === choice._key
         )
       : []
 
@@ -67,16 +70,25 @@ export const scoresByPlayer = (match, questionKey = 0) => {
   if (questionKey === 0) {
     // base calculation on all questions up until the current question
     // if no currentQuestion, use all questions
-    const lastIndex = indexOfCurrentQuestion > -1 ? indexOfCurrentQuestion + 1 : questions.length
+    const lastIndex =
+      indexOfCurrentQuestion > -1
+        ? indexOfCurrentQuestion + 1
+        : questions.length
     questionsToCalculate = questions.slice(0, lastIndex)
   } else {
     // base calculation on a given question
-    const questionIndex = questions.map(question => question._key).indexOf(questionKey)
+    const questionIndex = questions
+      .map(question => question._key)
+      .indexOf(questionKey)
     questionsToCalculate = questions.slice(questionIndex, questionIndex + 1)
   }
 
   // prime the return array
-  const playersWithScores = players.map(player => ({name: player.name, _id: player._id, score: 0}))
+  const playersWithScores = players.map(player => ({
+    name: player.name,
+    _id: player._id,
+    score: 0,
+  }))
 
   questionsToCalculate.forEach(question => {
     // begin with all answers to this questions
@@ -85,14 +97,17 @@ export const scoresByPlayer = (match, questionKey = 0) => {
         .filter(
           answer =>
             answer.questionKey === question._key &&
-            answer.selectedChoiceKey === question.choices.find(choice => choice.isCorrect)._key
+            answer.selectedChoiceKey ===
+              question.choices.find(choice => choice.isCorrect)._key
         ) // only correct answers to this question reamain
         .sort(sortBy('submittedAt', 'asc')) // order by who answered first
         .forEach((answer, index) => {
-          const correctPlayer = playersWithScores.find(player => player._id === answer.player._id)
+          const correctPlayer = playersWithScores.find(
+            player => player._id === answer.player._id
+          )
           if (correctPlayer) {
             // mutate player score based on placing
-            correctPlayer.score = correctPlayer.score + calculateScore(index) //boom
+            correctPlayer.score += calculateScore(index) // boom
           } else {
             // If a player joined, but left the game after submitting some answers
             // should we add him/her to the playersWithScores list and count score?

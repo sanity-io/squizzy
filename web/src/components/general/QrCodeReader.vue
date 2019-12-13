@@ -3,6 +3,7 @@
 </template>
 <script>
 import {QrcodeStream} from 'vue-qrcode-reader'
+import router from '@/router'
 
 export default {
   components: {
@@ -10,7 +11,7 @@ export default {
   },
   methods: {
     onDecode(decodedString) {
-      console.log(decodedString)
+      router.push({name: 'match', params: {slug: decodedString}})
     }
   }
 }
