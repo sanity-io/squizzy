@@ -1,8 +1,6 @@
 .DS_Store
 
-web/node_modules
-web/package-lock.json
-studio/dist
-studio/node_modules
-serverless/node_modules
-serverless/.env
+node_modules
+package-lock.json
+dist
+api/.env

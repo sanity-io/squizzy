@@ -1,5 +1,5 @@
 {
-  "name": "quizfabrikk",
+  "name": "squizzy",
   "private": true,
   "version": "1.0.0",
   "description": "It's a factory which makes quizzes! 🏭",
@@ -8,7 +8,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "sanity start",
-    "test": "sanity check"
+    "test": "sanity check",
+    "build": "sanity build"
   },
   "keywords": [
     "sanity"

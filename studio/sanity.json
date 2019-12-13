@@ -2,6 +2,7 @@
   "root": true,
   "project": {
     "name": "squizzy"
+    "basePath": "/studio"
   },
   "api": {
     "projectId": "puj7p168",
@@ -18,9 +19,7 @@
   ],
   "env": {
     "development": {
-      "plugins": [
-        "@sanity/vision"
-      ]
+      "plugins": ["@sanity/vision"]
     }
   },
   "parts": [
