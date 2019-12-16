@@ -48,5 +48,5 @@ export default {
 
 <style lang="sass" scoped>
 .home-squizzy
-  max-height: 300px
+  max-height: 250px
 </style>
