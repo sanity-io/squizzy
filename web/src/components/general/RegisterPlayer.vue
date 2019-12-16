@@ -59,6 +59,7 @@ export default {
               this.$emit("error", this.error);
             } else {
               this.error = false;
+              this.$emit("error", false);
             }
           });
       }
