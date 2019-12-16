@@ -1,4 +1,5 @@
 import UUID from '@sanity/uuid'
+
 const createSlug = () => UUID().substring(0, 5)
 
 export default {
@@ -11,57 +12,74 @@ export default {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description:
+        'Generates a QR-code. The game can also be accessed on /match/the-slug.',
       options: {
-        slugify: createSlug
-      }
+        slugify: createSlug,
+      },
     },
     {
       name: 'quiz',
       title: 'Quiz',
       type: 'reference',
-      to: [{type: 'quiz'}]
+      description:
+        'You need to have published your quiz before it appears here.',
+      to: [{type: 'quiz'}],
     },
     {
       name: 'startedAt',
       title: 'Started At',
-      type: 'datetime'
+      type: 'datetime',
+      description: 'This field is managed by a serverless function.',
+      readOnly: true,
     },
     {
       name: 'finishedAt',
       title: 'Finished At',
-      type: 'datetime'
+      type: 'datetime',
+      description: 'This field is managed by a serverless function.',
+      readOnly: true,
     },
     {
       name: 'currentQuestionKey',
       title: 'Current Question Key',
+      readOnly: true,
       type: 'string',
-      description: 'String referring to a question by _key (in quiz.questions[])'
+      description:
+        'String referring to a question by _key (in quiz.questions[]). This field is managed by a serverless function.',
     },
     {
       name: 'isCurrentQuestionOpen',
       title: 'Current Question Open',
+      readOnly: true,
       type: 'boolean',
-      description: 'Is the current question open to receive answers?'
+      description:
+        'Is the current question open to receive answers? This field is managed by a serverless function.',
     },
     {
       name: 'players',
       title: 'Players',
+      readOnly: true,
       type: 'array',
       of: [{type: 'reference', to: {type: 'player'}}],
-      description: 'Players who have joined the match'
+      description:
+        'Players who have joined the match. This field is managed by a serverless function',
     },
     {
       name: 'answers',
       title: 'Answers',
+      description:
+        'The answers given by the players. This field is managed by a serverless function',
+      readOnly: true,
       type: 'array',
-      of: [{type: 'answer'}]
-    }
+      of: [{type: 'answer'}],
+    },
   ],
   initialValue: () => ({
     slug: {
       current: createSlug(),
-      _type: 'slug'
-    }
+      _type: 'slug',
+    },
   }),
   preview: {
     select: {
@@ -69,7 +87,7 @@ export default {
       slug: 'slug.current',
       players: 'players',
       startedAt: 'startedAt',
-      finishedAt: 'finishedAt'
+      finishedAt: 'finishedAt',
     },
     prepare({title, slug, players, startedAt, finishedAt}) {
       const isOngoing = startedAt && !finishedAt
@@ -81,11 +99,13 @@ export default {
       } else {
         subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
       }
-      subtitle = `${subtitle} - ${numberOfPlayers} player${numberOfPlayers === 1 ? '' : 's'}`
+      subtitle = `${subtitle} - ${numberOfPlayers} player${
+        numberOfPlayers === 1 ? '' : 's'
+      }`
       return {
         title: `[${slug}] ${title}`,
-        subtitle
+        subtitle,
       }
-    }
-  }
+    },
+  },
 }
