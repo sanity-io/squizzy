@@ -3,15 +3,15 @@
 </template>
 <script>
 import { QrcodeStream } from "vue-qrcode-reader";
-import router from "@/router";
 
 export default {
   components: {
     QrcodeStream
   },
   methods: {
-    onDecode(decodedString) {
-      router.push({ name: "match", params: { slug: decodedString } });
+    onDecode(string) {
+      const decodedString = string.split("/match/")[1];
+      this.$router.push({ name: "match", params: { slug: decodedString } });
     }
   }
 };
