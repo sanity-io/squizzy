@@ -13,6 +13,7 @@ import styles from './QuizMatchTool.css'
 const playableGamesQuery = `//groq
   *[
     _type == "match" && // get all documents of type “match”
+    defined(quiz) && // which have a quiz attached
     !(_id in path("drafts.**")) // filter out matches that's not published
   ]| order (_updatedAt desc) // order them by last updated
   [0...50] // only show the last 50 updated
@@ -21,7 +22,7 @@ const playableGamesQuery = `//groq
 class QuizMatchTool extends React.Component {
   state = {
     match: null,
-    matches: null,
+    matches: null
   }
 
   observables = {}
@@ -31,9 +32,9 @@ class QuizMatchTool extends React.Component {
   static propTypes = {
     router: PropTypes.shape({
       state: PropTypes.shape({
-        selectedDocumentId: PropTypes.string,
-      }),
-    }),
+        selectedDocumentId: PropTypes.string
+      })
+    })
   }
 
   componentDidMount() {
@@ -81,7 +82,7 @@ class QuizMatchTool extends React.Component {
           {
             includeResult: true,
             visibility: 'query',
-            events: ['welcome', 'mutation', 'reconnect'],
+            events: ['welcome', 'mutation', 'reconnect']
           }
         )
         .subscribe(this.handleReceiveDocument)
@@ -96,12 +97,9 @@ class QuizMatchTool extends React.Component {
     const documentId = this.props.router.state.selectedDocumentId
     if (documentId) {
       client
-        .fetch(
-          `*[_id==$documentId][0]{..., quiz->, players[]->, answers[]{...,player->}}`,
-          {
-            documentId,
-          }
-        )
+        .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->, answers[]{...,player->}}`, {
+          documentId
+        })
         .then(match => this.setState({match}))
         .catch(error => console.log(error))
     }
@@ -151,9 +149,7 @@ class QuizMatchTool extends React.Component {
             <div className={styles.welcome}>
               <Squizzy />
               <h1 className={styles.welcomeMessage}>Welcome to Squizzy!</h1>
-              <p className={styles.welcomeMessage}>
-                Please select a match to start playing.
-              </p>
+              <p className={styles.welcomeMessage}>Please select a match to start playing.</p>
             </div>
           </>
         )}
