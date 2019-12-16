@@ -7,8 +7,13 @@
     <div class="progress label">{{ status }}</div>
     <div>
       <squizzy-squid :mouth="expression.mouth" :eyes="expression.eyes" />
-      <h1 class="feedback-heading">{{ feedbackTitle }}</h1>
-      <p class="question">{{ question.title }}</p>
+      <p class="feedback-heading">{{ feedbackTitle }}</p>
+      <h1
+        class="question"
+        :class="{ long: question.title.split('').length > 60 }"
+      >
+        {{ question.title }}
+      </h1>
       <div class="correct-answers">
         <div class="label">
           Correct answer{{ correctAnswers.length > 1 ? "s" : "" }}
@@ -173,16 +178,18 @@ export default {
   display: grid
   grid-template-rows: min-content min-content auto min-content
 
-.feedback-heading
+.question
+  margin: 0.5rem 0
   font-size: $font-size-large
   @media screen and (min-height: 667px)
     font-size: $font-size-xlarge
   @media screen and (min-height: 812px)
     font-size: $font-size-xxlarge
+  @media screen and (max-width: 320px)
+    font-size: $font-size-medium
+  &.long
+    font-size: $font-size-medium
 
-.question
-  margin: 0.5rem 0
-  font-size: $font-size-base
 
 .correct-answers
   text-align: center
