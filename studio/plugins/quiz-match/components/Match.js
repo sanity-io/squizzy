@@ -33,7 +33,7 @@ class Match extends React.Component {
       currentQuestionKey: PropTypes.string,
       startedAt: PropTypes.string,
       finishedAt: PropTypes.string,
-      answers: PropTypes.arrayOf(),
+      answers: PropTypes.array,
       quiz: PropTypes.shape({
         title: PropTypes.string,
         description: PropTypes.string,

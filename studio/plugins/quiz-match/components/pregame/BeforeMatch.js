@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {get} from 'lodash'
 import MatchQrCode from './MatchQrCode'
 import Squizzy from '../Squizzy'
@@ -6,13 +7,25 @@ import PlayerList from './PlayerList'
 import styles from '../styles/BeforeMatch.css'
 
 class BeforeStart extends React.Component {
-  handleStart = () => {
-    this.props.onStart()
+  static propTypes = {
+    onStart: PropTypes.func,
+    onKickPlayer: PropTypes.func,
+    match: PropTypes.shape({
+      slug: PropTypes.shape({
+        current: PropTypes.string,
+      }),
+      players: PropTypes.array,
+      quiz: PropTypes.shape({
+        title: PropTypes.string,
+        questions: PropTypes.array,
+        description: PropTypes.string,
+      }),
+    }),
   }
 
-  handleKickPlayer = playerId => {
-    this.props.onKickPlayer(playerId)
-  }
+  handleStart = () => this.props.onStart()
+
+  handleKickPlayer = playerId => this.props.onKickPlayer(playerId)
 
   render() {
     const {match} = this.props
@@ -22,8 +35,16 @@ class BeforeStart extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.qrCodeMobile}>
+          <p>
+            <strong>/match/{match.slug.current}</strong>
+          </p>
           <MatchQrCode match={match} />
-          <p className={styles.instructions}>Scan the QR code to get started!</p>
+          <p className={styles.instructions}>
+            Scan the QR code to get started!
+            <br />
+            <small></small>
+          </p>
+          <p></p>
         </div>
         <section className={`${styles.section} ${styles.matchInfo}`}>
           <Squizzy mouth="happy" className={styles.squizzy} />
@@ -32,13 +53,18 @@ class BeforeStart extends React.Component {
             <h1 className={styles.quizName}>{quiz.title}</h1>
             <div className={styles.matchDetails}>
               <div>
-                <div className={styles.questionNumber}>{quiz.questions.length}</div>
+                <div className={styles.questionNumber}>
+                  {quiz.questions.length}
+                </div>
                 <div className={styles.infoLabel}>Questions</div>
               </div>
               <div>
                 <div className={styles.questionNumber}>{players.length}</div>
                 <div className={styles.infoLabel}>Players</div>
               </div>
+            </div>
+            <div className={styles.description}>
+              <p>{quiz.description}</p>
             </div>
           </div>
         </section>
@@ -49,8 +75,13 @@ class BeforeStart extends React.Component {
             <PlayerList match={match} onKickPlayer={this.handleKickPlayer} />
           </div>
           <div className={styles.qrCodeDesktop}>
+            <p>
+              <strong>/match/{match.slug.current}</strong>
+            </p>
             <MatchQrCode match={match} />
-            <p className={styles.instructions}>Scan the QR code to get started!</p>
+            <p className={styles.instructions}>
+              Scan the QR code to get started!
+            </p>
           </div>
         </section>
       </div>
