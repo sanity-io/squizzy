@@ -1,6 +1,10 @@
 const micro = require('micro')
 const cors = require('micro-cors')()
-const {ensurePlayerExists, ensurePlayerParticipation, fetchMatch} = require('./_src/sanityApi')
+const {
+  ensurePlayerExists,
+  ensurePlayerParticipation,
+  fetchMatch,
+} = require('./_src/sanityApi')
 
 const {json, send} = micro
 
@@ -37,7 +41,7 @@ const handler = async (req, res) => {
     return send(res, 400, {error: `no match for slug ${matchSlug}`})
   }
 
-  const result = await ensurePlayerParticipation(player, match)
+  await ensurePlayerParticipation(player, match)
   return send(res, 200, {status: 'ok'})
 }
 

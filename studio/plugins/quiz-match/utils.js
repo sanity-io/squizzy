@@ -15,7 +15,12 @@ const sortBy = (sortField, direction = 'asc') => (a, b) => {
   return 0
 }
 
-export const assembleMatchUrl = match => match.slug.current
+export const assembleMatchUrl = ({slug}) => {
+  if (window.location.host === 'localhost') {
+    return `${config.localWebHost}/${slug.current}`
+  }
+  return slug.current
+}
 
 export function findCurrentQuestion(match) {
   return match.quiz.questions.find(

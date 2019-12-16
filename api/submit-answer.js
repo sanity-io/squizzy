@@ -2,6 +2,7 @@ const micro = require('micro')
 const cors = require('micro-cors')()
 
 const {fetchMatch, submitAnswer} = require('./_src/sanityApi')
+
 const {json, send} = micro
 
 const parse = async req => {
@@ -39,7 +40,7 @@ const handler = async (req, res) => {
     return send(res, 400, {error: `no match for slug ${matchSlug}`})
   }
 
-  const result = await submitAnswer(match, playerId, questionKey, selectedChoiceKey)
+  await submitAnswer(match, playerId, questionKey, selectedChoiceKey)
   return send(res, 200, {status: 'ok'})
 }
 
