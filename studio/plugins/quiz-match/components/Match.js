@@ -101,12 +101,6 @@ class Match extends React.Component {
     }
   }
 
-  handleSkipQuestion = () => {
-    // console.log('skip question button clicked')
-    this.handleCloseQuestion()
-    this.handleNextQuestion()
-  }
-
   handleFinishMatch = () => {
     // console.log('finish match button clicked')
     const {match} = this.props
@@ -231,14 +225,6 @@ class Match extends React.Component {
                 Stop
               </Button>
             )}
-            {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
-              <Button
-                onClick={this.handleSkipQuestion}
-                className={`${styles.button} ${styles.skipButton}`}
-              >
-                Skip
-              </Button>
-            )}
 
             {isCurrentQuestionOpen && (
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
@@ -280,7 +266,7 @@ class Match extends React.Component {
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
               <Button onClick={this.handleCancelMatch} color="danger" className={styles.button}>
-                Stop game
+                Cancel match
               </Button>
               <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>
                 Next question
