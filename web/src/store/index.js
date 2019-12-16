@@ -43,7 +43,7 @@ export default new Vuex.Store({
           playerId: player.id,
           matchSlug: slug
         };
-        commit("SET_STATUS_MESSAGE", false);
+        commit("matchStore/RESET_ALL", false, { root: true });
         return withdrawFromGame(params).then(result => {
           if (result === true) {
             commit("playerStore/REGISTER_PLAYER", false, { root: true });
@@ -52,13 +52,8 @@ export default new Vuex.Store({
         });
       } else {
         commit("playerStore/REGISTER_PLAYER", false, { root: true });
-        commit("matchStore/RESET_ALL", null, { root: true });
+        commit("matchStore/RESET_ALL", false, { root: true });
         if (currentRoute !== "home") {
-          const status = {
-            title: "You left the match",
-            message: "Join another one to continue."
-          };
-          commit("SET_STATUS_MESSAGE", status);
           return router.push({ name: "home" });
         }
       }
