@@ -10,10 +10,17 @@ import Match from './components/Match'
 
 import styles from './QuizMatchTool.css'
 
-const playableGamesQuery = `//groq
+const matchesQuery = `//groq
+  *[
+    _type == "match" && // get all documents of type “match”
+    !(_id in path("drafts.**")) // filter out matches that's not published
+  ]
+  `
+const playableMatchesQuery = `//groq
   *[
     _type == "match" && // get all documents of type “match”
     defined(quiz) && // which have a quiz attached
+    defined(quiz->questions) && // the quiz needs questions
     !(_id in path("drafts.**")) // filter out matches that's not published
   ]| order (_updatedAt desc) // order them by last updated
   [0...50] // only show the last 50 updated
@@ -25,9 +32,8 @@ class QuizMatchTool extends React.Component {
     matches: null
   }
 
-  observables = {}
-
-  subscription = null
+  playableMatchesSubscription = null
+  currentMatchSubscription = null
 
   static propTypes = {
     router: PropTypes.shape({
@@ -39,8 +45,16 @@ class QuizMatchTool extends React.Component {
 
   componentDidMount() {
     // Fetch published Match documents
-    this.observables.list = client.observable
-      .fetch(playableGamesQuery)
+    this.playableMatchesSubscription = client
+      .listen(
+        matchesQuery,
+        {},
+        {
+          includeResult: true,
+          visibility: 'query',
+          events: ['welcome', 'mutation', 'reconnect']
+        }
+      )
       .subscribe(this.handleReceiveList)
 
     // If we have a document ID as part of our route, load that document as well
@@ -61,21 +75,21 @@ class QuizMatchTool extends React.Component {
 
   // When unmounting, cancel any ongoing requests
   componentWillUnmount() {
-    Object.keys(this.observables).forEach(obs => {
-      this.observables[obs].unsubscribe()
-    })
-    if (this.subscription) {
-      this.subscription.unsubscribe()
+    if (this.playableMatchesSubscription) {
+      this.playableMatchesSubscription.unsubscribe()
+    }
+    if (this.currentMatchSubscription) {
+      this.currentMatchSubscription.unsubscribe()
     }
   }
 
   fetchDocument(documentId) {
     // If we're already fetching a document, make sure to cancel that request
-    if (this.subscription) {
-      this.subscription.unsubscribe()
+    if (this.currentMatchSubscription) {
+      this.currentMatchSubscription.unsubscribe()
     }
     if (documentId) {
-      this.subscription = client
+      this.currentMatchSubscription = client
         .listen(
           `*[_id==$documentId]`,
           {documentId},
@@ -89,8 +103,10 @@ class QuizMatchTool extends React.Component {
     }
   }
 
-  handleReceiveList = matches => {
-    this.setState({matches})
+  handleReceiveList = event => {
+    client.fetch(playableMatchesQuery).then(matches => {
+      this.setState({matches})
+    })
   }
 
   handleReceiveDocument = () => {
