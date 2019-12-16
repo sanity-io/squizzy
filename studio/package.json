@@ -16,6 +16,9 @@
   "keywords": [
     "sanity"
   ],
+  "engines": {
+    "node": ">=0.10.3"
+  },
   "dependencies": {
     "@sanity/base": "^0.147.3",
     "@sanity/components": "^0.147.3",
