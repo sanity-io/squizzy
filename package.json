@@ -1,0 +1,25 @@
+{
+  "name": "squizzy",
+  "version": "1.0.0",
+  "description": "![Squizzy logo](https://repository-images.githubusercontent.com/222647703/1c3ab900-1fdf-11ea-924e-10ed07035d95)",
+  "main": "index.js",
+  "scripts": {
+    "studio": "cd studio && npm run dev",
+    "web": "cd web && npm run dev",
+    "dev": "concurrently \"npm run studio\" \"npm run web\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanity-io/squizzy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanity-io/squizzy/issues"
+  },
+  "homepage": "https://github.com/sanity-io/squizzy#readme",
+  "devDependencies": {
+    "concurrently": "^5.0.1"
+  }
+}
