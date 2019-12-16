@@ -5,6 +5,7 @@ import {get} from 'lodash'
 import {withRouterHOC} from 'part:@sanity/base/router' // eslint-disable-line
 import client from 'part:@sanity/base/client' // eslint-disable-line
 import Button from 'part:@sanity/components/buttons/default' // eslint-disable-line
+import Spinner from 'part:@sanity/components/loading/spinner' // eslint-disable-line
 import IntentButton from 'part:@sanity/components/buttons/intent' // eslint-disable-line
 
 import BeforeMatch from './pregame/BeforeMatch'
@@ -179,7 +180,7 @@ class Match extends React.Component {
     const {selectedDocumentId} = this.props.router.state
 
     if (!match) {
-      return <div>No match for {selectedDocumentId}</div>
+      return <Spinner message="Loading match..." center />
     }
 
     const {
