@@ -33,13 +33,11 @@
     </div>
     <section class="section">
       <keep-alive>
-        <transition :name="transitionName">
-          <component
-            :is="activeView.component"
-            :key="activeView.name"
-            class="transition"
-          />
-        </transition>
+        <component
+          :is="activeView.component"
+          :key="activeView.name"
+          class="transition"
+        />
       </keep-alive>
     </section>
     <div class="view-tracker">
@@ -101,7 +99,6 @@ export default {
   data() {
     return {
       activeView: RESULT_VIEWS.graph,
-      transitionName: "next",
       status: "Waiting for Squizzmaster..."
     };
   },
@@ -154,7 +151,6 @@ export default {
   methods: {
     swipeLeft() {
       if (this.activeView.name === "leaderboard") {
-        this.transitionName = "prev";
         this.activeView = RESULT_VIEWS.graph;
       } else {
         return;
@@ -162,7 +158,6 @@ export default {
     },
     swipeRight() {
       if (this.activeView.name === "results") {
-        this.transitionName = "next";
         this.activeView = RESULT_VIEWS.leaderboard;
       } else {
         return;
@@ -247,26 +242,4 @@ export default {
     &.is-active
       transform: scale(1.1)
       background: $color-gray--darker
-
-.next-leave-active,
-.next-enter-active
-  transition: transform 0.7s ease-in-out
-  z-index: 1
-
-.prev-leave-active,
-.prev-enter-active
-  transition: transform 0.7s ease-in-out
-  z-index: 0
-
-.next-enter
-  transform: translate(100%, 0)
-
-.next-leave-to
-  transform: translate(-100%, 0)
-
-.prev-enter
-  transform: translate(-100%, 0)
-
-.prev-leave-to
-  transform: translate(100%, 0)
 </style>
