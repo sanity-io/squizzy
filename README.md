@@ -16,22 +16,26 @@ Table of contents:
   - [Create and edit quizzes](#create-and-edit-quizzes)
   - [Create a new match](#create-a-new-match)
 - [Local development](#local-development)
+  - [Studio](#studio)
+  - [Web client](#web-client)
 - [Extras](#extras)
 
 ## Deploy your own Squizzy instance
 
 To get started with Squizzy, follow these instructions. You can also watch this [video walkthrough on YouTube][youtube].
 
-1. Fork/clone this repository
-2. Install dependencies, including `npm install --global @sanity/cli now`\*
-3. Run `npx sanity init` inside the `/studio` folder. Follow the instructions to connect the studio up with a new project and dataset.
+1. [Copy](https://github.com/sanity-io/squizzy/generate) this repository and clone it to your computer
+2. Install dependencies with `npm install` (or `yarn`) in the `/studio` and `/web` folders, including `npm install --global @sanity/cli now`
+3. Run `sanity init` inside the `/studio` folder Follow the instructions to connect the studio up with a new project and dataset
 4. Run `now` in the root folder to deploy the app or go to [your Now account and add the GitHub repository][now-github]
 5. Add a secret token with write permissions to your Now app:
    1. Find your project’s API settings on https://manage.sanity.io/{YOUR_PROJECTID}/settings/api (or run `sanity manage` inside `/studio`)
    2. Under the Tokens sections, create a new token with write permissions
    3. Copy-paste the token, and paste it into the `.env.template` file in the root folder
    4. Rename the file to `.env` to prevent it from being tracked in git
-   5. Make sure you have copied the token and run `now secrets add $(pbpaste)` to add it on Now
+   5. Make sure you have copied the token and run `now secrets add $(pbpaste)` to add it on Now.
+   6. Alternatively: `now secrets add <the-token>` (put a space before `now` to avoid the token going into your bash history).
+6. Add your app domain to your Sanity project’s CORS settings. `sanity cors add https://your-name.now.sh --credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.studio)
 
 ## Play Squizzy
 
@@ -57,6 +61,27 @@ The host screen will show a QR code. Your players can join by scanning this QR c
 The host controls the game play from the “Let’s play” tool in the studio.
 
 ## Local development
+
+### Studio
+
+Go to [sanity.io/docs](https://sanity.io/docs) to find documentation.
+
+1. Make sure you have the CLI installed: `npm i -g @sanity/cli`
+2. Inside the `/studio` folder, install dependencies with `sanity install`
+3. `npm run dev` to start the local development server
+4. You can open the studio on [localhost:3333](http://localhost:3333)
+
+You'll find the content model for the quiz, match, and players inside of `/studio/schemas`.
+
+You'll find the host play display inside of `/studio/plugins/quiz-match`.
+
+You can tweak the Studio’s color scheme in `/studio/squizzyTheme.css`
+
+### Web client
+
+Go to [nuxtjs.org/docs](https://nuxtjs.org/docs) for documentation.
+
+1. Install dependencies
 
 ## Extras
 

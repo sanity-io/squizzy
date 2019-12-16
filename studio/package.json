@@ -10,8 +10,7 @@
     "start": "sanity start",
     "dev": "sanity start",
     "test": "sanity check",
-    "build": "sanity build",
-    "now-dev": "sanity start"
+    "build": "sanity build"
   },
   "keywords": [
     "sanity"
