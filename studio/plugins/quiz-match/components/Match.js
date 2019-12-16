@@ -25,6 +25,9 @@ function nextQuestion(match) {
 }
 
 class Match extends React.Component {
+  state = {
+    isCancelled: false
+  }
   static propTypes = {
     match: PropTypes.shape({
       _id: PropTypes.string,
@@ -91,13 +94,17 @@ class Match extends React.Component {
   handleNextQuestion = () => {
     // console.log('next question button clicked')
     const {match} = this.props
+    const {isCancelled} = this.state
 
     const next = nextQuestion(match)
-    if (next) {
+    if (next && !isCancelled) {
       client
         .patch(match._id)
         .set({currentQuestionKey: next._key, isCurrentQuestionOpen: true})
         .commit()
+      this.setState({
+        isCancelled: false
+      })
     }
   }
 
@@ -144,6 +151,31 @@ class Match extends React.Component {
       .commit()
   }
 
+  handleCancelQuestion = () => {
+    const {match} = this.props
+    this.setState({
+      isCancelled: true
+    })
+    client
+      .patch(match._id)
+      .set({isCurrentQuestionOpen: false})
+      .commit()
+  }
+
+  handleRestartQuestion = () => {
+    // console.log('next question button clicked')
+    const {match} = this.props
+    const {isCancelled} = this.state
+
+    client
+      .patch(match._id)
+      .set({isCurrentQuestionOpen: true})
+      .commit()
+    this.setState({
+      isCancelled: false
+    })
+  }
+
   handleKickPlayer = playerId => {
     // console.log('kick player button clicked')
     const {match} = this.props
@@ -164,6 +196,7 @@ class Match extends React.Component {
 
   render() {
     const {match} = this.props
+    const {isCancelled} = this.state
     const {selectedDocumentId} = this.props.router.state
 
     if (!match) {
@@ -219,10 +252,10 @@ class Match extends React.Component {
           <>
             {!isFinalQuestionCompleted && isCurrentQuestionOpen && (
               <Button
-                onClick={this.handleCloseQuestion}
+                onClick={this.handleCancelQuestion}
                 className={`${styles.button} ${styles.stopButton}`}
               >
-                Stop
+                Cancel
               </Button>
             )}
 
@@ -268,8 +301,11 @@ class Match extends React.Component {
               <Button onClick={this.handleCancelMatch} color="danger" className={styles.button}>
                 Cancel match
               </Button>
-              <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>
-                Next question
+              <Button 
+                onClick={isCancelled ? this.handleRestartQuestion : this.handleNextQuestion} 
+                color="success" 
+                className={styles.button}>
+                {isCancelled ? 'Restart question' : 'Next question'}
               </Button>
             </>
           )}
