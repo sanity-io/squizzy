@@ -60,7 +60,6 @@ class Countdown extends React.Component {
     const {seconds, mouth} = this.state
     const {match} = this.props
     const answerCount = match.answers ? match.answers.length : 0
-    console.log(match)
     return (
       <div className={styles.root}>
         <div className={styles.countdownWrapper}>
