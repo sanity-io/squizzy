@@ -6,7 +6,9 @@ import axios from "axios";
  * This assumes that the local serverless API runs with `now dev` on localhost:3000
  */
 const backendRootUrl =
-  window.location.host === "localhost" ? "http://localhost:3000/api" : "/api";
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000/api"
+    : "/api";
 
 export const withdrawFromGame = ({ playerId, matchSlug }) => {
   const url = `${backendRootUrl}/withdraw-player`;

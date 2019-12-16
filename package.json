@@ -6,7 +6,8 @@
   "scripts": {
     "studio": "cd studio && npm run dev",
     "web": "cd web && npm run dev",
-    "dev": "concurrently \"npm run studio\" \"npm run web\""
+    "dev": "concurrently \"npm run studio\" \"npm run web\"",
+    "now-dev": "npm run dev"
   },
   "repository": {
     "type": "git",
