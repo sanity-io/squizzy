@@ -20,9 +20,7 @@ import MediaPlayer from './MediaPlayer'
 function nextQuestion(match) {
   const {currentQuestionKey, quiz} = match
   const {questions} = quiz
-  const index = questions
-    .map(question => question._key)
-    .indexOf(currentQuestionKey)
+  const index = questions.map(question => question._key).indexOf(currentQuestionKey)
   return questions[index + 1]
 }
 
@@ -47,22 +45,22 @@ class Match extends React.Component {
             _key: PropTypes.string,
             _type: PropTypes.string,
             isCorrect: PropTypes.bool,
-            title: PropTypes.string,
-          }),
-        }),
+            title: PropTypes.string
+          })
+        })
       }),
       players: PropTypes.arrayOf({
         _id: PropTypes.string,
         _key: PropTypes.string,
         name: PropTypes.string,
-        score: PropTypes.number,
-      }),
+        score: PropTypes.number
+      })
     }),
     router: PropTypes.shape({
       state: PropTypes.shape({
-        selectedDocumentId: PropTypes.string,
-      }),
-    }),
+        selectedDocumentId: PropTypes.string
+      })
+    })
   }
 
   componentDidUpdate() {
@@ -71,10 +69,7 @@ class Match extends React.Component {
       return
     }
     const {currentQuestionKey, isCurrentQuestionOpen} = match
-    if (
-      isCurrentQuestionOpen &&
-      allPlayersHaveSubmitted(match, currentQuestionKey)
-    ) {
+    if (isCurrentQuestionOpen && allPlayersHaveSubmitted(match, currentQuestionKey)) {
       this.handleCloseQuestion()
     }
   }
@@ -88,7 +83,7 @@ class Match extends React.Component {
       .set({
         startedAt: new Date().toISOString(),
         currentQuestionKey: firstQuestionKey,
-        isCurrentQuestionOpen: true,
+        isCurrentQuestionOpen: true
       })
       .commit()
   }
@@ -120,7 +115,7 @@ class Match extends React.Component {
       .patch(match._id)
       .set({
         finishedAt: new Date().toISOString(),
-        isCurrentQuestionOpen: false,
+        isCurrentQuestionOpen: false
       })
       .unset(['currentQuestionKey'])
       .commit()
@@ -168,9 +163,7 @@ class Match extends React.Component {
   isCurrentQuestionTheLast = () => {
     const {quiz, currentQuestionKey} = this.props.match
     return (
-      quiz.questions
-        .map(question => question._key)
-        .indexOf(currentQuestionKey) ===
+      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
       quiz.questions.length - 1
     )
   }
@@ -183,13 +176,7 @@ class Match extends React.Component {
       return <Spinner message="Loading match..." center />
     }
 
-    const {
-      startedAt,
-      finishedAt,
-      quiz,
-      isCurrentQuestionOpen,
-      currentQuestionKey,
-    } = match
+    const {startedAt, finishedAt, quiz, isCurrentQuestionOpen, currentQuestionKey} = match
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
@@ -216,17 +203,14 @@ class Match extends React.Component {
     }
 
     const isCurrentQuestionTheLast =
-      quiz.questions
-        .map(question => question._key)
-        .indexOf(currentQuestionKey) ===
+      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
       quiz.questions.length - 1
-    const isFinalQuestionCompleted =
-      isCurrentQuestionTheLast && !isCurrentQuestionOpen
+    const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
 
     const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
 
-    const topPlayers = scoresByPlayer(match).slice(0, 2)
+    const topPlayers = scoresByPlayer(match).slice(0, 3)
     return (
       <div className={styles.root}>
         {isNotYetStarted && (
@@ -257,15 +241,10 @@ class Match extends React.Component {
             )}
 
             {isCurrentQuestionOpen && (
-              <Question
-                match={match}
-                onCloseQuestion={this.handleCloseQuestion}
-              />
+              <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            {currentQuestionKey && !isCurrentQuestionOpen && (
-              <Results match={match} />
-            )}
+            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} />}
           </>
         )}
 
@@ -300,28 +279,16 @@ class Match extends React.Component {
           )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
-              <Button
-                onClick={this.handleCancelMatch}
-                color="danger"
-                className={styles.button}
-              >
+              <Button onClick={this.handleCancelMatch} color="danger" className={styles.button}>
                 Stop game
               </Button>
-              <Button
-                onClick={this.handleNextQuestion}
-                color="success"
-                className={styles.button}
-              >
+              <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>
                 Next question
               </Button>
             </>
           )}
           {isOngoing && isFinalQuestionCompleted && (
-            <Button
-              color="success"
-              onClick={this.handleFinishMatch}
-              className={styles.button}
-            >
+            <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
               Finish game
             </Button>
           )}
