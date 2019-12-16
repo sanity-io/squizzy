@@ -31,7 +31,7 @@ export default {
     },
     getScoresByPlayer() {
       return this.topPlayers
-        ? scoresByPlayer(this.$store.state.matchStore.match).slice(0, 2)
+        ? scoresByPlayer(this.$store.state.matchStore.match).slice(0, 3)
         : scoresByPlayer(this.$store.state.matchStore.match);
     }
   },
