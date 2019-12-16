@@ -1,4 +1,5 @@
 import UUID from '@sanity/uuid'
+import {MdTv} from 'react-icons/md'
 
 const createSlug = () => UUID().substring(0, 5)
 
@@ -6,6 +7,7 @@ export default {
   name: 'match',
   title: 'Match',
   type: 'document',
+  icon: MdTv,
   description: 'An instance of a Quiz',
   fields: [
     {

@@ -1,7 +1,10 @@
+import {MdQuestionAnswer} from 'react-icons/md'
+
 export default {
   name: 'quiz',
   title: 'Quiz',
   type: 'document',
+  icon: MdQuestionAnswer,
   description:
     'A list of questions along with possible answers (choices). Play a Quiz by creating a Match',
   fields: [
