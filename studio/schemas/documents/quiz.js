@@ -37,10 +37,11 @@ export default {
       title: 'title',
       questions: 'questions'
     },
-    prepare({title, questions}) {
+    prepare({title, questions = []}) {
+      const numberOfQuestions = questions.length
       return {
-        title: title || 'untitled',
-        subtitle: `${questions.length} questions`
+        title: title || 'untitled quiz 😢',
+        subtitle: `${numberOfQuestions} ${numberOfQuestions === 1 ? 'question' : 'questions'}`
       }
     }
   }
