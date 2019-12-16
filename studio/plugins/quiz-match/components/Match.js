@@ -1,18 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {get} from 'lodash'
 
-import {StateLink, withRouterHOC, IntentLink, WithRouter} from 'part:@sanity/base/router'
-import client from 'part:@sanity/base/client'
-import Button from 'part:@sanity/components/buttons/default'
-import IntentButton from 'part:@sanity/components/buttons/intent'
+import {withRouterHOC} from 'part:@sanity/base/router' // eslint-disable-line
+import client from 'part:@sanity/base/client' // eslint-disable-line
+import Button from 'part:@sanity/components/buttons/default' // eslint-disable-line
+import IntentButton from 'part:@sanity/components/buttons/intent' // eslint-disable-line
 
 import BeforeMatch from './pregame/BeforeMatch'
 import Question from './quiz/Question'
-import Leaderboard from './results/Leaderboard'
 import Results from './results/Results'
-import {allPlayersHaveSubmitted, getCurrentProgress, scoresByPlayer} from '../utils'
+import {allPlayersHaveSubmitted, scoresByPlayer} from '../utils'
 
-import globals from './styles/globals.css'
 import styles from './styles/Match.css'
 import TopPlayers from './TopPlayers'
 import MediaPlayer from './MediaPlayer'
@@ -20,24 +19,69 @@ import MediaPlayer from './MediaPlayer'
 function nextQuestion(match) {
   const {currentQuestionKey, quiz} = match
   const {questions} = quiz
-  const index = questions.map(question => question._key).indexOf(currentQuestionKey)
+  const index = questions
+    .map(question => question._key)
+    .indexOf(currentQuestionKey)
   return questions[index + 1]
 }
 
 class Match extends React.Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      _id: PropTypes.string,
+      isCurrentQuestionOpen: PropTypes.bool,
+      currentQuestionKey: PropTypes.string,
+      startedAt: PropTypes.string,
+      finishedAt: PropTypes.string,
+      answers: PropTypes.arrayOf(),
+      quiz: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string,
+          description: PropTypes.string,
+          questions: PropTypes.arrayOf({
+            _key: PropTypes.string,
+            _type: PropTypes.string,
+            title: PropTypes.string,
+            timeLimit: PropTypes.number,
+            choices: PropTypes.arrayOf({
+              _key: PropTypes.string,
+              _type: PropTypes.string,
+              isCorrect: PropTypes.boolean,
+              title: PropTypes.string,
+            }),
+          }),
+        })
+      ),
+      players: PropTypes.arrayOf({
+        _id: PropTypes.string,
+        _key: PropTypes.string,
+        name: PropTypes.string,
+        score: PropTypes.number,
+      }),
+    }),
+    router: PropTypes.shape({
+      state: PropTypes.shape({
+        selectedDocumentId: PropTypes.string,
+      }),
+    }),
+  }
+
   componentDidUpdate() {
     const {match} = this.props
     if (!match) {
       return
     }
-    const {players, currentQuestionKey, isCurrentQuestionOpen} = match
-    if (isCurrentQuestionOpen && allPlayersHaveSubmitted(match, currentQuestionKey)) {
+    const {currentQuestionKey, isCurrentQuestionOpen} = match
+    if (
+      isCurrentQuestionOpen &&
+      allPlayersHaveSubmitted(match, currentQuestionKey)
+    ) {
       this.handleCloseQuestion()
     }
   }
 
   handleStartMatch = () => {
-    console.log('start match button clicked')
+    // console.log('start match button clicked')
     const {match} = this.props
     const firstQuestionKey = match.quiz.questions[0]._key
     client
@@ -45,13 +89,13 @@ class Match extends React.Component {
       .set({
         startedAt: new Date().toISOString(),
         currentQuestionKey: firstQuestionKey,
-        isCurrentQuestionOpen: true
+        isCurrentQuestionOpen: true,
       })
       .commit()
   }
 
   handleNextQuestion = () => {
-    console.log('next question button clicked')
+    // console.log('next question button clicked')
     const {match} = this.props
 
     const next = nextQuestion(match)
@@ -64,27 +108,27 @@ class Match extends React.Component {
   }
 
   handleSkipQuestion = () => {
-    console.log('skip question button clicked')
+    // console.log('skip question button clicked')
     this.handleCloseQuestion()
     this.handleNextQuestion()
   }
 
   handleFinishMatch = () => {
-    console.log('finish match button clicked')
+    // console.log('finish match button clicked')
     const {match} = this.props
 
     client
       .patch(match._id)
       .set({
         finishedAt: new Date().toISOString(),
-        isCurrentQuestionOpen: false
+        isCurrentQuestionOpen: false,
       })
       .unset(['currentQuestionKey'])
       .commit()
   }
 
   handleCancelMatch = () => {
-    console.log('cancel match button clicked')
+    // console.log('cancel match button clicked')
     const {match} = this.props
     client
       .patch(match._id)
@@ -94,7 +138,7 @@ class Match extends React.Component {
   }
 
   handleRestartMatch = () => {
-    console.log('restart match button clicked')
+    // console.log('restart match button clicked')
     const {match} = this.props
     client
       .patch(match._id)
@@ -104,7 +148,7 @@ class Match extends React.Component {
   }
 
   handleCloseQuestion = () => {
-    console.log('closing current question')
+    // console.log('closing current question')
     const {match} = this.props
     client
       .patch(match._id)
@@ -113,7 +157,7 @@ class Match extends React.Component {
   }
 
   handleKickPlayer = playerId => {
-    console.log('kick player button clicked')
+    // console.log('kick player button clicked')
     const {match} = this.props
 
     client
@@ -125,7 +169,9 @@ class Match extends React.Component {
   isCurrentQuestionTheLast = () => {
     const {quiz, currentQuestionKey} = this.props.match
     return (
-      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
+      quiz.questions
+        .map(question => question._key)
+        .indexOf(currentQuestionKey) ===
       quiz.questions.length - 1
     )
   }
@@ -138,7 +184,13 @@ class Match extends React.Component {
       return <div>No match for {selectedDocumentId}</div>
     }
 
-    const {startedAt, finishedAt, quiz, isCurrentQuestionOpen, currentQuestionKey} = match
+    const {
+      startedAt,
+      finishedAt,
+      quiz,
+      isCurrentQuestionOpen,
+      currentQuestionKey,
+    } = match
     const isOngoing = startedAt && !finishedAt
     const isNotYetStarted = !startedAt && !finishedAt
     const isFinished = startedAt && finishedAt
@@ -165,13 +217,16 @@ class Match extends React.Component {
     }
 
     const isCurrentQuestionTheLast =
-      quiz.questions.map(question => question._key).indexOf(currentQuestionKey) ===
+      quiz.questions
+        .map(question => question._key)
+        .indexOf(currentQuestionKey) ===
       quiz.questions.length - 1
-    const isFinalQuestionCompleted = isCurrentQuestionTheLast && !isCurrentQuestionOpen
+    const isFinalQuestionCompleted =
+      isCurrentQuestionTheLast && !isCurrentQuestionOpen
 
     const hasPlayers = match.players && match.players.length > 0
     const hasQuestions = quiz.questions && get(quiz, 'questions', []).length > 0
-    const status = `${quiz.title} ${isOngoing ? getCurrentProgress(match) : ''}`
+
     const topPlayers = scoresByPlayer(match).slice(0, 2)
     return (
       <div className={styles.root}>
@@ -203,10 +258,15 @@ class Match extends React.Component {
             )}
 
             {isCurrentQuestionOpen && (
-              <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
+              <Question
+                match={match}
+                onCloseQuestion={this.handleCloseQuestion}
+              />
             )}
 
-            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} />}
+            {currentQuestionKey && !isCurrentQuestionOpen && (
+              <Results match={match} />
+            )}
           </>
         )}
 
@@ -241,16 +301,28 @@ class Match extends React.Component {
           )}
           {isOngoing && !isFinalQuestionCompleted && !isCurrentQuestionOpen && (
             <>
-              <Button onClick={this.handleCancelMatch} color="danger" className={styles.button}>
+              <Button
+                onClick={this.handleCancelMatch}
+                color="danger"
+                className={styles.button}
+              >
                 Stop game
               </Button>
-              <Button onClick={this.handleNextQuestion} color="success" className={styles.button}>
+              <Button
+                onClick={this.handleNextQuestion}
+                color="success"
+                className={styles.button}
+              >
                 Next question
               </Button>
             </>
           )}
           {isOngoing && isFinalQuestionCompleted && (
-            <Button color="success" onClick={this.handleFinishMatch} className={styles.button}>
+            <Button
+              color="success"
+              onClick={this.handleFinishMatch}
+              className={styles.button}
+            >
               Finish game
             </Button>
           )}

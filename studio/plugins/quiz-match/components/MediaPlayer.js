@@ -1,10 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactPlayer from 'react-player'
 import styles from './styles/MediaPlayer.css'
 
 // Don't put this in a grid, if you want it full width and responsive
-function MediaPlayer(props) {
-  const {musicUrl} = props.match.quiz
+function MediaPlayer({match: {quiz: {musicUrl = ''} = {}} = {}}) {
   if (!musicUrl) {
     return null
   }
@@ -19,6 +19,14 @@ function MediaPlayer(props) {
       />
     </div>
   )
+}
+
+MediaPlayer.propTypes = {
+  match: PropTypes.shape({
+    match: PropTypes.shape({
+      musicUrl: PropTypes.string,
+    }),
+  }),
 }
 
 export default MediaPlayer

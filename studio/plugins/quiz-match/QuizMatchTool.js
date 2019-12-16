@@ -1,40 +1,39 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {StateLink, withRouterHOC, IntentLink} from 'part:@sanity/base/router'
 import Spinner from 'part:@sanity/components/loading/spinner'
-import Squizzy from './components/Squizzy'
 import Preview from 'part:@sanity/base/preview'
 import client from 'part:@sanity/base/client'
 import schema from 'part:@sanity/base/schema'
+import Squizzy from './components/Squizzy'
 import Match from './components/Match'
 
 import styles from './QuizMatchTool.css'
 
-const playableGamesQuery = `*[
-  !(_id in path("drafts.**"))
-  && _type == "match"
-][0...50] | order (_updatedAt desc)`
+const playableGamesQuery = `//groq
+  *[
+    _type == "match" && // get all documents of type “match”
+    !(_id in path("drafts.**")) // filter out matches that's not published
+  ]| order (_updatedAt desc) // order them by last updated
+  [0...50] // only show the last 50 updated
+  `
 
 class QuizMatchTool extends React.Component {
   state = {
     match: null,
-    matches: null
+    matches: null,
   }
 
   observables = {}
 
   subscription = null
 
-  handleReceiveList = matches => {
-    this.setState({matches})
-  }
-
-  handleReceiveDocument = incoming => {
-    const documentId = this.props.router.state.selectedDocumentId
-    client
-      .fetch(`*[_id==$documentId][0]{..., quiz->, players[]->, answers[]{...,player->}}`, {
-        documentId
-      })
-      .then(match => this.setState({match: match}))
+  static propTypes = {
+    router: PropTypes.shape({
+      state: PropTypes.shape({
+        selectedDocumentId: PropTypes.string,
+      }),
+    }),
   }
 
   componentDidMount() {
@@ -48,25 +47,6 @@ class QuizMatchTool extends React.Component {
     if (documentId) {
       this.fetchDocument(documentId)
     }
-  }
-
-  fetchDocument(documentId) {
-    // If we're already fetching a document, make sure to cancel that request
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-
-    this.subscription = client
-      .listen(
-        `*[_id==$documentId]`,
-        {documentId},
-        {
-          includeResult: true,
-          visibility: 'query',
-          events: ['welcome', 'mutation', 'reconnect']
-        }
-      )
-      .subscribe(this.handleReceiveDocument)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -88,13 +68,52 @@ class QuizMatchTool extends React.Component {
     }
   }
 
+  fetchDocument(documentId) {
+    // If we're already fetching a document, make sure to cancel that request
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+    if (documentId) {
+      this.subscription = client
+        .listen(
+          `*[_id==$documentId]`,
+          {documentId},
+          {
+            includeResult: true,
+            visibility: 'query',
+            events: ['welcome', 'mutation', 'reconnect'],
+          }
+        )
+        .subscribe(this.handleReceiveDocument)
+    }
+  }
+
+  handleReceiveList = matches => {
+    this.setState({matches})
+  }
+
+  handleReceiveDocument = () => {
+    const documentId = this.props.router.state.selectedDocumentId
+    if (documentId) {
+      client
+        .fetch(
+          `*[_id==$documentId][0]{..., quiz->, players[]->, answers[]{...,player->}}`,
+          {
+            documentId,
+          }
+        )
+        .then(match => this.setState({match}))
+        .catch(error => console.log(error))
+    }
+  }
+
   renderMatchList() {
-    const {matches, isLoading} = this.state
+    const {matches} = this.state
 
     if (!matches) {
       return (
         <div className={styles.document}>
-          <h2>No matches found 😞, but that's no problem you can just creat one 😍</h2>
+          <h2>No matches found. You should create one!</h2>
           <IntentLink intent="create" params={{type: 'match'}}>
             Create
           </IntentLink>
@@ -116,7 +135,7 @@ class QuizMatchTool extends React.Component {
   }
 
   render() {
-    const {matches, match} = this.state
+    const {match} = this.state
     const {selectedDocumentId} = this.props.router.state
 
     if (selectedDocumentId && match && match._type !== 'match') {
@@ -132,7 +151,9 @@ class QuizMatchTool extends React.Component {
             <div className={styles.welcome}>
               <Squizzy />
               <h1 className={styles.welcomeMessage}>Welcome to Squizzy!</h1>
-              <p className={styles.welcomeMessage}>Please select a match to get started.</p>
+              <p className={styles.welcomeMessage}>
+                Please select a match to start playing.
+              </p>
             </div>
           </>
         )}
