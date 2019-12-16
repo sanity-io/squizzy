@@ -21,7 +21,7 @@ class Countdown extends React.Component {
   componentDidMount() {
     const {match} = this.props
     const currentQuestion = findCurrentQuestion(match)
-    this.setState({seconds: currentQuestion.timeLimit || defaultTimeLimit})
+    this.setState({seconds: 150 || defaultTimeLimit})
     this.myInterval = setInterval(() => {
       const {seconds} = this.state
       const timeLimit = currentQuestion.timeLimit
@@ -59,7 +59,8 @@ class Countdown extends React.Component {
   render() {
     const {seconds, mouth} = this.state
     const {match} = this.props
-    const answerCount = match.answers ? match.answers.length : 0
+    const {currentQuestion} = match
+    const answerCount = match.answers ? match.answers.filter(answer => answer.questionKey === match.currentQuestionKey).length : 0
     return (
       <div className={styles.root}>
         <div className={styles.countdownWrapper}>
