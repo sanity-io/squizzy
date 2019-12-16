@@ -11,38 +11,37 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'description',
       title: 'Description',
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'questions',
       title: 'Questions',
       type: 'array',
-      validation: Rule =>
-        Rule.min(1).error('A quiz must have at least one question'),
-      of: [{type: 'question'}],
+      validation: Rule => Rule.min(1).error('A quiz must have at least one question'),
+      of: [{type: 'question'}]
     },
     {
       name: 'musicUrl',
       title: 'URL to a music resource',
       type: 'url',
-      description: 'Played while a question is open for answering',
-    },
+      description: 'Played while a question is open for answering'
+    }
   ],
   preview: {
     select: {
       title: 'title',
-      questions: 'questions',
+      questions: 'questions'
     },
     prepare({title, questions}) {
       return {
-        title,
-        subtitle: `${questions.length} questions`,
+        title: title || 'untitled',
+        subtitle: `${questions.length} questions`
       }
-    },
-  },
+    }
+  }
 }

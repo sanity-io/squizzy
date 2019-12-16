@@ -1,113 +1,114 @@
-import UUID from '@sanity/uuid'
-import {MdTv} from 'react-icons/md'
+import UUID from "@sanity/uuid";
+import { MdTv } from "react-icons/md";
 
-const createSlug = () => UUID().substring(0, 5)
+const createSlug = () => UUID().substring(0, 5);
 
 export default {
-  name: 'match',
-  title: 'Match',
-  type: 'document',
+  name: "match",
+  title: "Match",
+  type: "document",
   icon: MdTv,
-  description: 'An instance of a Quiz',
+  description: "An instance of a Quiz",
   fields: [
     {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       description:
-        'Generates a QR-code. The game can also be accessed on /match/the-slug.',
+        "Generates a QR-code. The game can also be accessed on /match/the-slug.",
       options: {
-        slugify: createSlug,
-      },
+        slugify: createSlug
+      }
     },
     {
-      name: 'quiz',
-      title: 'Quiz',
-      type: 'reference',
+      name: "quiz",
+      title: "Quiz",
+      type: "reference",
       description:
-        'You need to have published your quiz before it appears here.',
-      to: [{type: 'quiz'}],
+        "You need to have published your quiz before it appears here.",
+      to: [{ type: "quiz" }]
     },
     {
-      name: 'startedAt',
-      title: 'Started At',
-      type: 'datetime',
-      description: 'This field is managed by a serverless function.',
-      readOnly: true,
+      name: "startedAt",
+      title: "Started At",
+      type: "datetime",
+      description: "This field is managed by a serverless function.",
+      readOnly: true
     },
     {
-      name: 'finishedAt',
-      title: 'Finished At',
-      type: 'datetime',
-      description: 'This field is managed by a serverless function.',
-      readOnly: true,
+      name: "finishedAt",
+      title: "Finished At",
+      type: "datetime",
+      description: "This field is managed by a serverless function.",
+      readOnly: true
     },
     {
-      name: 'currentQuestionKey',
-      title: 'Current Question Key',
+      name: "currentQuestionKey",
+      title: "Current Question Key",
       readOnly: true,
-      type: 'string',
+      type: "string",
       description:
-        'String referring to a question by _key (in quiz.questions[]). This field is managed by a serverless function.',
+        "String referring to a question by _key (in quiz.questions[]). This field is managed by a serverless function."
     },
     {
-      name: 'isCurrentQuestionOpen',
-      title: 'Current Question Open',
+      name: "isCurrentQuestionOpen",
+      title: "Current Question Open",
       readOnly: true,
-      type: 'boolean',
+      type: "boolean",
       description:
-        'Is the current question open to receive answers? This field is managed by a serverless function.',
+        "Is the current question open to receive answers? This field is managed by a serverless function."
     },
     {
-      name: 'players',
-      title: 'Players',
+      name: "players",
+      title: "Players",
       readOnly: true,
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'player'}}],
+      type: "array",
+      of: [{ type: "reference", to: { type: "player" } }],
       description:
-        'Players who have joined the match. This field is managed by a serverless function',
+        "Players who have joined the match. This field is managed by a serverless function"
     },
     {
-      name: 'answers',
-      title: 'Answers',
+      name: "answers",
+      title: "Answers",
       description:
-        'The answers given by the players. This field is managed by a serverless function',
+        "The answers given by the players. This field is managed by a serverless function",
       readOnly: true,
-      type: 'array',
-      of: [{type: 'answer'}],
-    },
+      type: "array",
+      of: [{ type: "answer" }]
+    }
   ],
   initialValue: () => ({
     slug: {
       current: createSlug(),
-      _type: 'slug',
-    },
+      _type: "slug"
+    }
   }),
   preview: {
     select: {
-      title: 'quiz.title',
-      slug: 'slug.current',
-      players: 'players',
-      startedAt: 'startedAt',
-      finishedAt: 'finishedAt',
+      title: "quiz.title",
+      slug: "slug.current",
+      players: "players",
+      startedAt: "startedAt",
+      finishedAt: "finishedAt"
     },
-    prepare({title, slug, players, startedAt, finishedAt}) {
-      const isOngoing = startedAt && !finishedAt
-      const isNotYetStarted = !startedAt && !finishedAt
-      const numberOfPlayers = players && players.length > 0 ? players.length : 0
-      let subtitle
+    prepare({ title, slug, players, startedAt, finishedAt }) {
+      const isOngoing = startedAt && !finishedAt;
+      const isNotYetStarted = !startedAt && !finishedAt;
+      const numberOfPlayers =
+        players && players.length > 0 ? players.length : 0;
+      let subtitle;
       if (isNotYetStarted) {
-        subtitle = 'Not yet started'
+        subtitle = "Not yet started";
       } else {
-        subtitle = isOngoing ? 'Is ongoing!' : 'Finished'
+        subtitle = isOngoing ? "Is ongoing!" : "Finished";
       }
       subtitle = `${subtitle} - ${numberOfPlayers} player${
-        numberOfPlayers === 1 ? '' : 's'
-      }`
+        numberOfPlayers === 1 ? "" : "s"
+      }`;
       return {
-        title: `[${slug}] ${title}`,
-        subtitle,
-      }
-    },
-  },
-}
+        title: `[${slug || "missing slug"}] ${title || "untitled"}`,
+        subtitle
+      };
+    }
+  }
+};
