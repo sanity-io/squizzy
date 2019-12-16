@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ChoiceCard from './ChoiceCard'
+import ChoiceCard from "./ChoiceCard";
 export default {
   components: {
     ChoiceCard
@@ -31,51 +31,57 @@ export default {
     return {
       answerSubmitted: false,
       selectedChoice: null
-    }
+    };
   },
   methods: {
     selectAnswer(choiceKey) {
-      const playerId = this.$store.getters['playerStore/playerId']
-      const match = this.$store.state.matchStore.match
-      const {answers = []} = match
+      const playerId = this.$store.getters["playerStore/playerId"];
+      const match = this.$store.state.matchStore.match;
+      const { answers = [] } = match;
       const didAnswerQuestion = answers.some(
-        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
-      )
+        answer =>
+          answer.questionKey === match.currentQuestionKey &&
+          answer.player._id === playerId
+      );
       if (!didAnswerQuestion) {
-        this.answerSubmitted = true
-        this.selectedChoice = choiceKey
-        this.$store.dispatch('client/submitAnswer', choiceKey)
+        this.answerSubmitted = true;
+        this.selectedChoice = choiceKey;
+        this.$store.dispatch("client/submitAnswer", choiceKey);
       }
     },
 
     playerHasAnsweredQuestion() {
       if (this.answerSubmitted === true) {
         // shortcut for a more snappy client experience
-        return true
+        return true;
       }
-      const playerId = this.$store.getters['playerStore/playerId']
-      const match = this.$store.state.matchStore.match
-      const {answers = []} = match
+      const playerId = this.$store.getters["playerStore/playerId"];
+      const match = this.$store.state.matchStore.match;
+      const { answers = [] } = match;
       return answers.some(
-        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
-      )
+        answer =>
+          answer.questionKey === match.currentQuestionKey &&
+          answer.player._id === playerId
+      );
     },
 
     choiceIsSelected(choiceKey) {
       if (this.selectedChoice) {
         // shortcut for a more snappy client experience
-        return this.selectedChoice === choiceKey
+        return this.selectedChoice === choiceKey;
       }
-      const playerId = this.$store.getters['playerStore/playerId']
-      const match = this.$store.state.matchStore.match
-      const {answers = []} = match
+      const playerId = this.$store.getters["playerStore/playerId"];
+      const match = this.$store.state.matchStore.match;
+      const { answers = [] } = match;
       const answer = answers.find(
-        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
-      )
-      return answer && answer.selectedChoiceKey === choiceKey
+        answer =>
+          answer.questionKey === match.currentQuestionKey &&
+          answer.player._id === playerId
+      );
+      return answer && answer.selectedChoiceKey === choiceKey;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

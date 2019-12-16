@@ -37,11 +37,11 @@ export default {
   },
   computed: {
     icon() {
-      const icons = ['Circle', 'Star', 'Triangle', 'Square']
-      return () => import(`../symbols/${icons[this.index]}Icon.vue`)
+      const icons = ["Circle", "Star", "Triangle", "Square"];
+      return () => import(`../symbols/${icons[this.index]}Icon.vue`);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

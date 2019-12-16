@@ -11,10 +11,10 @@ export default {
   props: {
     color: {
       type: String,
-      default: ''
+      default: ""
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

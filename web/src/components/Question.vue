@@ -2,7 +2,10 @@
   <div class="question-card">
     <div class="progress label">{{ title }} {{ progress }}</div>
     <div class="question">
-      <question-image v-if="currentQuestion.image" :asset="currentQuestion.image" />
+      <question-image
+        v-if="currentQuestion.image"
+        :asset="currentQuestion.image"
+      />
       <h1
         class="title"
         :class="{
@@ -18,18 +21,18 @@
 </template>
 
 <script>
-import QuestionImage from './question/QuestionImage'
-import QuestionChoices from './question/QuestionChoices'
-import {mapGetters} from 'vuex'
+import QuestionImage from "./question/QuestionImage";
+import QuestionChoices from "./question/QuestionChoices";
+import { mapGetters } from "vuex";
 export default {
   components: {
     QuestionImage,
     QuestionChoices
   },
   computed: {
-    ...mapGetters('matchStore', ['currentQuestion', 'title', 'progress'])
+    ...mapGetters("matchStore", ["currentQuestion", "title", "progress"])
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

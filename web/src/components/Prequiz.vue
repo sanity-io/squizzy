@@ -1,6 +1,9 @@
 <template>
   <div class="view prequiz">
-    <squizzy-squid :mouth="activeView.expression.mouth" :eyes="activeView.expression.eyes" />
+    <squizzy-squid
+      :mouth="activeView.expression.mouth"
+      :eyes="activeView.expression.eyes"
+    />
     <div class="label" v-if="activeView.status">
       {{ activeView.status }}
     </div>
@@ -13,13 +16,24 @@
       <div class="player-count">
         {{ playerCount }}
       </div>
-      <div class="label">{{ playerCount !== 1 ? 'players have' : 'player has' }} joined</div>
+      <div class="label">
+        {{ playerCount !== 1 ? "players have" : "player has" }} joined
+      </div>
     </div>
     <div v-if="isFinished">
       <h2 class="top-players">Top players</h2>
       <leaderboard class="players" top-players>
-        <span class="crown" slot="crown" :data-rank="player.index" slot-scope="player">
-          <svg stroke-width="0" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+        <span
+          class="crown"
+          slot="crown"
+          :data-rank="player.index"
+          slot-scope="player"
+        >
+          <svg
+            stroke-width="0"
+            viewBox="0 0 640 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M528 448H112c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h416c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm64-320c-26.5 0-48 21.5-48 48 0 7.1 1.6 13.7 4.4 19.8L476 239.2c-15.4 9.2-35.3 4-44.2-11.6L350.3 85C361 76.2 368 63 368 48c0-26.5-21.5-48-48-48s-48 21.5-48 48c0 15 7 28.2 17.7 37l-81.5 142.6c-8.9 15.6-28.9 20.8-44.2 11.6l-72.3-43.4c2.7-6 4.4-12.7 4.4-19.8 0-26.5-21.5-48-48-48S0 149.5 0 176s21.5 48 48 48c2.6 0 5.2-.4 7.7-.8L128 416h384l72.3-192.8c2.5.4 5.1.8 7.7.8 26.5 0 48-21.5 48-48s-21.5-48-48-48z"
             ></path>
@@ -32,9 +46,9 @@
 </template>
 
 <script>
-import SquizzySquid from '../components/general/SquizzySquid'
-import RegisterPlayer from '../components/general/RegisterPlayer'
-const Leaderboard = () => import('../components/result/Leaderboard')
+import SquizzySquid from "../components/general/SquizzySquid";
+import RegisterPlayer from "../components/general/RegisterPlayer";
+const Leaderboard = () => import("../components/result/Leaderboard");
 export default {
   components: {
     SquizzySquid,
@@ -43,40 +57,42 @@ export default {
   },
   computed: {
     isFinished() {
-      return this.match.startedAt && this.match.finishedAt
+      return this.match.startedAt && this.match.finishedAt;
     },
     match() {
-      return this.$store.state.matchStore.match
+      return this.$store.state.matchStore.match;
     },
     status() {
-      const player = this.$store.state.playerStore.player
-      return this.activeView.name !== 'lobby'
-        ? `${this.match && player ? 'Joined' : 'Joined'}: ${this.match.quiz.title}`
-        : 'Powered by Sanity'
+      const player = this.$store.state.playerStore.player;
+      return this.activeView.name !== "lobby"
+        ? `${this.match && player ? "Joined" : "Joined"}: ${
+            this.match.quiz.title
+          }`
+        : "Powered by Sanity";
     },
     activeView() {
       // Get the player object from the store
-      const player = this.$store.state.playerStore.player
+      const player = this.$store.state.playerStore.player;
       // Quiz title
-      const title = this.match.quiz.title
+      const title = this.match.quiz.title;
 
       // Register for match if no Player
       if (!player)
         return {
-          name: 'register',
+          name: "register",
           title: `Squizzy time!`,
           status: `Joining: ${title}`,
-          expression: {eyes: 'happy', mouth: 'default'}
-        }
+          expression: { eyes: "happy", mouth: "default" }
+        };
 
       if (this.isFinished)
         return {
-          name: 'Finished',
-          title: 'Thank you for playing!',
-          subtitle: 'The match finished, did you have a squid time?',
+          name: "Finished",
+          title: "Thank you for playing!",
+          subtitle: "The match finished, did you have a squid time?",
           status: false,
-          expression: {mouth: 'happy'}
-        }
+          expression: { mouth: "happy" }
+        };
       // const match = this.$store.state.matchStore.match
       // const isPlayerInMatch = match.players.some(player => player._id === player.id)
       // // Wait in lobby if there is a match and we have a player
@@ -95,18 +111,18 @@ export default {
       //   ? `You've left the match`
       //   : 'Scan a QR code to get started!'
       return {
-        name: 'welcome',
+        name: "welcome",
         title: `Hello ${player.name}!`,
-        subtitle: 'Game is about to start. Waiting for the Squizzmaster...',
+        subtitle: "Game is about to start. Waiting for the Squizzmaster...",
         status: `Joined: ${title}`,
-        expression: {eyes: 'default', mouth: 'happy'}
-      }
+        expression: { eyes: "default", mouth: "happy" }
+      };
     },
     playerCount() {
-      return this.$store.getters['matchStore/playerCount']
+      return this.$store.getters["matchStore/playerCount"];
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

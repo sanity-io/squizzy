@@ -10,45 +10,49 @@
       @keydown.enter="validateName"
       autocomplete="off"
     />
-    <v-button @click.native="validateName" :title="buttonTitle" :is-loading="isLoading" />
+    <v-button
+      @click.native="validateName"
+      :title="buttonTitle"
+      :is-loading="isLoading"
+    />
   </div>
 </template>
 
 <script>
-import Button from '@/components/general/Button'
+import Button from "@/components/general/Button";
 export default {
   components: {
-    'v-button': Button
+    "v-button": Button
   },
   data() {
     return {
-      label: 'What do we call you?',
-      placeholder: 'Nickname',
+      label: "What do we call you?",
+      placeholder: "Nickname",
       playerName: null,
-      buttonTitle: 'Join quiz'
-    }
+      buttonTitle: "Join quiz"
+    };
   },
   computed: {
     isLoading() {
-      return this.$store.state.playerStore.isLoading
+      return this.$store.state.playerStore.isLoading;
     }
   },
   methods: {
     validateName() {
-      const name = this.playerName
+      const name = this.playerName;
       if (name) {
         this.$store
-          .dispatch('playerStore/registerPlayer', name)
+          .dispatch("playerStore/registerPlayer", name)
           .then(() => {
-            console.log(name, 'has been registered!')
+            // console.log(name, "has been registered!");
           })
-          .catch(() => {
-            console.log('something went wrong')
-          })
+          .catch(error => {
+            console.error(error); // eslint-disable-line
+          });
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

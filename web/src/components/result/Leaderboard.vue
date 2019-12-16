@@ -1,9 +1,9 @@
 <template>
   <div class="leaderboard-wrapper">
-    <ul class="leaderboard" :class="{'top-players': topPlayers}">
+    <ul class="leaderboard" :class="{ 'top-players': topPlayers }">
       <li
         class="item"
-        :class="{'current-player': player._id === playerId}"
+        :class="{ 'current-player': player._id === playerId }"
         v-for="(player, index) in getScoresByPlayer"
         :key="player._id"
       >
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {scoresByPlayer} from '../../utils'
+import { scoresByPlayer } from "../../utils";
 export default {
   props: {
     topPlayers: {
@@ -27,19 +27,19 @@ export default {
   },
   computed: {
     playerId() {
-      return this.$store.state.playerStore.player.id
+      return this.$store.state.playerStore.player.id;
     },
     getScoresByPlayer() {
       return this.topPlayers
         ? scoresByPlayer(this.$store.state.matchStore.match).slice(0, 2)
-        : scoresByPlayer(this.$store.state.matchStore.match)
+        : scoresByPlayer(this.$store.state.matchStore.match);
     }
   },
   mounted() {
-    const currentPlayer = this.$el.getElementsByClassName('current-player')[0]
-    if (currentPlayer) return currentPlayer.scrollIntoView()
+    const currentPlayer = this.$el.getElementsByClassName("current-player")[0];
+    if (currentPlayer) return currentPlayer.scrollIntoView();
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

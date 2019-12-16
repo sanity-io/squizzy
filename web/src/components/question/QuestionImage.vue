@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import client from '../../sanityClient'
-import imageUrlBuilder from '@sanity/image-url'
+import client from "../../sanityClient";
+import imageUrlBuilder from "@sanity/image-url";
 
-const builder = imageUrlBuilder(client)
+const builder = imageUrlBuilder(client);
 
 export default {
   props: {
@@ -23,10 +23,10 @@ export default {
       return builder
         .image(asset)
         .width(500)
-        .url()
+        .url();
     }
   }
-}
+};
 </script>
 
 <style lang="sass">

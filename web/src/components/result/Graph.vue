@@ -7,35 +7,40 @@
         :key="choice.title"
         :index="index"
         :total="totalAnswerCount"
-        :player-answer="playerAnswer._key === choice._key ? playerAnswer : false"
+        :player-answer="
+          playerAnswer._key === choice._key ? playerAnswer : false
+        "
       />
     </div>
   </div>
 </template>
 
 <script>
-import Column from './Column'
-import {answerDistribution} from '../../utils'
+import Column from "./Column";
+import { answerDistribution } from "../../utils";
 export default {
   components: {
-    'v-column': Column
+    "v-column": Column
   },
   computed: {
     match() {
-      return this.$store.state.matchStore.match
+      return this.$store.state.matchStore.match;
     },
     totalAnswerCount() {
-      const count = this.getAnswerDistribution.reduce((sum, {answerCount}) => sum + answerCount, 0)
-      return count
+      const count = this.getAnswerDistribution.reduce(
+        (sum, { answerCount }) => sum + answerCount,
+        0
+      );
+      return count;
     },
     playerAnswer() {
-      return this.$store.getters['playerStore/playerAnswer']
+      return this.$store.getters["playerStore/playerAnswer"];
     },
     getAnswerDistribution() {
-      return answerDistribution(this.match)
+      return answerDistribution(this.match);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

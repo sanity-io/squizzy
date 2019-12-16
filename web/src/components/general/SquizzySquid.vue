@@ -352,14 +352,14 @@ export default {
   props: {
     eyes: {
       type: String,
-      default: 'default'
+      default: "default"
     },
     mouth: {
       type: String,
-      default: 'default'
+      default: "default"
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
