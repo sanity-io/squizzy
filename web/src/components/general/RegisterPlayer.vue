@@ -15,6 +15,7 @@
       :title="buttonTitle"
       :is-loading="isLoading"
     />
+    <p class="error-message" v-if="error">{{ error }}</p>
   </div>
 </template>
 
@@ -29,12 +30,21 @@ export default {
       label: "What do we call you?",
       placeholder: "Nickname",
       playerName: null,
-      buttonTitle: "Join quiz"
+      buttonTitle: "Join quiz",
+      error: false
     };
   },
   computed: {
     isLoading() {
       return this.$store.state.playerStore.isLoading;
+    }
+  },
+  watch: {
+    playerName() {
+      if (this.error) {
+        this.error = false;
+        this.$emit("error", false);
+      }
     }
   },
   methods: {
@@ -43,11 +53,13 @@ export default {
       if (name) {
         this.$store
           .dispatch("playerStore/registerPlayer", name)
-          .then(() => {
-            // console.log(name, "has been registered!");
-          })
-          .catch(error => {
-            console.error(error); // eslint-disable-line
+          .then(response => {
+            if (!response) {
+              this.error = "Something went wrong, please try again.";
+              this.$emit("error", this.error);
+            } else {
+              this.error = false;
+            }
           });
       }
     }
@@ -82,4 +94,8 @@ export default {
 
 .input::placeholder
   color: $color-gray--darker
+
+.error-message
+  margin-top: 0.5rem
+  max-width: 250px
 </style>
