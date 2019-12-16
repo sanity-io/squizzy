@@ -62,10 +62,6 @@ export default {
   justify-content: center
   height: 100%
 
-.disabled
-  opacity: 0.7
-  transition: all 0.4s ease-in-out
-
 .choice-radio
   position: absolute
   top: 0
@@ -79,6 +75,12 @@ export default {
 .choice-radio:disabled
   pointer-events: none
 
+.disabled
+  pointer-events: none
+  &:not(.selected-answer)
+    opacity: 0.4
+    transition: all 0.4s ease-in-out
+
 .choice-title
   flex-grow: 1
   font-size: $font-size-large
@@ -86,20 +88,6 @@ export default {
   text-align: center
   @media screen and (max-width: 320px)
     font-size: $font-size-medium
-
-.selected-answer
-  animation-name: selected
-  animation-duration: 1.5s
-  animation-iteration-count: infinite
-  animation-timing-function: ease-in-out
-
-@keyframes selected
-  from
-    transform: scale(1.02)
-  50%
-    transform: scale(0.9)
-  to
-    transform: scale(1.02)
 
 // Symbol representing choice
 .symbol

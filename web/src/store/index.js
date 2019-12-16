@@ -43,9 +43,9 @@ export default new Vuex.Store({
           playerId: player.id,
           matchSlug: slug
         };
-        commit("matchStore/RESET_ALL", false, { root: true });
         return withdrawFromGame(params).then(result => {
           if (result === true) {
+            commit("matchStore/RESET_ALL", false, { root: true });
             commit("playerStore/REGISTER_PLAYER", false, { root: true });
             if (currentRoute !== "home") return router.push({ name: "home" });
           }

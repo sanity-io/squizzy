@@ -2,35 +2,74 @@
   <div class="question-card">
     <div class="progress label">{{ title }} {{ progress }}</div>
     <div class="question">
-      <question-image
-        v-if="currentQuestion.image"
-        :asset="currentQuestion.image"
-      />
-      <h1
-        class="title"
-        :class="{
-          'title-long': currentQuestion.title.split('').length > 80,
-          'title-with-image': currentQuestion.image
-        }"
-      >
-        {{ currentQuestion.title }}
-      </h1>
+      <template v-if="!isAnswerSubmitted">
+        <question-image
+          v-if="currentQuestion.image"
+          :asset="currentQuestion.image"
+        />
+        <h1
+          class="title"
+          :class="{
+            'title-long': currentQuestion.title.split('').length > 80,
+            'title-with-image': currentQuestion.image
+          }"
+        >
+          {{ currentQuestion.title }}
+        </h1>
+      </template>
+      <template v-else>
+        <div class="question-status">
+          <squizzy-squid class="confirmation-squizzy" eyes="happy" />
+          <h1 class="title">Answer submitted!</h1>
+          <p>Waiting for other players...</p>
+        </div>
+      </template>
     </div>
-    <question-choices :choices="currentQuestion.choices" />
+    <question-choices
+      :choices="currentQuestion.choices"
+      :is-answer-submitted="isAnswerSubmitted"
+      @answered="setPlayerClickedCard"
+    />
   </div>
 </template>
 
 <script>
 import QuestionImage from "./question/QuestionImage";
 import QuestionChoices from "./question/QuestionChoices";
+import SquizzySquid from "./general/SquizzySquid";
 import { mapGetters } from "vuex";
 export default {
   components: {
     QuestionImage,
-    QuestionChoices
+    QuestionChoices,
+    SquizzySquid
+  },
+  data() {
+    return {
+      playerClickedCard: false
+    };
   },
   computed: {
-    ...mapGetters("matchStore", ["currentQuestion", "title", "progress"])
+    ...mapGetters("matchStore", ["currentQuestion", "title", "progress"]),
+    isAnswerSubmitted() {
+      if (this.playerClickedCard) {
+        // shortcut for a more snappy client experience
+        return true;
+      }
+      const player = this.$store.state.playerStore.player;
+      const match = this.$store.state.matchStore.match;
+      const { answers = [] } = match;
+      return answers.some(
+        answer =>
+          answer.questionKey === match.currentQuestionKey &&
+          answer.player._id === player.id
+      );
+    }
+  },
+  methods: {
+    setPlayerClickedCard() {
+      this.playerClickedCard = true;
+    }
   }
 };
 </script>
@@ -70,4 +109,19 @@ export default {
 
 .title-with-image
   font-size: 2rem
+
+.question-status
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  .title
+    font-size: $font-size-large
+    margin: 0
+    padding: 0
+
+  .confirmation-squizzy
+    max-height: 150px
+    margin-top: -0.5rem
 </style>

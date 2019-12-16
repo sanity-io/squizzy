@@ -7,10 +7,11 @@
       :index="index"
       @change="selectAnswer(choice._key)"
       :class="{
-        disabled: playerHasAnsweredQuestion(),
-        'selected-answer': choiceIsSelected(choice._key)
+        disabled: isAnswerSubmitted,
+        'selected-answer':
+          selectedChoice === choice._key || choiceIsSelected(choice._key)
       }"
-      :disabled="playerHasAnsweredQuestion()"
+      :disabled="isAnswerSubmitted"
     />
   </div>
 </template>
@@ -22,6 +23,10 @@ export default {
     ChoiceCard
   },
   props: {
+    isAnswerSubmitted: {
+      type: Boolean,
+      default: false
+    },
     choices: {
       type: Array,
       required: true
@@ -29,42 +34,17 @@ export default {
   },
   data() {
     return {
-      answerSubmitted: false,
       selectedChoice: null
     };
   },
   methods: {
     selectAnswer(choiceKey) {
-      const playerId = this.$store.getters["playerStore/playerId"];
-      const match = this.$store.state.matchStore.match;
-      const { answers = [] } = match;
-      const didAnswerQuestion = answers.some(
-        answer =>
-          answer.questionKey === match.currentQuestionKey &&
-          answer.player._id === playerId
-      );
-      if (!didAnswerQuestion) {
-        this.answerSubmitted = true;
-        this.selectedChoice = choiceKey;
+      this.selectedChoice = choiceKey;
+      this.$emit("answered", true);
+      if (!this.isAnswerSubmitted) {
         this.$store.dispatch("client/submitAnswer", choiceKey);
       }
     },
-
-    playerHasAnsweredQuestion() {
-      if (this.answerSubmitted === true) {
-        // shortcut for a more snappy client experience
-        return true;
-      }
-      const playerId = this.$store.getters["playerStore/playerId"];
-      const match = this.$store.state.matchStore.match;
-      const { answers = [] } = match;
-      return answers.some(
-        answer =>
-          answer.questionKey === match.currentQuestionKey &&
-          answer.player._id === playerId
-      );
-    },
-
     choiceIsSelected(choiceKey) {
       if (this.selectedChoice) {
         // shortcut for a more snappy client experience
