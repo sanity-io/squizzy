@@ -58,6 +58,9 @@ class Countdown extends React.Component {
 
   render() {
     const {seconds, mouth} = this.state
+    const {match} = this.props
+    const answerCount = match.answers ? match.answers.length : 0
+    console.log(match)
     return (
       <div className={styles.root}>
         <div className={styles.countdownWrapper}>
@@ -67,7 +70,7 @@ class Countdown extends React.Component {
           </div>
           <Squizzy className={styles.countdownSquizzy} mouth={mouth} />
           <div>
-            <h2 className={styles.answers}>0</h2>
+            <h2 className={styles.answers}>{answerCount}</h2>
             <p className={styles.label}>answers</p>
           </div>
         </div>
