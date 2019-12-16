@@ -25,12 +25,11 @@ const TopPlayers = props => {
       <ul className={leaderboard.list}>
         {players.map((player, index) => (
           <li className={leaderboard.item} key={player._key}>
-            <span className={styles.crown} data-rank={index}>
+            <span className={styles.crown} data-rank={index} aria-label={index + 1} role="img">
               <Crown />
             </span>
-            <span className={leaderboard.rank}>{index + 1}</span>
             <span className={leaderboard.name}>{player.name}</span>
-            <span className={leaderboard.points}>{player.score} pts.</span>
+            <span className={leaderboard.points}>{player.score}</span>
           </li>
         ))}
       </ul>

@@ -7,8 +7,8 @@
         v-for="(player, index) in getScoresByPlayer"
         :key="player._id"
       >
-        <slot name="crown" :index="index" />
-        <span class="rank">{{ index + 1 }}</span>
+        <slot name="crown" :index="index" :aria-label="index + 1" role="img" />
+        <span class="rank" v-if="!topPlayers">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
         <span class="points">{{ Math.round(player.score) }}</span>
       </li>
@@ -82,6 +82,9 @@ export default {
 
   .points
     margin-left: auto
+
+  .crown
+    padding-right: 0.5rem
 
 .current-player
   font-weight: bold
