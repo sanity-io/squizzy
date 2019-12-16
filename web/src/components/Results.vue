@@ -55,27 +55,27 @@
 <script>
 import SquizzySquid from "@/components/general/SquizzySquid";
 const FEEDBACK_WRONG = [
-  "So inkompetant.",
-  "Eek! That sucks.",
-  "What a squidappointment.",
-  "Really, no inkling at all?",
+  "So inkompetant",
+  "That sucks",
+  "What a squidappointment",
+  "No inkling at all?",
   `Are you squddin' me!`,
   `Better luck next time...`,
-  "Wrong, I squid you not!",
-  `You don’t know squid!`,
-  `No tentacle points for you...`
+  "I squid you not",
+  `You don’t know squid`,
+  `No tentacle points for you`
 ];
 
 const FEEDBACK_CORRECT = [
-  `Wow, you're squidding it!`,
-  "Consquidulations!",
-  "You got a squid pro quo!",
-  "You are inkredible!",
-  `Aren't you the smartest squid in the room`,
-  "Inkredible effort!",
-  "How exsquidsit!",
-  `Tentacle points for you!`,
-  `You're kraken it!`
+  `You're squidding it`,
+  "Consquidulations",
+  "A squid pro quo!",
+  "You are inkredible",
+  `The smartest squid in the room`,
+  "Inkredible effort",
+  "How exsquidsit",
+  `Tentacle points for you`,
+  `You're kraken it`
 ];
 
 const RESULT_VIEWS = {
@@ -116,8 +116,8 @@ export default {
       const playerAnswer = this.playerAnswer;
       // Select feedback sentence based on player answer
       return playerAnswer.isCorrect
-        ? FEEDBACK_CORRECT[randomCorrect]
-        : FEEDBACK_WRONG[randomWrong];
+        ? `Correct! ${FEEDBACK_CORRECT[randomCorrect]}`
+        : `Wrong! ${FEEDBACK_WRONG[randomWrong]}`;
     },
     expression() {
       return this.playerAnswer.isCorrect
