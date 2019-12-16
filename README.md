@@ -9,8 +9,12 @@ Squizzy is a real-time quiz game powered by Sanity.io.
 
 Table of contents:
 
-- [Get started](#get-started)
+- [Deploy your own Squizzy instance](#deploy-your-own-squizzy-instance)
+- [Play Squizzy](#play-squizzy)
+  - [Create and edit quizzes](#create-and-edit-quizzes)
+  - [Create a new match](#create-a-new-match)
 - [Local development](#local-development)
+- [Extras](#extras)
 
 ## Deploy your own Squizzy instance
 
@@ -50,11 +54,11 @@ The host screen will show a QR code. Your players can join by scanning this QR c
 
 ## Local development
 
-\*You can also use `npx @sanity/cli <command>` and `npx now <command>` if you prefer not to install global dependencies.
-
 ## Extras
 
 - Add the [Giphy][giphy] asset source selector
+
+\*You can also use `npx @sanity/cli <command>` and `npx now <command>` if you prefer not to install global dependencies.
 
 [sanity-studio]: https://www.sanity.io/docs/sanity-studio
 [nuxt]: https://nuxtjs.org
