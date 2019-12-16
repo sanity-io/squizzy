@@ -3,13 +3,13 @@ export default {
   localApiHost: 'http://localhost:3000', // default Now API port
   match: {
     correctAnswerScore: 100,
-    firstAnswerScore: 50,
+    firstAnswerScore: 50
   },
   schema: {
-    maxAnswerLength: 50,
+    maxAnswerLength: 40,
     maxQuestionLength: 100,
     maxNumberOfChoices: 4,
     minNumberOfChoices: 2,
-    defaultTimeLimit: 30,
-  },
+    defaultTimeLimit: 30
+  }
 }
