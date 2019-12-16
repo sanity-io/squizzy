@@ -4,11 +4,22 @@
   "env": {
     "SQUIZZY_WRITE_TOKEN": "@squizzy_write_token"
   },
-  "builds": [{
-    "src": "api/**.js",
-    "use": "@now/node"
-  }],
-  "routes": [{
+  "builds": [
+    {
+      "src": "api/**.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "web/package.json",
+      "use": "@now/static-build"
+    },
+    {
+      "src": "studio/package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    {
       "src": "^/api/(.*)",
       "dest": "/api/$1.js"
     },
