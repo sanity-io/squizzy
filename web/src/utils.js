@@ -43,11 +43,15 @@ const sortBy = (sortField, direction = "asc") => {
 
 // Use the questionKey parameter to get scores for that particular question only
 export const scoresByPlayer = (match, questionKey = 0) => {
-  const { currentQuestionKey, answers, quiz, players } = match;
+  const { currentQuestionKey, answers, quiz, players = [] } = match;
   const { questions } = quiz;
   const indexOfCurrentQuestion = questions
     .map(question => question._key)
     .indexOf(currentQuestionKey);
+
+  if (players.length === 0) {
+    return [];
+  }
 
   // gather all answered questions
   let questionsToCalculate;
@@ -83,7 +87,7 @@ export const scoresByPlayer = (match, questionKey = 0) => {
           answer =>
             answer.questionKey === question._key &&
             answer.selectedChoiceKey ===
-              question.choices.find(choice => choice.isCorrect)._key
+              (question.choices.find(choice => choice.isCorrect) || {})._key
         ) // only correct answers to this question reamain
         .sort(sortBy("submittedAt", "asc")) // order by who answered first
         .forEach((answer, index) => {
