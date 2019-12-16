@@ -34,24 +34,22 @@ class Match extends React.Component {
       startedAt: PropTypes.string,
       finishedAt: PropTypes.string,
       answers: PropTypes.arrayOf(),
-      quiz: PropTypes.arrayOf(
-        PropTypes.shape({
+      quiz: PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+        questions: PropTypes.arrayOf({
+          _key: PropTypes.string,
+          _type: PropTypes.string,
           title: PropTypes.string,
-          description: PropTypes.string,
-          questions: PropTypes.arrayOf({
+          timeLimit: PropTypes.number,
+          choices: PropTypes.arrayOf({
             _key: PropTypes.string,
             _type: PropTypes.string,
+            isCorrect: PropTypes.bool,
             title: PropTypes.string,
-            timeLimit: PropTypes.number,
-            choices: PropTypes.arrayOf({
-              _key: PropTypes.string,
-              _type: PropTypes.string,
-              isCorrect: PropTypes.boolean,
-              title: PropTypes.string,
-            }),
           }),
-        })
-      ),
+        }),
+      }),
       players: PropTypes.arrayOf({
         _id: PropTypes.string,
         _key: PropTypes.string,

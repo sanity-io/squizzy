@@ -58,7 +58,12 @@ export const scoresByPlayer = (match, questionKey = 0) => {
   }
 
   // prime the return array
-  const playersWithScores = players.map(player => ({name: player.name, _id: player._id, score: 0}))
+  const playersWithScores = players.map(({_key, name, _id}) => ({
+    _key,
+    name,
+    _id,
+    score: 0
+  }))
 
   questionsToCalculate.forEach(question => {
     // begin with all answers to this questions

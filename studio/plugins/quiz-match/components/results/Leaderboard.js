@@ -6,32 +6,40 @@ import styles from '../styles/Leaderboard.css'
 class Leaderboard extends React.Component {
   static propTypes = {
     match: PropTypes.shape({
+      _id: PropTypes.string,
+      isCurrentQuestionOpen: PropTypes.bool,
       currentQuestionKey: PropTypes.string,
+      startedAt: PropTypes.string,
+      finishedAt: PropTypes.string,
       answers: PropTypes.arrayOf(),
-      quiz: PropTypes.arrayOf(
-        PropTypes.shape({
-          title: PropTypes.string,
-          description: PropTypes.string,
-          questions: PropTypes.arrayOf({
+      quiz: PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+        questions: PropTypes.arrayOf(
+          PropTypes.shape({
             _key: PropTypes.string,
             _type: PropTypes.string,
             title: PropTypes.string,
             timeLimit: PropTypes.number,
-            choices: PropTypes.arrayOf({
-              _key: PropTypes.string,
-              _type: PropTypes.string,
-              isCorrect: PropTypes.boolean,
-              title: PropTypes.string,
-            }),
-          }),
+            choices: PropTypes.arrayOf(
+              PropTypes.shape({
+                _key: PropTypes.string,
+                _type: PropTypes.string,
+                isCorrect: PropTypes.bool,
+                title: PropTypes.string,
+              })
+            ),
+          })
+        ),
+      }),
+      players: PropTypes.arrayOf(
+        PropTypes.shape({
+          _id: PropTypes.string,
+          _key: PropTypes.string,
+          name: PropTypes.string,
+          score: PropTypes.number,
         })
       ),
-      players: PropTypes.arrayOf({
-        _id: PropTypes.string,
-        _key: PropTypes.string,
-        name: PropTypes.string,
-        score: PropTypes.number,
-      }),
     }),
   }
 
