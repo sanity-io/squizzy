@@ -21,7 +21,7 @@ class Countdown extends React.Component {
   componentDidMount() {
     const {match} = this.props
     const currentQuestion = findCurrentQuestion(match)
-    this.setState({seconds: 150 || defaultTimeLimit})
+    this.setState({seconds: currentQuestion.timeLimit || defaultTimeLimit})
     this.myInterval = setInterval(() => {
       const {seconds} = this.state
       const timeLimit = currentQuestion.timeLimit
