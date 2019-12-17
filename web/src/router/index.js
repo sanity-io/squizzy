@@ -13,13 +13,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
-    beforeEnter(to, from, next) {
-      const match = store.state.matchStore.match;
-      return match
-        ? next({ name: "match", params: { slug: match.slug.current } })
-        : next();
-    }
+    component: Home
   },
   {
     path: "/match/:slug",
