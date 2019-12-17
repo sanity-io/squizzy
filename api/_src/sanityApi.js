@@ -21,9 +21,6 @@ export const fetchMatch = async matchSlug => {
 }
 
 export const withdrawPlayerFromMatch = async (playerId, match) => {
-  if (!match.players || !match.players.find(pRef => pRef._ref === playerId)) {
-    return Promise.resolve(true)
-  }
   return client
     .patch(match._id)
     .unset([`players[_ref=="${playerId}"]`])
@@ -31,14 +28,11 @@ export const withdrawPlayerFromMatch = async (playerId, match) => {
 }
 
 export const ensurePlayerParticipation = async (player, match) => {
-  if (match.players && match.players.some(pRef => pRef._ref === player._id)) {
-    return Promise.resolve(true)
-  }
-
   const playerRef = {_key: nanoid(), _type: 'reference', _ref: player._id}
   return client
     .patch(match._id)
     .setIfMissing({players: []})
+    .unset([`players[_ref=="${player._id}"]`])
     .append('players', [playerRef])
     .commit()
 }
