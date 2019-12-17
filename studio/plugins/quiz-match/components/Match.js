@@ -221,7 +221,7 @@ class Match extends React.Component {
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} />}
+            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} onKickPlayer={this.handleKickPlayer}/>}
           </>
         )}
 

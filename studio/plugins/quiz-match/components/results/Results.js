@@ -8,7 +8,7 @@ import Squizzy from '../Squizzy'
 
 class Results extends React.Component {
   render() {
-    const {match} = this.props
+    const {match, onKickPlayer} = this.props
     if (!match) {
       return null
     }
@@ -16,6 +16,7 @@ class Results extends React.Component {
 
     const currentQuestion = quiz.questions.find(question => question._key === currentQuestionKey)
     const choicesOnCurrentQuestion = currentQuestion.choices
+    const handleKickPlayer = playerId => onKickPlayer(playerId)
 
     const correctChoices = choicesOnCurrentQuestion
       .map((choice, index) => ({...choice, index}))
@@ -49,7 +50,7 @@ class Results extends React.Component {
           </div>
           <AnswerGraph match={match} />
         </div>
-        <Leaderboard match={match} />
+        <Leaderboard match={match} onKickPlayer={handleKickPlayer}/>
       </div>
     )
   }

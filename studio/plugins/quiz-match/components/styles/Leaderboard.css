@@ -46,6 +46,16 @@
     padding: var(--small-padding) var(--medium-padding);
     border-radius: 5px;
 
+    @nest & .name {
+      display: flex;
+
+      @nest & button {
+        opacity: 0;
+        padding-left: 1rem;
+        transition: opacity 0.3s linear;
+      }
+    }
+
     @nest & .rank {
       font-weight: normal;
       font-size: 0.85em;
@@ -60,6 +70,10 @@
   @nest & .item:nth-child(odd) {
     background: #F3F5FF;
   }
+}
+
+.item:hover .name button {
+  opacity: 1;
 }
 
 .crown {
