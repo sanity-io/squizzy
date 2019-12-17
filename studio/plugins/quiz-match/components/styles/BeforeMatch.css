@@ -99,15 +99,14 @@
 .quizName {
   margin: 0;
   font-size: 2.5rem;
-  padding-bottom: var(--small-padding);
 
   @media screen and (max-width: 650px) {
     font-size: 1.5em;
   }
 }
 
-.questionNumber {
-  font-size: 5rem;
+.number {
+  font-size: 4rem;
   line-height: 1;
 
   @media screen and (max-width: 650px) {
@@ -120,5 +119,6 @@
 }
 
 .description {
-  padding-top: var(--large-padding);
+  margin: 0;
+  padding-bottom: var(--medium-padding);
 }

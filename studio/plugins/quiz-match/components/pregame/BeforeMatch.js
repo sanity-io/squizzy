@@ -55,18 +55,16 @@ class BeforeStart extends React.Component {
           <div>
             <div className={styles.infoLabel}>Quiz Name</div>
             <h1 className={styles.quizName}>{quiz.title}</h1>
+            <p className={styles.description}>{quiz.description}</p>
             <div className={styles.matchDetails}>
               <div>
-                <div className={styles.questionNumber}>{quiz.questions.length}</div>
                 <div className={styles.infoLabel}>Questions</div>
+                <div className={styles.number}>{quiz.questions.length}</div>
               </div>
               <div>
-                <div className={styles.questionNumber}>{players.length}</div>
                 <div className={styles.infoLabel}>Players</div>
+                <div className={styles.number}>{players.length}</div>
               </div>
-            </div>
-            <div className={styles.description}>
-              <p>{quiz.description}</p>
             </div>
           </div>
         </section>
