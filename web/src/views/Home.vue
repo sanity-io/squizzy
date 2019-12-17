@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       title: "Welcome to Squizzy!",
-      subtitle: "Scan a QR code to get started.",
+      subtitle: "Use the camera below to scan the QR-code",
       status: "Powered by Sanity",
       expression: { mouth: "happy" }
     };
