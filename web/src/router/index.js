@@ -39,12 +39,6 @@ const routes = [
         console.error(error); // eslint-disable-line
       }
     }
-  },
-  {
-    path: "/matches",
-    name: "matches",
-    component: () =>
-      import(/* webpackChunkName: "matches" */ "../views/Matches.vue")
   }
 ];
 
