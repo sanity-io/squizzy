@@ -1,8 +1,8 @@
 <template>
   <div class="navbar">
     <div class="app-name">{{ $appName }}</div>
-    <button v-if="showLeaveButton" class="leave-button" @click="leaveGame">
-      <span class="leave-label">Leave</span>
+    <button v-if="showLeaveButton" class="leave-button" @click="leaveMatch">
+      <span class="leave-label">Leave match</span>
       <span class="leave-icon" role="img">
         <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -20,12 +20,12 @@ export default {
     showLeaveButton() {
       const hasPlayer = this.$store.state.playerStore.player;
       const hasMatch = this.$store.state.matchStore.match;
-      return hasMatch || hasPlayer;
+      return hasMatch && hasPlayer;
     }
   },
   methods: {
-    leaveGame() {
-      this.$store.dispatch("leaveGame");
+    leaveMatch() {
+      this.$store.dispatch("leaveMatch");
     }
   }
 };

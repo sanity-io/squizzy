@@ -51,18 +51,22 @@ export default {
     validateName() {
       const name = this.playerName;
       if (name) {
-        this.$store
-          .dispatch("playerStore/registerPlayer", name)
-          .then(response => {
-            if (!response) {
-              this.error = "Something went wrong, please try again.";
-              this.$emit("error", this.error);
-            } else {
-              this.error = false;
-              this.$emit("error", false);
-            }
-          });
+        this.registerNewPlayer();
       }
+    },
+
+    registerNewPlayer() {
+      return this.$store
+        .dispatch("playerStore/registerNewPlayer", this.playerName)
+        .then(response => {
+          if (!response) {
+            this.error = "Something went wrong, please try again.";
+            this.$emit("error", this.error);
+          } else {
+            this.error = false;
+            this.$emit("error", false);
+          }
+        });
     }
   }
 };

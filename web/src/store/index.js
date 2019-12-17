@@ -28,35 +28,24 @@ export default new Vuex.Store({
   state: {
     status: false
   },
-  mutations: {
-    SET_STATUS_MESSAGE(state, status) {
-      state.status = status;
-    }
-  },
   actions: {
-    leaveGame({ commit, rootState, rootGetters }) {
+    leaveMatch({ dispatch, rootState, rootGetters }) {
       const currentRoute = router.currentRoute.name;
       const slug = rootGetters["matchStore/slug"];
       const player = rootState.playerStore.player;
-      if (player && slug) {
-        const params = {
-          playerId: player.id,
-          matchSlug: slug
-        };
-        return withdrawFromGame(params).then(result => {
-          if (result === true) {
-            commit("matchStore/RESET_ALL", false, { root: true });
-            commit("playerStore/REGISTER_PLAYER", false, { root: true });
-            if (currentRoute !== "home") return router.push({ name: "home" });
-          }
-        });
-      } else {
-        commit("playerStore/REGISTER_PLAYER", false, { root: true });
-        commit("matchStore/RESET_ALL", false, { root: true });
-        if (currentRoute !== "home") {
-          return router.push({ name: "home" });
-        }
+      dispatch("matchStore/resetMatch", false, { root: true });
+      dispatch("client/stopListener", false, { root: true });
+
+      const params = {
+        playerId: player.id,
+        matchSlug: slug
+      };
+      if (currentRoute !== "home") {
+        router.push({ name: "home" });
       }
+      return withdrawFromGame(params).then(result => {
+        return result;
+      });
     }
   },
   modules: {

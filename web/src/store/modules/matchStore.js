@@ -43,6 +43,12 @@ const getters = {
       question => question._key === currentQuestionKey
     );
     return `(${progress + 1}/${quiz.questions.length})`;
+  },
+
+  isPlayerInMatch(state, rootGetters, rootState) {
+    const { players = [] } = state.match;
+    const currentPlayer = rootState.playerStore.player;
+    return players.some(player => player._id === currentPlayer.id);
   }
 };
 
@@ -52,14 +58,14 @@ const mutations = {
     state.match = updatedMatch;
   },
 
-  RESET_ALL(state) {
+  RESET_MATCH(state) {
     state.match = null;
   }
 };
 
 const actions = {
-  resetAll({ commit }) {
-    commit("RESET_ALL");
+  resetMatch({ commit }) {
+    commit("RESET_MATCH");
   },
   setMatchDetails({ commit }, match) {
     commit("SET_MATCH_DETAILS", match);

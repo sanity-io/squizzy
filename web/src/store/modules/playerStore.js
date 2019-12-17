@@ -43,8 +43,7 @@ const mutations = {
     if (player) {
       state.player = {
         name: player.playerName,
-        id: player.playerId,
-        match: player.matchSlug
+        id: player.playerId
       };
     } else {
       state.player = player;
@@ -56,24 +55,40 @@ const mutations = {
 };
 
 const actions = {
-  registerPlayer({ commit, rootGetters }, playerName) {
+  registerNewPlayer({ commit, rootGetters }, playerName) {
     commit("SET_IS_LOADING", true);
     // The registered player
-    const player = {
+    const body = {
       playerId: nanoid(),
       playerName,
       matchSlug: rootGetters["matchStore/slug"]
     };
-    return signUp(player).then(result => {
+    return signUp(body).then(result => {
       if (result === true) {
         // Commit the player mutation
-        commit("REGISTER_PLAYER", player);
+        commit("REGISTER_PLAYER", body);
       }
       // Set the loading state to false
       commit("SET_IS_LOADING", false);
       return result;
     });
   },
+
+  registerExistingPlayer({ commit, state, rootGetters }) {
+    commit("SET_IS_LOADING", true);
+    // The registered player
+    const body = {
+      playerId: state.player.id,
+      playerName: state.player.name,
+      matchSlug: rootGetters["matchStore/slug"]
+    };
+    return signUp(body).then(result => {
+      // Set the loading state to false
+      commit("SET_IS_LOADING", false);
+      return result;
+    });
+  },
+
   kickPlayer({ commit }) {
     commit("REGISTER_PLAYER", false);
   }

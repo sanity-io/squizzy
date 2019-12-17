@@ -66,9 +66,11 @@ export default {
       if (!player) return false;
       return this.match.startedAt && this.match.finishedAt;
     },
+
     match() {
       return this.$store.state.matchStore.match;
     },
+
     status() {
       const player = this.$store.state.playerStore.player;
       return this.activeView.name !== "lobby"
@@ -77,6 +79,7 @@ export default {
           }`
         : "Powered by Sanity";
     },
+
     activeView() {
       // Get the player object from the store
       const player = this.$store.state.playerStore.player;
@@ -108,13 +111,36 @@ export default {
         expression: { eyes: "default", mouth: "happy" }
       };
     },
+
     playerCount() {
       return this.$store.getters["matchStore/playerCount"];
+    }
+  },
+
+  mounted() {
+    const player = this.$store.state.playerStore.player;
+    const match = this.$store.state.matchStore.match;
+    if (player && match && !this.$store.getters["matchStore/isPlayerInMatch"]) {
+      this.registerExistingPlayer();
     }
   },
   methods: {
     setError(error) {
       this.error = error;
+    },
+
+    registerExistingPlayer() {
+      return this.$store
+        .dispatch("playerStore/registerExistingPlayer")
+        .then(response => {
+          if (!response) {
+            this.error = "Something went wrong, please try again.";
+            this.$emit("error", this.error);
+          } else {
+            this.error = false;
+            this.$emit("error", false);
+          }
+        });
     }
   }
 };

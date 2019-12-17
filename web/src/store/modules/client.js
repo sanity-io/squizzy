@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import client from "../../sanityClient";
 import { submitAnswerToQuestion } from "../squizzyServerApi";
 
@@ -24,39 +25,30 @@ const mutations = {
 
 const actions = {
   // Get the match to play
-  getMatchDetails({ commit, dispatch }, slug) {
+  getMatchDetails({ dispatch }, slug) {
     dispatch("stopListener");
-    dispatch("matchStore/resetAll", null, { root: true });
+    dispatch("matchStore/resetMatch", false, { root: true });
     return client
       .fetch(query, { slug })
       .then(match => {
-        if (match.startedAt && match.finishedAt) {
-          const status = {
-            title: "Oops! Game already finished",
-            message: "Please scan another code."
-          };
-          commit("SET_STATUS_MESSAGE", status, { root: true });
+        if (isEmpty(match)) {
           return false;
-        } else {
-          // Start the listener to get latest match updates
-          dispatch("startListener", match.slug.current);
-
-          // Set the match details
-          dispatch("matchStore/setMatchDetails", match, { root: true });
-
-          // Reset status message
-          commit("SET_STATUS_MESSAGE", false, { root: true });
-
-          // Return to beforeEnter route on /match/:id
-          return true;
         }
+
+        if (match.startedAt && match.finishedAt) {
+          return false;
+        }
+
+        // Start the listener to get latest match updates
+        dispatch("startListener", match.slug.current);
+
+        // Set the match details
+        dispatch("matchStore/setMatchDetails", match, { root: true });
+
+        // Return to beforeEnter route on /match/:id
+        return true;
       })
       .catch(error => {
-        const status = {
-          title: "Game not found",
-          message: `Sorry, I couldn't find the game you are looking for.`
-        };
-        commit("SET_STATUS_MESSAGE", status, { root: true });
         console.error(error); // eslint-disable-line
         return false;
       });
@@ -78,14 +70,7 @@ const actions = {
         .subscribe(async () => {
           // Something has happened with the match doc, let's fetch it
           const match = await client.fetch(query, { slug });
-          // console.log("match updated", match);
           dispatch("matchStore/setMatchDetails", match, { root: true });
-
-          // Remove player from store if not in match.players array
-          // const activePlayerId = rootState.player.player.id
-          // const playerExists = match.players.find(player => player._ref === activePlayerId)
-
-          // TODO if player is no longer i match.players array, don't delte player data, just redirect to /home
         });
     }
   },
