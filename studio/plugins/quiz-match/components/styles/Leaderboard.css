@@ -48,6 +48,7 @@
 
     @nest & .name {
       display: flex;
+      align-items: center;
 
       @nest & button {
         opacity: 0;
