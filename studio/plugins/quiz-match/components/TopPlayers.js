@@ -29,7 +29,7 @@ const TopPlayers = props => {
               <Crown />
             </span>
             <span className={leaderboard.name}>{player.name}</span>
-            <span className={leaderboard.points}>{player.score}</span>
+            <span className={leaderboard.points}>{Math.round(player.score)}</span>
           </li>
         ))}
       </ul>
@@ -38,7 +38,7 @@ const TopPlayers = props => {
 }
 
 TopPlayers.propTypes = {
-  players: PropTypes.array,
+  players: PropTypes.array
 }
 
 export default TopPlayers
