@@ -10,7 +10,7 @@
     "now-dev": "npm run dev"
   },
   "engines": {
-    "node": ">=0.10.3"
+    "node": "12.x"
   },
   "dependencies": {
     "@sanity/image-url": "^0.140.15",

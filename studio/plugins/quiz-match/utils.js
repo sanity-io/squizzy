@@ -18,7 +18,7 @@ export const assembleMatchUrl = ({slug}) => {
   if (window.location.hostname === 'localhost') {
     return `${config.default.localWebHost}/match/${slug.current}`
   }
-  return `${window.location.origin}/match/${slug.current}`
+  return `${config.default.remoteWebHost}/match/${slug.current}`
 }
 
 export function findCurrentQuestion(match) {
