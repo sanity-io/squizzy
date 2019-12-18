@@ -1,11 +1,7 @@
 const sanityClient = require('@sanity/client')
+const {sanityClientConfig} = require('../../sanityClientConfig')
 
-const client = sanityClient({
-  projectId: 'puj7p168',
-  dataset: 'production',
-  useCdn: false,
-  // eslint-disable-next-line no-process-env
-  token: process.env.SQUIZZY_WRITE_TOKEN
-})
+sanityClientConfig.token = process.env.SQUIZZY_WRITE_TOKEN
+const client = sanityClient(sanityClientConfig)
 
 module.exports = client

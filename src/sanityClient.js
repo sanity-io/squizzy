@@ -1,9 +1,10 @@
 const sanityClient = require("@sanity/client");
+const { sanityClientConfig } = require("../sanityClientConfig");
 
-export default sanityClient({
-  // replace this id with the one you find in /studio/sanity.json
-  projectId: "puj7p168",
-  // make sure that the dataset name is the same as the one in /studio/sanity.json
-  dataset: "production",
-  useCdn: false
-});
+if (sanityClientConfig.projectId === "puj7p168") {
+  console.error(
+    "Please change the projectId in ./sanityClientConfig.js to match the projectId found in ./studio/sanity.json"
+  );
+}
+
+export default sanityClient(sanityClientConfig);
