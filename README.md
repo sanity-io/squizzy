@@ -7,7 +7,7 @@ Squizzy is a real-time quiz game powered by Sanity.io.
 - Create quizes and host matches with [Sanity Studio][sanity-studio]
 - Real-time web app built with [Vue][vue], optimized for mobile
 - [Unsplash][unsplash] integration to easily add photos
-- Easy deployment on [ZEIT Now][now]
+- Easy deployment on [ZEIT’s Now][now]
 
 Table of contents:
 
