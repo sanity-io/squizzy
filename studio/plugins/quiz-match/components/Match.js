@@ -75,7 +75,6 @@ class Match extends React.Component {
   }
 
   handleStartMatch = () => {
-    // console.log('start match button clicked')
     const {match} = this.props
     const firstQuestionKey = match.quiz.questions[0]._key
     client
@@ -89,9 +88,7 @@ class Match extends React.Component {
   }
 
   handleNextQuestion = () => {
-    // console.log('next question button clicked')
     const {match} = this.props
-
     const next = nextQuestion(match)
     if (next) {
       client
@@ -102,9 +99,7 @@ class Match extends React.Component {
   }
 
   handleFinishMatch = () => {
-    // console.log('finish match button clicked')
     const {match} = this.props
-
     client
       .patch(match._id)
       .set({
@@ -116,7 +111,6 @@ class Match extends React.Component {
   }
 
   handleCancelMatch = () => {
-    // console.log('cancel match button clicked')
     const {match} = this.props
     client
       .patch(match._id)
@@ -126,7 +120,6 @@ class Match extends React.Component {
   }
 
   handleRestartMatch = () => {
-    // console.log('restart match button clicked')
     const {match} = this.props
     client
       .patch(match._id)
@@ -136,7 +129,6 @@ class Match extends React.Component {
   }
 
   handleCloseQuestion = () => {
-    // console.log('closing current question')
     const {match} = this.props
     client
       .patch(match._id)
@@ -145,9 +137,7 @@ class Match extends React.Component {
   }
 
   handleKickPlayer = playerId => {
-    // console.log('kick player button clicked')
     const {match} = this.props
-
     client
       .patch(match._id)
       .unset([`players[_ref=="${playerId}"]`])
@@ -221,7 +211,9 @@ class Match extends React.Component {
               <Question match={match} onCloseQuestion={this.handleCloseQuestion} />
             )}
 
-            {currentQuestionKey && !isCurrentQuestionOpen && <Results match={match} onKickPlayer={this.handleKickPlayer}/>}
+            {currentQuestionKey && !isCurrentQuestionOpen && (
+              <Results match={match} onKickPlayer={this.handleKickPlayer} />
+            )}
           </>
         )}
 
