@@ -12,7 +12,7 @@ Squizzy is a real-time quiz game powered by Sanity.io.
 Table of contents:
 
 - [Deploy your own Squizzy instance](#deploy-your-own-squizzy-instance)
-  - [Deploying the Sanity Studio and host display on *.sanity.studio](#deploying-the-sanity-studio-and-host-display-on-sanitystudio)
+  - [Deploying the Sanity Studio and host display on \*.sanity.studio](#deploying-the-sanity-studio-and-host-display-on-sanitystudio)
   - [Deploying the web app and the serverless functions on Now](#deploying-the-web-app-and-the-serverless-functions-on-now)
 - [Play Squizzy](#play-squizzy)
   - [Create and edit quizzes](#create-and-edit-quizzes)
@@ -38,14 +38,14 @@ To get started with Squizzy, follow these instructions.
 
 ### Deploying the web app and the serverless functions on Now
 
-1. Run `now` in the root folder to deploy the app, or go to [your Now account and add the GitHub repository][now-github]
-2. Add a secret token with write permissions to your Now app:
+1. First you need to add a secret token with write permissions to your Now account:
    1. Find your project’s API settings on https://manage.sanity.io/{YOUR_PROJECTID}/settings/api (or run `sanity manage` inside `/studio`)
    2. Under the Tokens sections, create a new token with write permissions
-   3. Copy-paste the token, and paste it into the `.env.template` file in the root folder
-   4. Rename the file to `.env` to prevent it from being tracked in git
-   5. Make sure you have copied the token and run `now secrets add $(pbpaste)` to add it on Now.
-   6. Alternatively: `now secrets add <the-token>` (put a space before `now` to avoid the token going into your bash history).
+   3. Rename the `.env.template` file to `.env` in the root folder, it will be ignored by git.
+   4. Copy-paste the token into the `.env` file for the `SQUIZZY_WRITE_TOKEN=` variable
+   5. Make sure you have copied the token and run `now secrets add squizzy_write_token $(pbpaste)` to add it on Now.
+   6. Alternatively: `now secrets add squizzy_write_token <the-token>` (put a space before `now` to avoid the token going into your bash history).
+2. Run `now` in the root folder to deploy the app, or go to [your Now account and add the GitHub repository][now-github]
 3. Add your app domain to your Sanity project’s CORS settings. `sanity cors add https://your-name.now.sh --credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.studio)
 4. Update the `remoteWebHost` in `/studio/quizConfig` to match your new URL on Now.
 
