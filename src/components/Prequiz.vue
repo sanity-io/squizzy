@@ -4,15 +4,18 @@
       :mouth="activeView.expression.mouth"
       :eyes="activeView.expression.eyes"
     />
-    <div class="status label" v-if="activeView.status">
+    <div v-if="activeView.status" class="status label">
       {{ activeView.status }}
     </div>
     <h1 class="page-title">{{ activeView.title }}</h1>
     <p v-if="activeView.subtitle" class="page-subtitle">
       {{ activeView.subtitle }}
     </p>
-    <register-player v-if="activeView.name === 'register'" @error="setError" />
-    <div class="match-details" v-if="!isFinished && !error">
+    <register-player
+      v-if="activeView.name === 'register' && !isFinished"
+      @error="setError"
+    />
+    <div v-if="!isFinished && !error" class="match-details">
       <div class="player-count">
         {{ playerCount }}
       </div>
@@ -24,10 +27,10 @@
       <h2 class="top-players">Top players</h2>
       <leaderboard class="players" top-players>
         <span
-          class="crown"
           slot="crown"
-          :data-rank="player.index"
           slot-scope="player"
+          class="crown"
+          :data-rank="player.index"
         >
           <svg
             stroke-width="0"
@@ -62,8 +65,6 @@ export default {
   },
   computed: {
     isFinished() {
-      const player = this.$store.state.playerStore.player;
-      if (!player) return false;
       return this.match.startedAt && this.match.finishedAt;
     },
 
@@ -86,6 +87,15 @@ export default {
       // Quiz title
       const title = this.match.quiz.title;
 
+      if (this.isFinished)
+        return {
+          name: "Finished",
+          title: "Thank you for playing!",
+          subtitle: "The match finished, did you have a squid time?",
+          status: this.match.quiz.title,
+          expression: { mouth: "happy" }
+        };
+
       // Register for match if no Player
       if (!player)
         return {
@@ -95,14 +105,6 @@ export default {
           expression: { eyes: "happy", mouth: "default" }
         };
 
-      if (this.isFinished)
-        return {
-          name: "Finished",
-          title: "Thank you for playing!",
-          subtitle: "The match finished, did you have a squid time?",
-          status: false,
-          expression: { mouth: "happy" }
-        };
       return {
         name: "welcome",
         title: `Hello ${player.name}!`,

@@ -35,10 +35,6 @@ const actions = {
           return false;
         }
 
-        if (match.startedAt && match.finishedAt) {
-          return false;
-        }
-
         // Start the listener to get latest match updates
         dispatch("startListener", match.slug.current);
 

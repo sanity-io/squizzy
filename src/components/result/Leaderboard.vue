@@ -1,14 +1,17 @@
 <template>
-  <div class="leaderboard-wrapper">
+  <div
+    class="leaderboard-wrapper"
+    :class="{'top-players-wrapper': topPlayers}"
+  >
     <ul class="leaderboard" :class="{ 'top-players': topPlayers }">
       <li
-        class="item"
-        :class="{ 'current-player': player._id === playerId }"
         v-for="(player, index) in getScoresByPlayer"
         :key="player._id"
+        class="item"
+        :class="{ 'current-player': player._id === playerId }"
       >
         <slot name="crown" :index="index" :aria-label="index + 1" role="img" />
-        <span class="rank" v-if="!topPlayers">{{ index + 1 }}</span>
+        <span v-if="!topPlayers" class="rank">{{ index + 1 }}</span>
         <span class="name">{{ player.name }}</span>
         <span class="points">{{ Math.round(player.score) }}</span>
       </li>
@@ -60,11 +63,15 @@ export default {
   padding: 0
   padding-top: 1rem
 
+.top-players-wrapper
+  height: auto
+
 .top-players
   position: static
   padding: 0
   margin: 0 1rem
   width: auto
+  height: auto
 
 .item
   display: flex
