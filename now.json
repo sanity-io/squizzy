@@ -6,16 +6,12 @@
   },
   "builds": [
     {
+      "src": "package.json",
+      "use": "@now/static-build"
+    },
+    {
       "src": "api/**.js",
       "use": "@now/node"
-    },
-    {
-      "src": "web/package.json",
-      "use": "@now/static-build"
-    },
-    {
-      "src": "studio/package.json",
-      "use": "@now/static-build"
     }
   ],
   "routes": [
@@ -24,24 +20,16 @@
       "dest": "/api/$1.js"
     },
     {
-      "src": "^/studio/static/(.*)",
-      "dest": "/studio/static/$1"
-    },
-    {
-      "src": "^/studio(.*)",
-      "dest": "/studio/index.html"
-    },
-    {
       "src": "^/(js|css)/(.*)",
-      "dest": "/web/$1/$2"
+      "dest": "/$1/$2"
     },
     {
       "src": "^/favicon.ico",
-      "dest": "/web/favicon.ico"
+      "dest": "/favicon.ico"
     },
     {
       "src": "/(.*)",
-      "dest": "/web/index.html"
+      "dest": "/index.html"
     }
   ]
 }
