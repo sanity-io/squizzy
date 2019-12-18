@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8080",
+    "serve": "vue-cli-service serve",
     "dev": "concurrently \"npm run serve\" \"npm run studio\"",
     "build": "vue-cli-service build",
     "studio": "cd studio && npm run dev",
-    "now-dev": "npm run serve"
+    "now-dev": "npm run dev"
   },
   "engines": {
     "node": ">=0.10.3"

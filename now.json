@@ -3,33 +3,5 @@
   "name": "squizzy",
   "env": {
     "SQUIZZY_WRITE_TOKEN": "@squizzy_write_token"
-  },
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@now/static-build"
-    },
-    {
-      "src": "api/**.js",
-      "use": "@now/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "^/api/(.*)",
-      "dest": "/api/$1.js"
-    },
-    {
-      "src": "^/(js|css)/(.*)",
-      "dest": "/$1/$2"
-    },
-    {
-      "src": "^/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  }
 }

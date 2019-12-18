@@ -5,37 +5,48 @@
 Squizzy is a real-time quiz game powered by Sanity.io.
 
 - Create quizes and host matches with [Sanity Studio][sanity-studio]
-- Real-time client frontend built with [Nuxt][nuxt] and [Vue][vue], optimized for mobile
+- Real-time web app built with [Vue][vue], optimized for mobile
 - [Unsplash][unsplash] integration to easily add photos
 - Easy deployment on [ZEIT Now][now]
 
 Table of contents:
 
 - [Deploy your own Squizzy instance](#deploy-your-own-squizzy-instance)
+  - [Deploying the Sanity Studio and host display on *.sanity.studio](#deploying-the-sanity-studio-and-host-display-on-sanitystudio)
+  - [Deploying the web app and the serverless functions on Now](#deploying-the-web-app-and-the-serverless-functions-on-now)
 - [Play Squizzy](#play-squizzy)
   - [Create and edit quizzes](#create-and-edit-quizzes)
   - [Create a new match](#create-a-new-match)
 - [Local development](#local-development)
-  - [Studio](#studio)
-  - [Web client](#web-client)
+  - [Sanity Studio](#sanity-studio)
+  - [Web app](#web-app)
 - [Extras](#extras)
 
 ## Deploy your own Squizzy instance
 
-To get started with Squizzy, follow these instructions. You can also watch this [video walkthrough on YouTube][youtube].
+To get started with Squizzy, follow these instructions.
 
 1. [Copy](https://github.com/sanity-io/squizzy/generate) this repository and clone it to your computer
-2. Install dependencies with `npm install` (or `yarn`) in the `/studio` and `/web` folders, including `npm install --global @sanity/cli now`
-3. Run `sanity init` inside the `/studio` folder Follow the instructions to connect the studio up with a new project and dataset
-4. Run `now` in the root folder to deploy the app or go to [your Now account and add the GitHub repository][now-github]
-5. Add a secret token with write permissions to your Now app:
+2. Install dependencies with `npm install` (or `yarn`) in the root and `/studio` folders.
+3. Install Now CLI and Sanity CLI: `npm install --global @sanity/cli now`
+
+### Deploying the Sanity Studio and host display on \*.sanity.studio
+
+1. Run `sanity init` inside the `/studio` folder. Follow the instructions to connect the studio up with a new project and dataset.
+2. Run `sanity deploy` to build and upload the studio to `<your-studio-name>.sanity.studio`
+3. Run `sanity deploy` again whenever you want to upload changes to the studio code
+
+### Deploying the web app and the serverless functions on Now
+
+1. Run `now` in the root folder to deploy the app, or go to [your Now account and add the GitHub repository][now-github]
+2. Add a secret token with write permissions to your Now app:
    1. Find your project’s API settings on https://manage.sanity.io/{YOUR_PROJECTID}/settings/api (or run `sanity manage` inside `/studio`)
    2. Under the Tokens sections, create a new token with write permissions
    3. Copy-paste the token, and paste it into the `.env.template` file in the root folder
    4. Rename the file to `.env` to prevent it from being tracked in git
    5. Make sure you have copied the token and run `now secrets add $(pbpaste)` to add it on Now.
    6. Alternatively: `now secrets add <the-token>` (put a space before `now` to avoid the token going into your bash history).
-6. Add your app domain to your Sanity project’s CORS settings. `sanity cors add https://your-name.now.sh --credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.studio)
+3. Add your app domain to your Sanity project’s CORS settings. `sanity cors add https://your-name.now.sh --credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.studio)
 
 ## Play Squizzy
 
@@ -62,11 +73,11 @@ The host controls the game play from the “Let’s play” tool in the studio.
 
 ## Local development
 
-### Studio
+### Sanity Studio
 
-Go to [sanity.io/docs](https://sanity.io/docs) to find documentation.
+Go to [sanity.io/docs](https://sanity.io/docs) to find more documentation on how to configure and customize Sanity Studio.
 
-1. Make sure you have the CLI installed: `npm i -g @sanity/cli`
+1. Make sure you have the CLI installed: `npm i -g @sanity/cli` (or `yarn global @sanity/cli`)
 2. Inside the `/studio` folder, install dependencies with `sanity install`
 3. `npm run dev` to start the local development server
 4. You can open the studio on [localhost:3333](http://localhost:3333)
@@ -77,17 +88,24 @@ You'll find the host play display inside of `/studio/plugins/quiz-match`.
 
 You can tweak the Studio’s color scheme in `/studio/squizzyTheme.css`
 
-### Web client
+### Web app
 
-Go to [nuxtjs.org/docs](https://nuxtjs.org/docs) for documentation.
+Go to [vuejs.org/docs](https://vuejs.org/docs) for documentation on Vue.
 
-1. Install dependencies
+1. Install dependencies by running `npm i` (or `yarn`) in the root folder
+2. Run `now dev` to start the web app, the studio, and serverless functions concurrently (remember to install studio dependencies first)
+3. You can access the following endpoints:
+   - Web app on `localhost:3000`
+   - Serverless functions on `localhost:3000/api/<function-name>`
+   - Sanity Studio on `localhost:3333`
+
+N.B! The web app will run on `localhost:3000` (the dev server log will show a different port number, but `now dev` binds this random port to :3000).
 
 ## Extras
 
-- Add the [Giphy][giphy] asset source selector
+- Add the [Giphy][giphy] asset source selector if you want easy access to animated GIFs for your quizzes.
 
-\*You can also use `npx @sanity/cli <command>` and `npx now <command>` if you prefer not to install global dependencies.
+\* You can also use `npx @sanity/cli <command>` and `npx now <command>` if you prefer not to install global dependencies.
 
 [sanity-studio]: https://www.sanity.io/docs/sanity-studio
 [nuxt]: https://nuxtjs.org
