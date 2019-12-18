@@ -46,7 +46,7 @@ To get started with Squizzy, follow these instructions.
    5. Make sure you have copied the token and run `now secrets add squizzy_write_token $(pbpaste)` to add it on Now.
    6. Alternatively: `now secrets add squizzy_write_token <the-token>` (put a space before `now` to avoid the token going into your bash history).
 2. Run `now` in the root folder to deploy the app, or go to [your Now account and add the GitHub repository][now-github]
-3. Add your app domain to your Sanity project’s CORS settings. In the `/studio` folder, run `sanity cors add https://your-name.now.sh --no-credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.studio)
+3. Add your app domain to your Sanity project’s CORS settings. In the `/studio` folder, run `sanity cors add https://your-name.now.sh --no-credentials` or go to your project’s API settings on [manage.sanity.io](https://manage.sanity.io)
 4. Update the `remoteWebHost` in `/studio/quizConfig` to match your new URL on Now.
 
 ## Play Squizzy
