@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Spinner from "./Spinner";
+import Spinner from './Spinner'
 export default {
   components: {
     Spinner
@@ -18,7 +18,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: "green"
+      default: 'green'
     },
     title: {
       type: String,
@@ -29,7 +29,7 @@ export default {
       default: false
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

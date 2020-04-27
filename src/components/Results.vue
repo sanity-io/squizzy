@@ -1,28 +1,19 @@
 <template>
-  <div
-    class="result page"
-    v-touch:swipe.left="swipeRight"
-    v-touch:swipe.right="swipeLeft"
-  >
+  <div v-touch:swipe.left="swipeRight" v-touch:swipe.right="swipeLeft" class="result page">
     <div class="progress label">{{ status }}</div>
     <div>
       <squizzy-squid :mouth="expression.mouth" :eyes="expression.eyes" />
       <p class="feedback-heading">{{ feedbackTitle }}</p>
-      <h1
-        class="question"
-        :class="{ long: question.title.split('').length > 60 }"
-      >
+      <h1 class="question" :class="{long: question.title.split('').length > 60}">
         {{ question.title }}
       </h1>
       <div class="correct-answers">
-        <div class="label">
-          Correct answer{{ correctAnswers.length > 1 ? "s" : "" }}
-        </div>
+        <div class="label">Correct answer{{ correctAnswers.length > 1 ? 's' : '' }}</div>
         <div class="answers">
           <div
-            class="answer choice"
             v-for="choice in correctAnswers"
             :key="choice.title"
+            class="answer choice"
             :data-choice="choice.index"
           >
             <div class="symbol"><component :is="choice.icon" /></div>
@@ -33,65 +24,61 @@
     </div>
     <section class="section">
       <keep-alive>
-        <component
-          :is="activeView.component"
-          :key="activeView.name"
-          class="transition"
-        />
+        <component :is="activeView.component" :key="activeView.name" class="transition" />
       </keep-alive>
     </section>
     <div class="view-tracker">
       <div
         class="view-dot"
+        :class="{'is-active': activeView.name === 'results'}"
         @click="swipeLeft"
-        :class="{ 'is-active': activeView.name === 'results' }"
       ></div>
       <div
         class="view-dot"
+        :class="{'is-active': activeView.name === 'leaderboard'}"
         @click="swipeRight"
-        :class="{ 'is-active': activeView.name === 'leaderboard' }"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
-import SquizzySquid from "@/components/general/SquizzySquid";
+import SquizzySquid from '@/components/general/SquizzySquid'
 const FEEDBACK_WRONG = [
-  "So inkompetant",
-  "That sucks",
-  "What a squidappointment",
-  "No inkling at all?",
+  'So inkompetant',
+  'That sucks',
+  'What a squidappointment',
+  'No inkling at all?',
   `Are you squddin' me!`,
   `Better luck next time...`,
-  "I squid you not",
+  'I squid you not',
   `You don’t know squid`,
   `No tentacle points for you`
-];
+]
 
 const FEEDBACK_CORRECT = [
   `You're squidding it`,
-  "Consquidulations",
-  "A squid pro quo!",
-  "You are inkredible",
+  'Consquidulations',
+  'A squid pro quo!',
+  'You are inkredible',
   `The smartest squid in the room`,
-  "Inkredible effort",
-  "How exsquidsit",
+  'Inkredible effort',
+  'How exsquidsit',
   `Tentacle points for you`,
   `You're kraken it`
-];
+]
 
 const RESULT_VIEWS = {
   graph: {
-    name: "results",
-    component: () => import("./result/Graph.vue")
+    name: 'results',
+    component: () => import('./result/Graph.vue')
   },
   leaderboard: {
-    name: "leaderboard",
-    component: () => import("./result/Leaderboard.vue")
+    name: 'leaderboard',
+    component: () => import('./result/Leaderboard.vue')
   }
-};
-import { mapGetters } from "vuex";
+}
+import {mapGetters} from 'vuex'
 export default {
   components: {
     SquizzySquid
@@ -99,72 +86,72 @@ export default {
   data() {
     return {
       activeView: RESULT_VIEWS.graph,
-      status: "Waiting for Squizzmaster..."
-    };
+      status: 'Waiting for Squizzmaster...'
+    }
   },
   computed: {
-    ...mapGetters("matchStore", ["currentQuestion", "title", "progress"]),
+    ...mapGetters('matchStore', ['currentQuestion', 'title', 'progress']),
     playerAnswer() {
-      return this.$store.getters["playerStore/playerAnswer"];
+      return this.$store.getters['playerStore/playerAnswer']
     },
     feedbackTitle() {
-      const maxWrong = FEEDBACK_WRONG.length;
-      const maxCorrect = FEEDBACK_CORRECT.length;
+      const maxWrong = FEEDBACK_WRONG.length
+      const maxCorrect = FEEDBACK_CORRECT.length
       // Get a random feedback sentence for wrong answers
-      const randomWrong = Math.floor(Math.random() * maxWrong);
+      const randomWrong = Math.floor(Math.random() * maxWrong)
       // Get a random feedback sentence for correct answer
-      const randomCorrect = Math.floor(Math.random() * maxCorrect);
+      const randomCorrect = Math.floor(Math.random() * maxCorrect)
       // Get the status of the player's answer from the store
-      const playerAnswer = this.playerAnswer;
+      const playerAnswer = this.playerAnswer
       // Select feedback sentence based on player answer
       return playerAnswer.isCorrect
         ? `Correct! ${FEEDBACK_CORRECT[randomCorrect]}`
-        : `Wrong! ${FEEDBACK_WRONG[randomWrong]}`;
+        : `Wrong! ${FEEDBACK_WRONG[randomWrong]}`
     },
     expression() {
       return this.playerAnswer.isCorrect
-        ? { eyes: "happy", mouth: "happy" }
-        : { eyes: "default", mouth: "sad-open" };
+        ? {eyes: 'happy', mouth: 'happy'}
+        : {eyes: 'default', mouth: 'sad-open'}
     },
     question() {
-      const question = this.$store.getters["matchStore/currentQuestion"];
-      return question;
+      const question = this.$store.getters['matchStore/currentQuestion']
+      return question
     },
     correctAnswers() {
-      const ICONS = ["Circle", "Star", "Triangle", "Square"];
-      const choices = this.$store.getters[
-        "matchStore/currentQuestion"
-      ].choices.map((choice, index) => ({
-        ...choice,
-        index
-      }));
+      const ICONS = ['Circle', 'Star', 'Triangle', 'Square']
+      const choices = this.$store.getters['matchStore/currentQuestion'].choices.map(
+        (choice, index) => ({
+          ...choice,
+          index
+        })
+      )
       return choices
         .filter(choice => choice.isCorrect)
         .map(choice => {
           return {
             ...choice,
             icon: () => import(`./symbols/${ICONS[choice.index]}Icon.vue`)
-          };
-        });
+          }
+        })
     }
   },
   methods: {
     swipeLeft() {
-      if (this.activeView.name === "leaderboard") {
-        this.activeView = RESULT_VIEWS.graph;
+      if (this.activeView.name === 'leaderboard') {
+        this.activeView = RESULT_VIEWS.graph
       } else {
-        return;
+        return
       }
     },
     swipeRight() {
-      if (this.activeView.name === "results") {
-        this.activeView = RESULT_VIEWS.leaderboard;
+      if (this.activeView.name === 'results') {
+        this.activeView = RESULT_VIEWS.leaderboard
       } else {
-        return;
+        return
       }
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

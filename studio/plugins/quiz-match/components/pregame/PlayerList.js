@@ -22,7 +22,11 @@ function PlayerList(props) {
               </li>
             )
           })}
-        {!players.length && <li className={styles.noPlayers} key="no-players">No players have joined yet...</li>}
+        {!players.length && (
+          <li className={styles.noPlayers} key="no-players">
+            No players have joined yet...
+          </li>
+        )}
       </ul>
     </div>
   )

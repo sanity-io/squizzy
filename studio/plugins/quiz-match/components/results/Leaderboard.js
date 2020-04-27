@@ -28,21 +28,21 @@ class Leaderboard extends React.Component {
                 _key: PropTypes.string,
                 _type: PropTypes.string,
                 isCorrect: PropTypes.bool,
-                title: PropTypes.string,
+                title: PropTypes.string
               })
-            ),
+            )
           })
-        ),
+        )
       }),
       players: PropTypes.arrayOf(
         PropTypes.shape({
           _id: PropTypes.string,
           _key: PropTypes.string,
           name: PropTypes.string,
-          score: PropTypes.number,
+          score: PropTypes.number
         })
-      ),
-    }),
+      )
+    })
   }
 
   render() {
@@ -55,19 +55,20 @@ class Leaderboard extends React.Component {
         <div className={styles.wrapper}>
           <ul className={styles.list}>
             {playersWithScores.map((player, index) => {
-            const handleKickPlayer = () => onKickPlayer(player._id)
-            return (
-              <li className={styles.item} key={player._id}>
-                <span className={styles.rank}>{index + 1}</span>
-                <span className={styles.name}>
-                  {player.name}
-                  <KickButton onKickPlayer={handleKickPlayer} />
-                </span>
-                <span className={styles.points}>
-                  {player.score > 0 ? Math.round(player.score) : 0}
-                </span>
-              </li>
-            )})}
+              const handleKickPlayer = () => onKickPlayer(player._id)
+              return (
+                <li className={styles.item} key={player._id}>
+                  <span className={styles.rank}>{index + 1}</span>
+                  <span className={styles.name}>
+                    {player.name}
+                    <KickButton onKickPlayer={handleKickPlayer} />
+                  </span>
+                  <span className={styles.points}>
+                    {player.score > 0 ? Math.round(player.score) : 0}
+                  </span>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>

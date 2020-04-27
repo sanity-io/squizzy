@@ -371,12 +371,12 @@ const Squizzy = props => {
 Squizzy.propTypes = {
   eyes: PropTypes.string,
   mouth: PropTypes.string,
-  className: PropTypes.string,
+  className: PropTypes.string
 }
 
 Squizzy.defaultProps = {
   eyes: 'default',
-  mouth: 'default',
+  mouth: 'default'
 }
 
 export default Squizzy

@@ -9,12 +9,7 @@ function MatchQrCode(props) {
 
   return (
     <div className={styles.qrCode}>
-      <QRCode
-        value={url}
-        renderAs="svg"
-        fgColor="#002152"
-        bgColor="transparent"
-      />
+      <QRCode value={url} renderAs="svg" fgColor="#002152" bgColor="transparent" />
     </div>
   )
 }

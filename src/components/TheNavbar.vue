@@ -18,17 +18,17 @@
 export default {
   computed: {
     showLeaveButton() {
-      const hasPlayer = this.$store.state.playerStore.player;
-      const hasMatch = this.$store.state.matchStore.match;
-      return hasMatch && hasPlayer;
+      const hasPlayer = this.$store.state.playerStore.player
+      const hasMatch = this.$store.state.matchStore.match
+      return hasMatch && hasPlayer
     }
   },
   methods: {
     leaveMatch() {
-      this.$store.dispatch("leaveMatch");
+      this.$store.dispatch('leaveMatch')
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

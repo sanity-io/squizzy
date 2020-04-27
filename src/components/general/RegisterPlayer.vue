@@ -2,74 +2,70 @@
   <div class="register-player">
     <label :for="`input-${label}-id`">{{ label }}</label>
     <input
-      class="input"
       :id="`input-${label}-id`"
-      type="text"
       v-model.trim="playerName"
+      class="input"
+      type="text"
       :placeholder="placeholder"
-      @keydown.enter="validateName"
       autocomplete="off"
+      @keydown.enter="validateName"
     />
-    <v-button
-      @click.native="validateName"
-      :title="buttonTitle"
-      :is-loading="isLoading"
-    />
-    <p class="error-message" v-if="error">{{ error }}</p>
+    <v-button :title="buttonTitle" :is-loading="isLoading" @click.native="validateName" />
+    <p v-if="error" class="error-message">{{ error }}</p>
   </div>
 </template>
 
 <script>
-import Button from "@/components/general/Button";
+import Button from '@/components/general/Button'
 export default {
   components: {
-    "v-button": Button
+    'v-button': Button
   },
   data() {
     return {
-      label: "What do we call you?",
-      placeholder: "Nickname",
+      label: 'What do we call you?',
+      placeholder: 'Nickname',
       playerName: null,
-      buttonTitle: "Join quiz",
+      buttonTitle: 'Join quiz',
       error: false
-    };
+    }
   },
   computed: {
     isLoading() {
-      return this.$store.state.playerStore.isLoading;
+      return this.$store.state.playerStore.isLoading
     }
   },
   watch: {
     playerName() {
       if (this.error) {
-        this.error = false;
-        this.$emit("error", false);
+        this.error = false
+        this.$emit('error', false)
       }
     }
   },
   methods: {
     validateName() {
-      const name = this.playerName;
+      const name = this.playerName
       if (name) {
-        this.registerNewPlayer();
+        this.registerNewPlayer()
       }
     },
 
     registerNewPlayer() {
       return this.$store
-        .dispatch("playerStore/registerNewPlayer", this.playerName)
+        .dispatch('playerStore/registerNewPlayer', this.playerName)
         .then(response => {
           if (!response) {
-            this.error = "Something went wrong, please try again.";
-            this.$emit("error", this.error);
+            this.error = 'Something went wrong, please try again.'
+            this.$emit('error', this.error)
           } else {
-            this.error = false;
-            this.$emit("error", false);
+            this.error = false
+            this.$emit('error', false)
           }
-        });
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

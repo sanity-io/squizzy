@@ -50,7 +50,7 @@ class Results extends React.Component {
           </div>
           <AnswerGraph match={match} />
         </div>
-        <Leaderboard match={match} onKickPlayer={handleKickPlayer}/>
+        <Leaderboard match={match} onKickPlayer={handleKickPlayer} />
       </div>
     )
   }

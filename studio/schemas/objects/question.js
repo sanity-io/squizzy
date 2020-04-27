@@ -4,7 +4,7 @@ const {
   minNumberOfChoices,
   maxNumberOfChoices,
   maxQuestionLength,
-  defaultTimeLimit,
+  defaultTimeLimit
 } = config.default.schema
 
 export default {
@@ -26,23 +26,22 @@ export default {
             return `A question can't be longer than ${maxQuestionLength} characters. This one has ${title.length}`
           }
           return true
-        }),
+        })
     },
     {
       name: 'timeLimit',
       title: 'Time Limit',
       type: 'number',
       description: `Given in seconds. ${defaultTimeLimit} seconds is a good default.`,
-      validation: Rule => Rule.required().error('You must set a time limit.'),
+      validation: Rule => Rule.required().error('You must set a time limit.')
     },
     {
       name: 'image',
       title: 'Image',
       type: 'image',
-      description:
-        'The image can be relevant or irrelevant to your question. Up to you!',
+      description: 'The image can be relevant or irrelevant to your question. Up to you!',
       options: {
-        hotspot: true,
+        hotspot: true
       },
       fields: [
         {
@@ -51,10 +50,10 @@ export default {
           title: 'Alternative text',
           description: 'For screen readers etc.',
           options: {
-            isHighlighted: true,
-          },
-        },
-      ],
+            isHighlighted: true
+          }
+        }
+      ]
     },
     {
       name: 'choices',
@@ -73,19 +72,19 @@ export default {
             return `A question can have a maximum of ${maxNumberOfChoices} choices`
           }
           return true
-        }),
-    },
+        })
+    }
   ],
   preview: {
     select: {
       title: 'title',
-      media: 'image',
+      media: 'image'
     },
     prepare({title, media}) {
       return {
         title,
-        media,
+        media
       }
-    },
-  },
+    }
+  }
 }

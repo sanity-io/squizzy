@@ -62,7 +62,6 @@ class BeforeStart extends React.Component {
                 <div className={styles.infoLabel}>Questions</div>
               </div>
               <div>
-                
                 <div className={styles.number}>{players.length}</div>
                 <div className={styles.infoLabel}>Players</div>
               </div>

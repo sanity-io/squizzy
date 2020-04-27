@@ -7,5 +7,5 @@ export default {
   name: 'quiz-match',
   router: route('/:selectedDocumentId'),
   icon: MdPlayArrow,
-  component: QuizMatchTool,
+  component: QuizMatchTool
 }

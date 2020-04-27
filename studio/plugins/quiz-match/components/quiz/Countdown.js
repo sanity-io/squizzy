@@ -60,7 +60,9 @@ class Countdown extends React.Component {
     const {seconds, mouth} = this.state
     const {match} = this.props
     const {currentQuestion} = match
-    const answerCount = match.answers ? match.answers.filter(answer => answer.questionKey === match.currentQuestionKey).length : 0
+    const answerCount = match.answers
+      ? match.answers.filter(answer => answer.questionKey === match.currentQuestionKey).length
+      : 0
     return (
       <div className={styles.root}>
         <div className={styles.countdownWrapper}>

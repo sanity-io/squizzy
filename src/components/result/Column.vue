@@ -1,6 +1,6 @@
 <template>
   <div class="column-wrapper choice" :data-choice="index">
-    <div class="column" :style="{ height }">
+    <div class="column" :style="{height}">
       <div v-if="playerAnswer" class="symbol player-answer">
         <svg
           v-if="playerAnswer.isCorrect"
@@ -53,15 +53,15 @@ export default {
   },
   computed: {
     symbol() {
-      const symbols = ["Circle", "Star", "Triangle", "Square"];
-      return () => import(`../symbols/${symbols[this.index]}Icon.vue`);
+      const symbols = ['Circle', 'Star', 'Triangle', 'Square']
+      return () => import(`../symbols/${symbols[this.index]}Icon.vue`)
     },
     height() {
-      const height = (100 / this.total) * this.choice.answerCount;
-      return `${height}%`;
+      const height = (100 / this.total) * this.choice.answerCount
+      return `${height}%`
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

@@ -3,10 +3,7 @@
     <div class="progress label">{{ title }} {{ progress }}</div>
     <div class="question">
       <template v-if="!isAnswerSubmitted">
-        <question-image
-          v-if="currentQuestion.image"
-          :asset="currentQuestion.image"
-        />
+        <question-image v-if="currentQuestion.image" :asset="currentQuestion.image" />
         <h1
           class="title"
           :class="{
@@ -34,10 +31,10 @@
 </template>
 
 <script>
-import QuestionImage from "./question/QuestionImage";
-import QuestionChoices from "./question/QuestionChoices";
-import SquizzySquid from "./general/SquizzySquid";
-import { mapGetters } from "vuex";
+import QuestionImage from './question/QuestionImage'
+import QuestionChoices from './question/QuestionChoices'
+import SquizzySquid from './general/SquizzySquid'
+import {mapGetters} from 'vuex'
 export default {
   components: {
     QuestionImage,
@@ -47,31 +44,29 @@ export default {
   data() {
     return {
       playerClickedCard: false
-    };
+    }
   },
   computed: {
-    ...mapGetters("matchStore", ["currentQuestion", "title", "progress"]),
+    ...mapGetters('matchStore', ['currentQuestion', 'title', 'progress']),
     isAnswerSubmitted() {
       if (this.playerClickedCard) {
         // shortcut for a more snappy client experience
-        return true;
+        return true
       }
-      const player = this.$store.state.playerStore.player;
-      const match = this.$store.state.matchStore.match;
-      const { answers = [] } = match;
+      const player = this.$store.state.playerStore.player
+      const match = this.$store.state.matchStore.match
+      const {answers = []} = match
       return answers.some(
-        answer =>
-          answer.questionKey === match.currentQuestionKey &&
-          answer.player._id === player.id
-      );
+        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === player.id
+      )
     }
   },
   methods: {
     setPlayerClickedCard() {
-      this.playerClickedCard = true;
+      this.playerClickedCard = true
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

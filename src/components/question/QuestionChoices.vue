@@ -5,19 +5,18 @@
       :key="choice._key"
       :title="choice.title"
       :index="index"
-      @change="selectAnswer(choice._key)"
       :class="{
         disabled: isAnswerSubmitted,
-        'selected-answer':
-          selectedChoice === choice._key || choiceIsSelected(choice._key)
+        'selected-answer': selectedChoice === choice._key || choiceIsSelected(choice._key)
       }"
       :disabled="isAnswerSubmitted"
+      @change="selectAnswer(choice._key)"
     />
   </div>
 </template>
 
 <script>
-import ChoiceCard from "./ChoiceCard";
+import ChoiceCard from './ChoiceCard'
 export default {
   components: {
     ChoiceCard
@@ -35,33 +34,31 @@ export default {
   data() {
     return {
       selectedChoice: null
-    };
+    }
   },
   methods: {
     selectAnswer(choiceKey) {
-      this.selectedChoice = choiceKey;
-      this.$emit("answered", true);
+      this.selectedChoice = choiceKey
+      this.$emit('answered', true)
       if (!this.isAnswerSubmitted) {
-        this.$store.dispatch("client/submitAnswer", choiceKey);
+        this.$store.dispatch('client/submitAnswer', choiceKey)
       }
     },
     choiceIsSelected(choiceKey) {
       if (this.selectedChoice) {
         // shortcut for a more snappy client experience
-        return this.selectedChoice === choiceKey;
+        return this.selectedChoice === choiceKey
       }
-      const playerId = this.$store.getters["playerStore/playerId"];
-      const match = this.$store.state.matchStore.match;
-      const { answers = [] } = match;
+      const playerId = this.$store.getters['playerStore/playerId']
+      const match = this.$store.state.matchStore.match
+      const {answers = []} = match
       const answer = answers.find(
-        answer =>
-          answer.questionKey === match.currentQuestionKey &&
-          answer.player._id === playerId
-      );
-      return answer && answer.selectedChoiceKey === choiceKey;
+        answer => answer.questionKey === match.currentQuestionKey && answer.player._id === playerId
+      )
+      return answer && answer.selectedChoiceKey === choiceKey
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

@@ -1,14 +1,11 @@
 <template>
-  <div
-    class="leaderboard-wrapper"
-    :class="{'top-players-wrapper': topPlayers}"
-  >
-    <ul class="leaderboard" :class="{ 'top-players': topPlayers }">
+  <div class="leaderboard-wrapper" :class="{'top-players-wrapper': topPlayers}">
+    <ul class="leaderboard" :class="{'top-players': topPlayers}">
       <li
         v-for="(player, index) in getScoresByPlayer"
         :key="player._id"
         class="item"
-        :class="{ 'current-player': player._id === playerId }"
+        :class="{'current-player': player._id === playerId}"
       >
         <slot name="crown" :index="index" :aria-label="index + 1" role="img" />
         <span v-if="!topPlayers" class="rank">{{ index + 1 }}</span>
@@ -20,7 +17,7 @@
 </template>
 
 <script>
-import { scoresByPlayer } from "../../utils";
+import {scoresByPlayer} from '../../utils'
 export default {
   props: {
     topPlayers: {
@@ -30,19 +27,19 @@ export default {
   },
   computed: {
     playerId() {
-      return this.$store.state.playerStore.player.id;
+      return this.$store.state.playerStore.player.id
     },
     getScoresByPlayer() {
       return this.topPlayers
         ? scoresByPlayer(this.$store.state.matchStore.match).slice(0, 3)
-        : scoresByPlayer(this.$store.state.matchStore.match);
+        : scoresByPlayer(this.$store.state.matchStore.match)
     }
   },
   mounted() {
-    const currentPlayer = this.$el.getElementsByClassName("current-player")[0];
-    if (currentPlayer) return currentPlayer.scrollIntoView();
+    const currentPlayer = this.$el.getElementsByClassName('current-player')[0]
+    if (currentPlayer) return currentPlayer.scrollIntoView()
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

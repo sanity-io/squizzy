@@ -24,9 +24,9 @@ function MediaPlayer({match: {quiz: {musicUrl = ''} = {}} = {}}) {
 MediaPlayer.propTypes = {
   match: PropTypes.shape({
     match: PropTypes.shape({
-      musicUrl: PropTypes.string,
-    }),
-  }),
+      musicUrl: PropTypes.string
+    })
+  })
 }
 
 export default MediaPlayer

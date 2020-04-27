@@ -7,13 +7,13 @@
           type="radio"
           name="choices"
           :aria-labelledby="`choice-label-${title}`"
-          @change="$emit('change', $event)"
           :disabled="disabled"
+          @change="$emit('change', $event)"
         />
         <div class="symbol">
           <component :is="icon" />
         </div>
-        <h2 class="choice-title" :id="`choice-label-${title}`">{{ title }}</h2>
+        <h2 :id="`choice-label-${title}`" class="choice-title">{{ title }}</h2>
       </div>
     </div>
   </div>
@@ -37,11 +37,11 @@ export default {
   },
   computed: {
     icon() {
-      const icons = ["Circle", "Star", "Triangle", "Square"];
-      return () => import(`../symbols/${icons[this.index]}Icon.vue`);
+      const icons = ['Circle', 'Star', 'Triangle', 'Square']
+      return () => import(`../symbols/${icons[this.index]}Icon.vue`)
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>
