@@ -36,25 +36,31 @@ class Match extends React.Component {
       quiz: PropTypes.shape({
         title: PropTypes.string,
         description: PropTypes.string,
-        questions: PropTypes.arrayOf({
-          _key: PropTypes.string,
-          _type: PropTypes.string,
-          title: PropTypes.string,
-          timeLimit: PropTypes.number,
-          choices: PropTypes.arrayOf({
+        questions: PropTypes.arrayOf(
+          PropTypes.shape({
             _key: PropTypes.string,
             _type: PropTypes.string,
-            isCorrect: PropTypes.bool,
-            title: PropTypes.string
+            title: PropTypes.string,
+            choices: PropTypes.arrayOf(
+              PropTypes.shape({
+                _key: PropTypes.string,
+                _type: PropTypes.string,
+                isCorrect: PropTypes.bool,
+                title: PropTypes.string
+              })
+            ),
+            image: PropTypes.object
           })
-        })
+        )
       }),
-      players: PropTypes.arrayOf({
-        _id: PropTypes.string,
-        _key: PropTypes.string,
-        name: PropTypes.string,
-        score: PropTypes.number
-      })
+      players: PropTypes.arrayOf(
+        PropTypes.shape({
+          _id: PropTypes.string,
+          _type: PropTypes.string,
+          name: PropTypes.string,
+          score: PropTypes.number
+        })
+      )
     }),
     router: PropTypes.shape({
       state: PropTypes.shape({
