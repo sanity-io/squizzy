@@ -1,24 +1,24 @@
 <template>
-  <div id="app" v-cloak>
+  <div v-cloak id="app">
     <the-navbar />
     <router-view />
   </div>
 </template>
 
 <script>
-import TheNavbar from "@/components/TheNavbar";
+import TheNavbar from '@/components/TheNavbar'
 export default {
   components: {
     TheNavbar
   },
   mounted() {
-    this.$store.dispatch("client/startListener");
+    this.$store.dispatch('client/startListener')
   },
   destroyed() {
-    this.$store.dispatch("client/stopListener");
-    this.$store.dispatch("leaveGame");
+    this.$store.dispatch('client/stopListener')
+    this.$store.dispatch('leaveGame')
   }
-};
+}
 </script>
 
 <style lang="sass">
