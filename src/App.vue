@@ -14,7 +14,7 @@ export default {
   mounted() {
     this.$store.dispatch('client/startListener')
   },
-  beforeDestroy() {
+  destroyed() {
     this.$store.dispatch('client/stopListener')
     this.$store.dispatch('leaveGame')
   }
