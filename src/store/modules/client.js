@@ -1,4 +1,6 @@
 import {isEmpty} from 'lodash'
+import {asyncScheduler} from 'rxjs'
+import {throttleTime} from 'rxjs/operators'
 import client from '../../sanityClient'
 import {submitAnswerToQuestion} from '../squizzyServerApi'
 
@@ -63,6 +65,7 @@ const actions = {
             events: ['welcome', 'mutation', 'reconnect']
           }
         )
+        .pipe(throttleTime(1000, asyncScheduler, {trailing: true})) // Safety valve in case a huge number of events arrive at once (e.g. many players answering simulatneously)
         .subscribe(async () => {
           // Something has happened with the match doc, let's fetch it
           const match = await client.fetch(query, {slug})
