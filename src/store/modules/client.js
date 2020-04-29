@@ -8,7 +8,7 @@ const query = `
 `
 
 // Query to listen for new match updates
-const listenerQuery = `*[_type == "match" && slug.current == $slug && !(_id in path("drafts.**"))][0]`
+const listenerQuery = `*[_type == "match" && slug.current == $slug && !(_id in path("drafts.**"))][0]{_id}`
 
 // Variable for listener to subscribe and unsubscribe
 let subscription
@@ -58,7 +58,7 @@ const actions = {
           listenerQuery,
           {slug},
           {
-            includeResult: true,
+            includeResult: false,
             visibility: 'query',
             events: ['welcome', 'mutation', 'reconnect']
           }
