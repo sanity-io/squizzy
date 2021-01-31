@@ -39,7 +39,7 @@ To get started with Squizzy, follow these instructions.
 ### Deploying the web app and the serverless functions on Now
 
 1. First you need to add a secret token with write permissions to your Now account:
-   1. Find your project’s API settings on https://manage.sanity.io/{YOUR_PROJECTID}/settings/api (or run `sanity manage` inside `/studio`)
+   1. Find your project’s API settings on https://manage.sanity.io/projects/{YOUR_PROJECTID}/settings/api (or run `sanity manage` inside `/studio`)
    2. Under the Tokens sections, create a new token with write permissions
    3. Rename the `.env.template` file to `.env` in the root folder, it will be ignored by git.
    4. Copy-paste the token into the `.env` file for the `SQUIZZY_WRITE_TOKEN=` variable
